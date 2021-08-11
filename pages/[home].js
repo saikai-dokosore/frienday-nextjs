@@ -1,7 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.scss";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -10,8 +12,8 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Frienday</title>
-        <meta name="description" content="Friendayアプリです" />
+        <title>{router.query.home}</title>
+        <meta name="description" content="超気軽に誘っちゃおう" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
