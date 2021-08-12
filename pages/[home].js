@@ -7,7 +7,64 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-  console.log(router.query.home);
+  const [database, setDatabase] = useState({
+    id: "",
+    name: "",
+    job: "",
+    emoji: "",
+    phone: "",
+    password: "",
+    bio: "",
+    schedule: [{ month: "", percentage: 0 }],
+    place: [
+      {
+        name: "",
+        emoji: "",
+      },
+    ],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  // axios で取得するjsonファイルのパスを宣言
+  const URL = "/database.json";
+
+  useEffect(() => {
+    axios.get(URL).then((res) => {
+      for (let account in res.data) {
+        if (res.data[account].id === router.query.home) {
+          setDatabase(res.data[account]);
+          setIsLoading(false);
+        } else {
+          console.log("違う");
+        }
+      }
+    });
+  }, [router]);
+
+  // スケジュールコンポーネント
+  const MonthSetBoxs = () => {
+    const list = database.schedule?.map((m, i) => {
+      return (
+        <li key={i} className={styles.monthSetBox}>
+          <div className={styles.month}>{m?.month}</div>
+          <div className={styles.percentage}>{m?.percentage}</div>
+        </li>
+      );
+    });
+    return <ul className={styles.monthRowBox}>{list}</ul>;
+  };
+
+  // いきたいところコンポーネント
+  const PlaceSetBoxs = () => {
+    const list = database.place?.map((p, i) => {
+      return (
+        <li key={i} className={styles.placeSetBox}>
+          {p?.name}
+        </li>
+      );
+    });
+    return <ul className={styles.placeCulumnBox}>{list}</ul>;
+  };
 
   return (
     <div className={styles.container}>
@@ -17,59 +74,33 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <header className={styles.header}>FRIENDAY</header>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">{router.query.home}</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className={styles.accountBox}>
+          <div className={styles.accountImgBox}>
+            {String.fromCodePoint(database?.emoji)}
+          </div>
+          <div className={styles.accountTextBox}>
+            <h3>{database?.name}</h3>
+            <p className={styles.accountTextJob}>{database?.job}</p>
+            <p className={styles.accountTextBio}>{database?.bio}</p>
+          </div>
+        </div>
+        <div className={styles.scheduleBox}>
+          <div className={styles.BoxHeader}>
+            <h3>あいてるひ</h3>
+            <button>編集</button>
+          </div>
+          {isLoading ? <div></div> : <MonthSetBoxs />}
+        </div>
+        <div className={styles.placeBox}>
+          <div className={styles.BoxHeader}>
+            <h3>いきたい場所リスト</h3>
+            <button>編集</button>
+          </div>
+          {isLoading ? <div></div> : <PlaceSetBoxs />}
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }

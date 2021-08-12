@@ -1,0 +1,69 @@
+[
+  {
+      "id": "saikai",
+      "name": "さいかい",
+      "job": "学生",
+      "emoji": "0x1F978",
+      "color": "",
+      "phone": "08097234800",
+      "password": "pass001",
+      "bio": "初めまして、開発者のさいかいです。",
+      "schedule": [
+        {"month": "April", "percentage": 60},
+        {"month": "May", "percentage": 50},
+        {"month": "June", "percentage": 70},
+        {"month": "August", "percentage": 40}
+      ],
+      "place": [
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        },
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        },
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        },
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        },
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        },
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        },
+        {
+          "name": "ラーメン",
+          "emoji": "0x1F35C"
+        }
+    ]
+  },
+  {
+    "id": "nakashizu",
+    "name": "中静",
+    "job": "学生",
+    "emoji": "0x1F978",
+    "color": "",
+    "phone": "08097234800",
+    "password": "pass001",
+    "bio": "中静です",
+    "schedule": [
+      {"month": "April", "percentage": 60},
+      {"month": "May", "percentage": 50},
+      {"month": "June", "percentage": 70},
+      {"month": "August", "percentage": 40}
+    ],
+    "place": [{
+      "name": "",
+      "emoji": "",
+      "color": ""
+    }]
+  }
+]
