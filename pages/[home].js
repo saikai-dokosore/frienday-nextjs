@@ -15,7 +15,7 @@ export default function Home() {
     phone: "",
     password: "",
     bio: "",
-    schedule: [{ month: "", percentage: 0 }],
+    schedule: [{ month: "", emoji: "", percentage: 0 }],
     place: [
       {
         name: "",
@@ -48,6 +48,9 @@ export default function Home() {
         <li key={i} className={styles.monthSetBox}>
           <div className={styles.month}>{m?.month}</div>
           <div className={styles.percentage}>{m?.percentage}</div>
+          <div className={styles.emojiBox}>
+            <div className={styles.emoji}>{String.fromCodePoint(m?.emoji)}</div>
+          </div>
         </li>
       );
     });
@@ -59,7 +62,11 @@ export default function Home() {
     const list = database.place?.map((p, i) => {
       return (
         <li key={i} className={styles.placeSetBox}>
-          {p?.name}
+          <div className={styles.placeTextBox}>
+            <div className={styles.emoji}>{String.fromCodePoint(p?.emoji)}</div>
+            <div className={styles.name}>{p?.name}</div>
+          </div>
+          <button>いきたい！</button>
         </li>
       );
     });
