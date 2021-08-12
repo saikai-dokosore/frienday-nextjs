@@ -75,17 +75,17 @@ export default function Home() {
       </Head>
 
       <header className={styles.header}>FRIENDAY</header>
-      <main className={styles.main}>
-        <div className={styles.accountBox}>
-          <div className={styles.accountImgBox}>
-            {String.fromCodePoint(database?.emoji)}
-          </div>
-          <div className={styles.accountTextBox}>
-            <h3>{database?.name}</h3>
-            <p className={styles.accountTextJob}>{database?.job}</p>
-            <p className={styles.accountTextBio}>{database?.bio}</p>
-          </div>
+      <div className={styles.accountBox}>
+        <div className={styles.accountImgBox}>
+          {String.fromCodePoint(database?.emoji)}
         </div>
+        <div className={styles.accountTextBox}>
+          <h3>{database?.name}</h3>
+          <p className={styles.accountTextJob}>{database?.job}</p>
+          <p className={styles.accountTextBio}>{database?.bio}</p>
+        </div>
+      </div>
+      <main className={styles.main}>
         <div className={styles.scheduleBox}>
           <div className={styles.BoxHeader}>
             <h3>あいてるひ</h3>
