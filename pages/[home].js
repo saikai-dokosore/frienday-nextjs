@@ -47,7 +47,10 @@ export default function Home() {
       return (
         <li key={i} className={styles.monthSetBox}>
           <div className={styles.month}>{m?.month}</div>
-          <div className={styles.percentage}>{m?.percentage}</div>
+          <div className={styles.percentage}>
+            {m?.percentage}
+            <span>%</span>
+          </div>
           <div className={styles.emojiBox}>
             <div className={styles.emoji}>{String.fromCodePoint(m?.emoji)}</div>
           </div>

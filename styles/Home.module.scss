@@ -64,6 +64,7 @@ $bp : (mobile : 480px,
   .accountImgBox {
     width: 80px;
     height: 80px;
+    min-width: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,7 +78,7 @@ $bp : (mobile : 480px,
     flex-flow: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 15px;
+    padding-left: 10px;
 
     h3 {
       font-size: 16px;
@@ -90,6 +91,7 @@ $bp : (mobile : 480px,
       opacity: 0.5;
     }
     .accountTextBio {
+      margin-top: 10px;
       padding-left: 2px;
       font-size: 10px;
       font-weight: 500;
