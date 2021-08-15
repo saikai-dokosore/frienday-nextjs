@@ -1,9 +1,30 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useState, useEffect } from "react";
+
+/* import fetch from "node-fetch";
+// fetchではなくDatabaseのSDKを使いたい
+// fireStoreを使いたい
+// ログイン処理をする
+
+export const getStaticProps = async () => {
+  const res = await fetch();
+  return res.json();
+};
+
+export const getServerSideProps = async () => {
+  const res = await fetch();
+  return res.json();
+}; */
+
+// SWRを使いたい
+// data部分だけclientSideでfetchしたい
+
+// URLはダイナミックルーティングで生成したい
 
 export default function Home() {
   const router = useRouter();
@@ -80,11 +101,20 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>{router.query.home}</title>
-        <meta name="description" content="超気軽に誘っちゃおう" />
+        <meta
+          name="description"
+          content={router.query.home + "を気軽に誘っちゃおう"}
+        />
         <link rel="icon" href="/favicon.ico" />
+        {/* ここでOGPも設定したい */}
       </Head>
 
-      <header className={styles.header}>FRIENDAY</header>
+      <header className={styles.header}>
+        <h1>FRIENDAY</h1>
+        <Link href="/login">
+          <a>login</a>
+        </Link>
+      </header>
       <div className={styles.accountBox}>
         <div className={styles.accountImgBox}>
           {String.fromCodePoint(database?.emoji)}

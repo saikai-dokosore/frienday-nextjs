@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/Index.module.scss";
 
 export default function Index() {
@@ -13,6 +14,9 @@ export default function Index() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Frienday説明用のページ</h1>
+        <Link href="/saikai">
+          <a>saikai</a>
+        </Link>
       </main>
 
       <footer className={styles.footer}>

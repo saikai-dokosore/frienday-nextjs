@@ -44,12 +44,25 @@ $bp : (mobile : 480px,
     }
   border-top: 1px solid #eaeaea;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  color: black;
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 0.3em;
+  h1 {
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.3em;
+  }
+  a {
+    height: 30px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: var(--gray100);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 15px;
+  }
 }
 .accountBox {
   margin-top: 60px;
@@ -107,7 +120,7 @@ $bp : (mobile : 480px,
   display: flex;
   flex-flow: row;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
   @include query (tablet) {
     flex-flow: column;
     justify-content: center;
