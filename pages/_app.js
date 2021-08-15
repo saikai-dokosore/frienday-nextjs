@@ -1,10 +1,10 @@
 import "../styles/globals.scss";
 import "../styles/reset.scss";
 
-// ログイン判定をする
+// ログイン処理をする
 
-const MyApp = ({ Component, pageProps }) => {
+function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
-};
+}
 
 export default MyApp;
