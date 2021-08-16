@@ -55,8 +55,8 @@ export default function Home() {
         if (res.data[account].id === router.query.home) {
           setDatabase(res.data[account]);
           setIsLoading(false);
-        } else {
-          console.log("違う");
+        } else if (router.query.home !== undefined) {
+          router.replace("/404");
         }
       }
     });
@@ -106,7 +106,9 @@ export default function Home() {
           content={router.query.home + "を気軽に誘っちゃおう"}
         />
         <link rel="icon" href="/favicon.ico" />
-        {/* ここでOGPも設定したい */}
+        <meta property="og:image" content="test" />
+        <meta name="og:title" content="test" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <header className={styles.header}>

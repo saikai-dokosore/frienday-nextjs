@@ -2,24 +2,23 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 
-export default function Home() {
+export default function Custom404() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>sakusaku</title>
-        <meta name="description" content={"test" + "を気軽に誘っちゃおう"} />
+        <title>アカウントがありません</title>
+        <meta name="description" content="404ページです" />
         <link rel="icon" href="/favicon.ico" />
-        {/* ここでOGPも設定したい */}
       </Head>
 
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        <Link href="/saikai">
-          <a>saikai</a>
+        <Link href="/login">
+          <a>login</a>
         </Link>
       </header>
 
-      <main className={styles.main}>サクサクページ</main>
+      <main className={styles.main}>アカウントが存在しません</main>
     </div>
   );
 }

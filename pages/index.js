@@ -1,36 +1,40 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import styles from "../styles/Index.module.scss";
+import Layout, { siteTitle } from "../components/layout";
+import utilStyles from "../styles/utils.module.css";
+import { getSortedPostsData } from "../lib/posts";
 
-export default function Index() {
+export default function Home({ allPostsData }) {
   return (
-    <div className={styles.container}>
+    <Layout home>
       <Head>
-        <title>Frienday</title>
-        <meta name="description" content="Friendayアプリです" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>{siteTitle}</title>
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Frienday説明用のページ</h1>
-        <Link href="/saikai">
-          <a>saikai</a>
-        </Link>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+      <section className={utilStyles.headingMd}>
+        <p>[Your Self Introduction]</p>
+      </section>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
   );
+}
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
 }
