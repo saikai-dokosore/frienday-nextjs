@@ -130,7 +130,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.scheduleBox}>
           <div className={styles.BoxHeader}>
-            <h3>あいてるひ</h3>
+            <h3>あいてる率</h3>
             <button>編集</button>
           </div>
           {isLoading ? <div></div> : <MonthSetBoxs />}

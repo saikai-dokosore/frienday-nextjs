@@ -126,10 +126,9 @@ $bp : (mobile : 480px,
   @include query (tablet) {
     flex-flow: column;
     justify-content: center;
-    padding: 0 10px;
+    padding: 0;
   }
 }
-
 
 .scheduleBox {
   display: flex;
@@ -139,6 +138,7 @@ $bp : (mobile : 480px,
   width: 100%;
   max-width: 600px;
   overflow: auto;
+  padding: 0 10px;
 }
 
 .placeBox {
@@ -149,6 +149,7 @@ $bp : (mobile : 480px,
   align-items: flex-start;
   width: 100%;
   max-width: 600px;
+  padding: 0 10px;
 }
 
 .BoxHeader {
