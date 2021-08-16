@@ -74,6 +74,9 @@ $bp : (mobile : 480px,
   justify-content: flex-start;
   align-items: center;
 
+  .green100 {
+    background-color: var(--red100);
+  }
   .accountImgBox {
     width: 80px;
     height: 80px;
@@ -82,7 +85,6 @@ $bp : (mobile : 480px,
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: var(--green100);
     font-size: 20px;
   }
 
@@ -178,6 +180,42 @@ $bp : (mobile : 480px,
   align-items: center;
   overflow: scroll;
   padding: 10px 0;
+  .January {
+    background-color: var(--green100);
+  }
+  .February {
+    background-color: var(--green100);
+  }
+  .March {
+    background-color: var(--green100);
+  }
+  .April {
+    background-color: var(--green100);
+  }
+  .May {
+    background-color: var(--green200);
+  }
+  .June {
+    background-color: var(--purple100);
+  }
+  .July {
+    background-color: var(--blue200);
+  }
+  .August {
+    background-color: var(--green100);
+  }
+  .September {
+    background-color: var(--green100);
+  }
+  .October {
+    background-color: var(--green100);
+  }
+  .November {
+    background-color: var(--green100);
+  }
+  .December {
+    background-color: var(--green100);
+  }
   .monthSetBox {
     display: flex;
     flex-flow: column;
@@ -188,7 +226,6 @@ $bp : (mobile : 480px,
     width: 120px;
     height: 190px;
     border-radius: 20px;
-    background-color: var(--green100);
     .month {
       flex: 1;
       display: flex;

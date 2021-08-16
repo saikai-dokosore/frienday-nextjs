@@ -66,7 +66,7 @@ export default function Home() {
   const MonthSetBoxs = () => {
     const list = database.schedule?.map((m, i) => {
       return (
-        <li key={i} className={styles.monthSetBox}>
+        <li key={i} className={styles.monthSetBox + " " + styles[m?.month]}>
           <div className={styles.month}>{m?.month}</div>
           <div className={styles.percentage}>
             {m?.percentage}
@@ -118,7 +118,7 @@ export default function Home() {
         </Link>
       </header>
       <div className={styles.accountBox}>
-        <div className={styles.accountImgBox}>
+        <div className={styles.accountImgBox + " " + styles[database?.color]}>
           {String.fromCodePoint(database?.emoji)}
         </div>
         <div className={styles.accountTextBox}>
