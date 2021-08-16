@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
 
       <header className={styles.header}>
-        <h1>FRIENDAY</h1>
+        <h1>SAKUSAKU</h1>
         <Link href="/saikai">
           <a>saikai</a>
         </Link>
