@@ -70,7 +70,7 @@ export default function Home() {
           <div className={styles.month}>{m?.month}</div>
           <div className={styles.percentage}>
             {m?.percentage}
-            <span>%</span>
+            <span className={styles.percentageUnit}>%</span>
           </div>
           <div className={styles.emojiBox}>
             <div className={styles.emoji}>{String.fromCodePoint(m?.emoji)}</div>

@@ -232,6 +232,8 @@ $bp : (mobile : 480px,
       justify-content: center;
       align-items: center;
       width: 100%;
+      font-weight: 900;
+      font-size: 18px;
     }
     .percentage {
       flex: 1;
@@ -239,6 +241,14 @@ $bp : (mobile : 480px,
       justify-content: center;
       align-items: center;
       width: 100%;
+      font-weight: 900;
+      font-size: 16px;
+      mix-blend-mode: color-burn;
+      .percentageUnit {
+        font-weight: 500;
+        font-size: 12px;
+        margin-top: 4px;
+      }
     }
     .emojiBox {
       flex: 3;
