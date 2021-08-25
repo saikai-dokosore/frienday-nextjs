@@ -1,18 +1,41 @@
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Index.module.scss";
-import firebase from "../lib/firebaseInit";
+import firebase, { db } from "../lib/firebaseInit";
 import { useState, useEffect } from "react";
 
 export default function Index() {
-  const db = firebase.firestore();
-  const [test, setTest] = useState("test");
+  console.log(db.collection("users").doc("VdGVn7pujtI1YeOiEsdF").get());
+
+  const addUser = async () => {
+    console.log("addUser");
+    await db.collection("users").add({
+      id: "testuser",
+    });
+    console.log("addedUser");
+  };
+
+  const updateUser = async () => {
+    console.log("updateUser");
+    const ref = db.collection("users").doc("VdGVn7pujtI1YeOiEsdF");
+    console.log(ref);
+    const snapshots = await ref.get();
+    console.log(snapshots);
+    db.collection("users").doc("VdGVn7pujtI1YeOiEsdF").set({
+      id: "saikai_official",
+    });
+    console.log("updatedUser");
+  };
 
   const getUsers = async () => {
-    const saikai = db.collection("users").doc("wkqfA90zWaaDGX5tf0lu").get();
-    console.log(saikai);
+    console.log("getUser");
+    const users = await db.collection("users").get();
+    let items = [];
+    users.forEach(function (doc) {
+      items.push(doc);
+    });
+    console.log(items[0].data().id);
   };
-  getUsers();
 
   return (
     <div className={styles.container}>
@@ -32,8 +55,9 @@ export default function Index() {
         </Link>
       </header>
       <main className={styles.main}>
-        <h1>index</h1>
-        {test}
+        <button onClick={() => addUser()}>Add</button>
+        <button onClick={() => getUsers()}>Get</button>
+        <button onClick={() => updateUser()}>Update</button>
       </main>
     </div>
   );
