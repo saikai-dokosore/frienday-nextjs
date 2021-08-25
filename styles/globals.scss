@@ -19,7 +19,9 @@
   --gray200: #D0D0D0;
 }
 
-
+html {
+  height: -webkit-fill-available;
+}
 body {
   background-color: var(--white100);
   color: var(--black100);
@@ -28,5 +30,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100vw;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   overflow-x: hidden;
 }

@@ -1,40 +1,40 @@
 import Head from "next/head";
-import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
+import Link from "next/link";
+import styles from "../styles/Index.module.scss";
+import firebase from "../lib/firebaseInit";
+import { useState, useEffect } from "react";
 
-export default function Home({ allPostsData }) {
-  return (
-    <Layout home>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-      <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              {title}
-              <br />
-              {id}
-              <br />
-              {date}
-            </li>
-          ))}
-        </ul>
-      </section>
-    </Layout>
-  );
-}
+export default function Index() {
+  const db = firebase.firestore();
+  const [test, setTest] = useState("test");
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
+  const getUsers = async () => {
+    const saikai = db.collection("users").doc("wkqfA90zWaaDGX5tf0lu").get();
+    console.log(saikai);
   };
+  getUsers();
+
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>home</title>
+        <meta name="description" content="test" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:image" content="test" />
+        <meta name="og:title" content="test" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+
+      <header className={styles.header}>
+        <h1>FRIENDAY</h1>
+        <Link href="/saikai">
+          <a>saikai</a>
+        </Link>
+      </header>
+      <main className={styles.main}>
+        <h1>index</h1>
+        {test}
+      </main>
+    </div>
+  );
 }

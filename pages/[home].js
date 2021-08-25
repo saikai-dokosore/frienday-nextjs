@@ -3,64 +3,65 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { useState, useEffect } from "react";
 
-/* import fetch from "node-fetch";
-// fetchではなくDatabaseのSDKを使いたい
-// fireStoreを使いたい
-// ログイン処理をする
-
-export const getStaticProps = async () => {
-  const res = await fetch();
-  return res.json();
-};
-
-export const getServerSideProps = async () => {
-  const res = await fetch();
-  return res.json();
-}; */
-
-// SWRを使いたい
-// data部分だけclientSideでfetchしたい
-
-// URLはダイナミックルーティングで生成したい
-
-export default function Home() {
-  const router = useRouter();
-  const [database, setDatabase] = useState({
-    id: "",
-    name: "",
-    job: "",
-    emoji: "",
-    phone: "",
-    password: "",
-    bio: "",
-    schedule: [{ month: "", emoji: "", percentage: 0 }],
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+  const database = {
+    id: "saikai",
+    name: "さいかい",
+    job: "学生",
+    emoji: "0x1F978",
+    color: "green100",
+    phone: "08097234800",
+    password: "pass001",
+    bio: "初めまして、開発者のさいかいです。現在帰省中なのでバンバン遊びましょう！",
+    schedule: [
+      { month: "April", emoji: "0x1F338", percentage: 60 },
+      { month: "May", emoji: "0x1F38F", percentage: 50 },
+      { month: "June", emoji: "0x1F40C", percentage: 70 },
+      { month: "July", emoji: "0x1F38B", percentage: 40 },
+    ],
     place: [
       {
-        name: "",
-        emoji: "",
+        name: "ラーメン",
+        emoji: "0x1F35C",
+      },
+      {
+        name: "居酒屋",
+        emoji: "0x1F376",
+      },
+      {
+        name: "ラーメン",
+        emoji: "0x1F35C",
+      },
+      {
+        name: "ラーメン",
+        emoji: "0x1F35C",
+      },
+      {
+        name: "ラーメン",
+        emoji: "0x1F35C",
+      },
+      {
+        name: "ラーメン",
+        emoji: "0x1F35C",
+      },
+      {
+        name: "ラーメン",
+        emoji: "0x1F35C",
       },
     ],
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  };
+  return {
+    props: {
+      database,
+    },
+  };
+}
 
-  // axios で取得するjsonファイルのパスを宣言
-  const URL = "/database.json";
-
-  useEffect(() => {
-    axios.get(URL).then((res) => {
-      for (let account in res.data) {
-        if (res.data[account].id === router.query.home) {
-          setDatabase(res.data[account]);
-          setIsLoading(false);
-        } else if (router.query.home !== undefined) {
-          router.replace("/404");
-        }
-      }
-    });
-  }, [router]);
+export default function Home({ database }) {
+  const router = useRouter();
 
   // スケジュールコンポーネント
   const MonthSetBoxs = () => {
@@ -133,14 +134,14 @@ export default function Home() {
             <h3>あいてる率</h3>
             <button>編集</button>
           </div>
-          {isLoading ? <div></div> : <MonthSetBoxs />}
+          <MonthSetBoxs />
         </div>
         <div className={styles.placeBox}>
           <div className={styles.BoxHeader}>
             <h3>いきたい場所リスト</h3>
             <button>編集</button>
           </div>
-          {isLoading ? <div></div> : <PlaceSetBoxs />}
+          <PlaceSetBoxs />
         </div>
       </main>
     </div>
