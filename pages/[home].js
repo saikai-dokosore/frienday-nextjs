@@ -1,71 +1,64 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import firebase, { db } from "../lib/firebaseInit";
 
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const database = {
-    id: "saikai",
-    name: "さいかい",
-    job: "学生",
-    emoji: "0x1F978",
-    color: "green100",
-    phone: "08097234800",
-    password: "pass001",
-    bio: "初めまして、開発者のさいかいです。現在帰省中なのでバンバン遊びましょう！",
-    schedule: [
-      { month: "April", emoji: "0x1F338", percentage: 60 },
-      { month: "May", emoji: "0x1F38F", percentage: 50 },
-      { month: "June", emoji: "0x1F40C", percentage: 70 },
-      { month: "July", emoji: "0x1F38B", percentage: 40 },
-    ],
-    place: [
-      {
-        name: "ラーメン",
-        emoji: "0x1F35C",
-      },
-      {
-        name: "居酒屋",
-        emoji: "0x1F376",
-      },
-      {
-        name: "ラーメン",
-        emoji: "0x1F35C",
-      },
-      {
-        name: "ラーメン",
-        emoji: "0x1F35C",
-      },
-      {
-        name: "ラーメン",
-        emoji: "0x1F35C",
-      },
-      {
-        name: "ラーメン",
-        emoji: "0x1F35C",
-      },
-      {
-        name: "ラーメン",
-        emoji: "0x1F35C",
-      },
-    ],
+// データ取得用の関数
+const getData = async (users) => {
+  let userId = ""; // ユーザードキュメントID
+  let userObj = {}; // プロフィールオブジェクト
+  let placeObj = { place: [] }; // 場所オブジェクト
+  const getUserData = async (u) => {
+    await u.forEach(async (user) => {
+      userId = user.id;
+      userObj = user.data();
+    });
   };
+  const getPlaceData = async (p) => {
+    p.forEach(async (place) => {
+      placeObj.place.push(place.data());
+    });
+  };
+
+  await getUserData(users);
+  const places = await db
+    .collection("users")
+    .doc(userId)
+    .collection("place")
+    .get();
+  await getPlaceData(places);
+
+  return { ...userObj, ...placeObj };
+};
+
+// サーバー上でレンダリング
+export async function getServerSideProps(context) {
+  const id = await context.params.home;
+  const users = await db.collection("users").where("id", "==", id).get();
+  if (users.size === 0) {
+    context.res.writeHead(302, { Location: "/404" });
+    context.res.end();
+  }
+  const database = await getData(users);
   return {
     props: {
-      database,
+      id: id,
+      database: database || "undef",
     },
   };
 }
 
-export default function Home({ database }) {
-  const router = useRouter();
+// コンポーネント
+export default function Home({ id, database }) {
+  console.log(id + "で検索をかけました");
+
+  const [userData, setUserData] = useState(database); // ユーザープロフィール
+  const [placeData, setPlaceData] = useState(database.place); // 行きたい場所
 
   // スケジュールコンポーネント
   const MonthSetBoxs = () => {
-    const list = database.schedule?.map((m, i) => {
+    const list = userData.schedule?.map((m, i) => {
       return (
         <li key={i} className={styles.monthSetBox + " " + styles[m?.month]}>
           <div className={styles.month}>{m?.month}</div>
@@ -84,7 +77,7 @@ export default function Home({ database }) {
 
   // いきたいところコンポーネント
   const PlaceSetBoxs = () => {
-    const list = database.place?.map((p, i) => {
+    const list = placeData.map((p, i) => {
       return (
         <li key={i} className={styles.placeSetBox}>
           <div className={styles.placeTextBox}>
@@ -101,10 +94,10 @@ export default function Home({ database }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{router.query.home}</title>
+        <title>{userData.id}</title>
         <meta
           name="description"
-          content={router.query.home + "を気軽に誘っちゃおう"}
+          content={userData.id + "を気軽に誘っちゃおう"}
         />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
@@ -119,23 +112,23 @@ export default function Home({ database }) {
         </Link>
       </header>
       <div className={styles.accountBox}>
-        <div className={styles.accountImgBox + " " + styles[database?.color]}>
-          {String.fromCodePoint(database?.emoji)}
+        <div className={styles.accountImgBox + " " + styles[userData?.color]}>
+          {String.fromCodePoint(userData?.emoji)}
         </div>
         <div className={styles.accountTextBox}>
-          <h3>{database?.name}</h3>
-          <p className={styles.accountTextJob}>{database?.job}</p>
-          <p className={styles.accountTextBio}>{database?.bio}</p>
+          <h3>{userData?.name}</h3>
+          <p className={styles.accountTextJob}>{userData?.job}</p>
+          <p className={styles.accountTextBio}>{userData?.bio}</p>
         </div>
       </div>
       <main className={styles.main}>
-        <div className={styles.scheduleBox}>
+        {/* <div className={styles.scheduleBox}>
           <div className={styles.BoxHeader}>
             <h3>あいてる率</h3>
             <button>編集</button>
           </div>
           <MonthSetBoxs />
-        </div>
+        </div> */}
         <div className={styles.placeBox}>
           <div className={styles.BoxHeader}>
             <h3>いきたい場所リスト</h3>

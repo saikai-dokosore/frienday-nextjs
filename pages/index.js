@@ -3,9 +3,16 @@ import Link from "next/link";
 import styles from "../styles/Index.module.scss";
 import firebase, { db } from "../lib/firebaseInit";
 import { useState, useEffect } from "react";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function Index() {
-  console.log(db.collection("users").doc("VdGVn7pujtI1YeOiEsdF").get());
+  // console.log(db.collection("users").doc("VdGVn7pujtI1YeOiEsdF").get());
+
+  // ログインユーザー情報を取得
+  const { authChecking, currentUser } = useCurrentUser();
+  useEffect(() => {
+    console.log(currentUser);
+  }, [authChecking, currentUser]);
 
   const addUser = async () => {
     console.log("addUser");
@@ -28,13 +35,16 @@ export default function Index() {
   };
 
   const getUsers = async () => {
-    console.log("getUser");
-    const users = await db.collection("users").get();
+    const users = await db
+      .collection("users")
+      .where("id", "==", "saikai")
+      .get();
+    console.log(users.size);
     let items = [];
     users.forEach(function (doc) {
-      items.push(doc);
+      items.push(doc.data());
     });
-    console.log(items[0].data().id);
+    console.log(items);
   };
 
   return (
@@ -50,8 +60,8 @@ export default function Index() {
 
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        <Link href="/saikai">
-          <a>saikai</a>
+        <Link href="/saikai_official">
+          <a>saikai_official</a>
         </Link>
       </header>
       <main className={styles.main}>
