@@ -27,6 +27,7 @@ const getData = async (users) => {
       Dec: [],
     },
   } // 場所オブジェクト
+
   const getUserData = async (u) => {
     await u.forEach(async (user) => {
       userId = user.id
@@ -74,6 +75,20 @@ export default function Home({ id, database }) {
   const [userData, setUserData] = useState(database) // ユーザープロフィール
   const [placeData, setPlaceData] = useState(database.place) // 行きたい場所
   const monthes = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthEmoji = {
+    Jan: '0x1F338',
+    Feb: '0x1F338',
+    Mar: '0x1F338',
+    Apr: '0x1F338',
+    May: '0x1F338',
+    Jun: '0x1F40C',
+    Jul: '0x1F338',
+    Aug: '0x1F338',
+    Sep: '0x1F338',
+    Oct: '0x1F338',
+    Nov: '0x1F338',
+    Dec: '0x1F338',
+  }
   const profileImg =
     'https://firebasestorage.googleapis.com/v0/b/frienday-test.appspot.com/o/profile_image.jpg?alt=media&token=7cab9838-52b3-409f-9dab-40dc1437e163'
 
@@ -84,27 +99,33 @@ export default function Home({ id, database }) {
       if (placeData[monthes[i]].length !== 0) {
         monthComps[monthes[i]] = placeData[monthes[i]].map((p, i) => {
           return (
-            <li key={i} className={styles.placeSetBox}>
+            <li key={i} className={styles.placeListBox}>
               <div className={styles.emoji}>{String.fromCodePoint(p?.emoji)}</div>
               <div className={styles.placeTextBox}>
                 <div className={styles.name}>{p?.name}</div>
-                <div className={styles.placeSetBtn}>
-                  <button className={styles.placeGo}>いきたい！</button>
-                  <button className={styles.placeDelete} onClick={() => deletePlace(p?.id)}>
-                    削除
-                  </button>
-                </div>
+              </div>
+              <div className={styles.placeBtnBox}>
+                <button className={styles.placeGo}>いきたい！</button>
+                <button className={styles.placeDelete} onClick={() => deletePlace(p?.id)}>
+                  削除
+                </button>
               </div>
             </li>
           )
         })
       }
     }
-    return (
-      <div>
-        <ul className={styles.placeCulumnBox}>{monthComps['Apr']}</ul>
-      </div>
-    )
+    let ulComps = []
+    for (let i = 0; i < Object.keys(monthComps).length; i++) {
+      let key = Object.keys(monthComps)[i]
+      ulComps.push(
+        <ul key={i} className={styles.placeUlBox + ' ' + styles[key]}>
+          <h3>{String.fromCodePoint(monthEmoji[key]) + ' ' + key}</h3>
+          {monthComps[key]}
+        </ul>
+      )
+    }
+    return ulComps
   }
 
   // いきたい場所を追加
@@ -153,7 +174,7 @@ export default function Home({ id, database }) {
       {/* アカウント */}
       <div className={styles.accountBox}>
         <div className={styles.accountImgBox + ' ' + styles[userData?.color]}>
-          <Image src={profileImg} alt="Profile Picture" width={500} height={500} />
+          <Image src={profileImg} alt="Profile Picture" width={200} height={200} />
         </div>
         <div className={styles.accountTextBox}>
           <h3>{userData?.name}</h3>

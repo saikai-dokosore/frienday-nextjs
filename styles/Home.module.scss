@@ -124,6 +124,7 @@ $bp : (mobile : 480px,
   }
 }
 
+// ポム
 .pomuBox {
   display: flex;
   flex-flow: row;
@@ -165,119 +166,110 @@ $bp : (mobile : 480px,
   }
 }
 
-
+// いきたい場所
 .placeBox {
-  margin-top: 20px;
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
   max-width: 600px;
-  padding: 0 10px;
-}
-
-.BoxHeader {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 30px;
-  h3 {
-    font-size: 14px;
-    font-weight: 700;
-  }
-  button {
+  padding: 20px 10px;
+  .placeUlBox {
     display: flex;
+    flex-flow: column;
     justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-    height: 100%;
-    font-size: 10px;
-    font-weight: 500;
-    opacity: 0.5;
-  }
-}
-
-
-.placeCulumnBox {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 10px 0;
-  width: 100%;
-  .placeSetBox {
-    display: flex;
-    flex-direction: Row;
-    justify-content: flex-start;
     align-items: flex-start;
-    padding: 15px 15px;
-    margin-bottom: 5px;
+    padding: 15px 15px 0px 15px;
     width: 100%;
-    height: auto;
     border-radius: 12px;
-    background-color: var(--gray100);
-    .emoji {
+    margin-bottom: 15px;
+    h3 {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    li+ li {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .placeListBox {
       display: flex;
+      flex-direction: Row;
       justify-content: center;
       align-items: center;
-      width: auto;
-      margin-right: 10px;
-      height: 100%;
-      font-size: 30px;
-    }
-    input {
+      padding: 20px 0;
+      margin-bottom: 5px;
       width: 100%;
-      background-color: var(--white100);
-    }
-    ::placeholder {
-      color: var(--black100);
-      opacity: 0.4;
-    }
-    .placeTextBox {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: flex-start;
-      .name {
-        margin-left: 10px;
-        font-size: 13px;
-      }
-    }
-    .placeSetBtn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      button {
+      height: auto;
+      .emoji {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 30px;
-        font-size: 10px;
-        padding: 0 20px;
-        border-radius: 10px;
-        border: 1px solid rgba(0,0,0,0.1);
+        font-size: 20px;
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        background-color: var(--white100);
+        border-radius: 50%;
       }
-      .placeGo {
-
+      .placeTextBox {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        .name {
+          margin-left: 10px;
+          font-size: 12px;
+          font-weight: 400; 
+        }
       }
-      .placeDelete {
-        display: none;
+      .placeBtnBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 80px;
+          height: 25px;
+          font-size: 10px;
+          font-weight: 400;
+          border-radius: 5px;
+          mix-blend-mode: color-burn;
+          border: 1px solid #272727;
+          
+        }
+        .placeGo {
+  
+        }
+        .placeDelete {
+          display: none;
+        }
+      }
+    }
+    .placeSetBoxPlus {
+      font-size: 12px;
+      background-color: var(--white100);
+      border: 1px solid rgba(0,0,0,0.1);
+      input {
+        width: 60%;
+      }
+      ::placeholder {
+        color: var(--black100);
+        opacity: 0.4;
       }
     }
   }
-  .placeSetBoxPlus {
-    font-size: 12px;
-    background-color: var(--white100);
-    border: 1px solid rgba(0,0,0,0.1);
-    input {
-      width: 60%;
-    }
-    ::placeholder {
-      color: var(--black100);
-      opacity: 0.4;
-    }
+  .Apr {
+    background-color: var(--green100);
+  }
+  .May {
+    background-color: var(--blue100);
+  }
+  .Jun {
+    background-color: var(--purple100);
   }
 }
+
+
