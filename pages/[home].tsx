@@ -52,7 +52,7 @@ const getData = async (users) => {
 }
 
 // サーバー上でレンダリング
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const id = await context.params.home
   const users = await db.collection('users').where('id', '==', id).get()
   if (users.size === 0) {
