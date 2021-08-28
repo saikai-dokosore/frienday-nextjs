@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint-fix": "eslint --fix './**/*.{js,ts,tsx}' && prettier --write './**/*.{js,ts,tsx}'"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -16,11 +17,31 @@
     "node-fetch": "^2.6.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-icons": "^4.2.0",
     "recoil": "^0.4.0",
     "sass": "^1.37.5"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.0.1"
+    "@types/node": "^16.7.2",
+    "@types/react": "^17.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./**/*.{js,jsx,ts,tsx}": [
+      "npm run lint-fix"
+    ]
   }
 }

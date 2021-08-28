@@ -2,16 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 
-export async function getServerSideProps(context) {
-  const { id } = context.params;
-  return {
-    props: {
-      id: id || "ok",
-    },
-  };
-}
-
-export default function Home({ id }) {
+export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -28,7 +19,7 @@ export default function Home({ id }) {
         </Link>
       </header>
 
-      <main className={styles.main}>サクサクページ{id}</main>
+      <main className={styles.main}>サクサクページ</main>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import "../styles/globals.scss";
 import "../styles/reset.scss";
 import { useEffect } from "react";
+import { AppProps } from "nexe/app";
 import { useSetRecoilState, RecoilRoot } from "recoil";
 import { currentUserState } from "../states/currentUser";
 
@@ -29,7 +30,7 @@ function AppInit() {
   return null;
 }
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
     if (router.asPath === "/login") return;
     // ログイン処理

@@ -1,0 +1,131 @@
+// レスポンシブ設定
+$bp : (mobile : 480px,
+    tablet : 768px,
+    desktop : 1440px,
+);
+@mixin query($display) {
+
+    @each $key,
+    $value in $bp {
+        @if ($display==$key) {
+            @media (max-width: $value) {
+                @content;
+            }
+        }
+    }
+}
+
+// 全体
+.container {
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+  width: 100vw;
+  padding: 0 100px;
+    @include query (tablet) {
+      padding: 0;
+    }
+}
+
+// ヘッダー
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  padding: 0 100px;
+    @include query (tablet) {
+      padding: 0 20px;
+    }
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.3em;
+  }
+  a {
+    height: 30px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: var(--gray100);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 15px;
+  }
+}
+
+// ボディ
+.main {
+  width: 100%;
+  padding: 50px 10px;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  @include query (tablet) {
+    flex-flow: column;
+    justify-content: center;
+    padding: 0;
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--insta-blue);
+    color: var(--white100);
+    font-size: 12px;
+    padding: 10px 15px;
+    border-radius: 8px;
+  }
+}
+
+.textBox {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.inputBox {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 300px;
+    height: 50px;
+    padding: 15px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+  }
+  ::placeholder {
+    color: var(--gray200);
+  }
+}
+.btnBox {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}

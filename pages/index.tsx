@@ -14,39 +14,6 @@ export default function Index() {
     console.log(currentUser);
   }, [authChecking, currentUser]);
 
-  const addUser = async () => {
-    console.log("addUser");
-    await db.collection("users").add({
-      id: "testuser",
-    });
-    console.log("addedUser");
-  };
-
-  const updateUser = async () => {
-    console.log("updateUser");
-    const ref = db.collection("users").doc("VdGVn7pujtI1YeOiEsdF");
-    console.log(ref);
-    const snapshots = await ref.get();
-    console.log(snapshots);
-    db.collection("users").doc("VdGVn7pujtI1YeOiEsdF").set({
-      id: "saikai_official",
-    });
-    console.log("updatedUser");
-  };
-
-  const getUsers = async () => {
-    const users = await db
-      .collection("users")
-      .where("id", "==", "saikai")
-      .get();
-    console.log(users.size);
-    let items = [];
-    users.forEach(function (doc) {
-      items.push(doc.data());
-    });
-    console.log(items);
-  };
-
   return (
     <div className={styles.container}>
       <Head>
@@ -64,11 +31,7 @@ export default function Index() {
           <a>saikai_official</a>
         </Link>
       </header>
-      <main className={styles.main}>
-        <button onClick={() => addUser()}>Add</button>
-        <button onClick={() => getUsers()}>Get</button>
-        <button onClick={() => updateUser()}>Update</button>
-      </main>
+      <main className={styles.main}>index</main>
     </div>
   );
 }

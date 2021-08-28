@@ -65,17 +65,23 @@ $bp : (mobile : 480px,
   }
 }
 .accountBox {
-  margin-top: 60px;
+  margin-top: 70px;
   margin-bottom: 30px;
   width: 100%;
-  height: 100px;
+  height: auto;
   padding: 0 15px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
   .green100 {
+    background-color: var(--green100);
+  }
+  .red100 {
     background-color: var(--red100);
+  }
+  .blue100 {
+    background-color: var(--blue100);
   }
   .accountImgBox {
     width: 80px;
@@ -86,6 +92,10 @@ $bp : (mobile : 480px,
     align-items: center;
     border-radius: 50%;
     font-size: 20px;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+    }
   }
 
   .accountTextBox {
@@ -114,6 +124,31 @@ $bp : (mobile : 480px,
   }
 }
 
+.pomuBox {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 0 20px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--insta-gray);
+    color: var(--black100);
+    font-size: 10px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  .enable {
+    background-color: var(--insta-blue);
+    color: var(--white100);
+  }
+}
+
 // ボディ
 .main {
   width: 100%;
@@ -125,21 +160,11 @@ $bp : (mobile : 480px,
   align-items: center;
   @include query (tablet) {
     flex-flow: column;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0;
   }
 }
 
-.scheduleBox {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 600px;
-  overflow: auto;
-  padding: 0 10px;
-}
 
 .placeBox {
   margin-top: 20px;
@@ -175,101 +200,6 @@ $bp : (mobile : 480px,
   }
 }
 
-.monthRowBox {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: scroll;
-  padding: 10px 0;
-  .January {
-    background-color: var(--green100);
-  }
-  .February {
-    background-color: var(--green100);
-  }
-  .March {
-    background-color: var(--green100);
-  }
-  .April {
-    background-color: var(--green100);
-  }
-  .May {
-    background-color: var(--green200);
-  }
-  .June {
-    background-color: var(--purple100);
-  }
-  .July {
-    background-color: var(--blue200);
-  }
-  .August {
-    background-color: var(--green100);
-  }
-  .September {
-    background-color: var(--green100);
-  }
-  .October {
-    background-color: var(--green100);
-  }
-  .November {
-    background-color: var(--green100);
-  }
-  .December {
-    background-color: var(--green100);
-  }
-  .monthSetBox {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0;
-    margin-right: 10px;
-    width: 120px;
-    height: 190px;
-    border-radius: 20px;
-    .month {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      font-weight: 900;
-      font-size: 18px;
-    }
-    .percentage {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      font-weight: 900;
-      font-size: 16px;
-      mix-blend-mode: color-burn;
-      .percentageUnit {
-        font-weight: 500;
-        font-size: 12px;
-        margin-left: 1px;
-        margin-top: 3px;
-      }
-    }
-    .emojiBox {
-      flex: 3;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      .emoji {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 1px solid rgba(0,0,0,0.1);
-      }
-    }
-  }
-}
 
 .placeCulumnBox {
   display: flex;
@@ -280,42 +210,74 @@ $bp : (mobile : 480px,
   width: 100%;
   .placeSetBox {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
+    flex-direction: Row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 15px 15px;
     margin-bottom: 5px;
     width: 100%;
-    height: 50px;
+    height: auto;
     border-radius: 12px;
     background-color: var(--gray100);
+    .emoji {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      margin-right: 10px;
+      height: 100%;
+      font-size: 30px;
+    }
+    input {
+      width: 100%;
+      background-color: var(--white100);
+    }
+    ::placeholder {
+      color: var(--black100);
+      opacity: 0.4;
+    }
     .placeTextBox {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .emoji {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-color: var(--white100);
-        font-size: 15px;
-      }
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
       .name {
         margin-left: 10px;
         font-size: 13px;
       }
     }
-    button {
+    .placeSetBtn {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 30px;
-      font-size: 10px;
-      padding: 0 20px;
-      border-radius: 10px;
-      border: 1px solid rgba(0,0,0,0.1);
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        font-size: 10px;
+        padding: 0 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+      .placeGo {
+
+      }
+      .placeDelete {
+        display: none;
+      }
+    }
+  }
+  .placeSetBoxPlus {
+    font-size: 12px;
+    background-color: var(--white100);
+    border: 1px solid rgba(0,0,0,0.1);
+    input {
+      width: 60%;
+    }
+    ::placeholder {
+      color: var(--black100);
+      opacity: 0.4;
     }
   }
 }
