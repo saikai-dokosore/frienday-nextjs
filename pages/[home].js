@@ -5,7 +5,6 @@ import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
 import firebase, { db } from "../lib/firebaseInit";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { GetServerSideProps } from "next";
 
 // データ取得用の関数
 const getData = async (users) => {
