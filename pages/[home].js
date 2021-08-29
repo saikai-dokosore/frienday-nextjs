@@ -77,6 +77,7 @@ export default function Home({ id, database }) {
 
   const [userData, setUserData] = useState(database); // ユーザープロフィール
   const [placeData, setPlaceData] = useState(database.place); // 行きたい場所
+  const [pomu, setPomu] = useState(false);
   const monthes = [
     "Jan",
     "Feb",
@@ -240,7 +241,14 @@ export default function Home({ id, database }) {
       {/* ポム */}
       <div className={styles.pomuBox}>
         <button>ポムられています</button>
-        <button className={styles.enable}>ポムる</button>
+        <button
+          onClick={() => {
+            setPomu(!pomu);
+          }}
+          className={styles.enable}
+        >
+          {pomu ? "ポムっています" : "ポムる"}
+        </button>
       </div>
 
       {/* いきたい場所リスト */}
