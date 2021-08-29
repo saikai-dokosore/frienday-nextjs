@@ -276,4 +276,63 @@ $bp : (mobile : 480px,
   }
 }
 
-
+.modalBack{
+  position: fixed;
+  bottom: 0px;
+  display: none;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  .modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    background-color: var(--white100);
+    border-radius: 20px 20px 0px 0px;
+    animation-name: animatebuttom;
+    animation-duration: 0.4s;
+    padding: 10px;
+    h3 {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      flex: 3;
+      textarea {
+        width: 100%;
+        height: 200px;
+        border-radius: 20px;
+        border:1px solid rgba(0, 0, 0, 0.1);
+        padding: 15px;
+      }
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        margin-left: 5px;
+        background-color: var(--insta-blue);
+        color: var(--white100);
+      }
+    }
+  }
+  @keyframes animatebuttom {
+    from {buttom: -400px; opacity: 0}
+    to {buttom: 0; opacity: 1}
+  }
+}

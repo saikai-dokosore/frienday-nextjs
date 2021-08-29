@@ -185,7 +185,18 @@ export default function Home({ id, database }) {
 
   const goPlace = async (id) => {
     console.log("go : " + id);
+    document.getElementById("modal").style.display = "flex";
   };
+  const closeModal = () => {
+    modal.style.display = "none";
+  };
+  if (typeof window !== "undefined") {
+    window.onclick = function (event) {
+      if (event.target == document.getElementById("modal")) {
+        document.getElementById("modal").style.display = "none";
+      }
+    };
+  }
 
   return (
     <div className={styles.container}>
@@ -238,6 +249,17 @@ export default function Home({ id, database }) {
           <PlaceSetBoxs />
         </div>
       </main>
+
+      {/* メッセージモーダル */}
+      <div id="modal" className={styles.modalBack}>
+        <div className={styles.modal}>
+          <h3>メッセージを送ろう</h3>
+          <form>
+            <textarea placeholder="〇〇グループで行こう！"></textarea>
+            <button type="submit">送る</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
