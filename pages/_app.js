@@ -7,8 +7,6 @@ function MyApp({ Component, pageProps, router }) {
   useEffect(() => {
     if (router.asPath === "/login") return;
     // ログイン処理
-
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
   }, [router.asPath]);
 
   return (
