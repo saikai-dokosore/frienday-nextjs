@@ -1,10 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
-import firebase, { db, storage } from "../lib/firebaseInit";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import { db, storage } from "../lib/firebaseInit";
+import { useAuth } from "../lib/auth";
 
 // データ取得用の関数
 const getData = async (users) => {
@@ -107,11 +106,28 @@ export default function Home({ id, database }) {
     Dec: "0x1F338",
   };
 
-  useEffect(async () => {
-    const profileImg = await storageRef
-      .child(`images/${id}.jpg`)
-      .getDownloadURL();
-    setAccountImgUrl(profileImg);
+  // Auth
+  const { currentUser, login, logout } = useAuth();
+  const handleLoginButton = () => {
+    login();
+  };
+  const handleLogoutButton = () => {
+    logout();
+  };
+
+  useEffect(() => {
+    console.log(currentUser?.email, "でログイン中");
+  }, [currentUser]);
+
+  // ProfileImg
+  useEffect(() => {
+    const getProfileImg = async () => {
+      const profileImg = await storageRef
+        .child(`images/${id}.jpg`)
+        .getDownloadURL();
+      setAccountImgUrl(profileImg);
+    };
+    getProfileImg();
   }, []);
 
   // いきたいところコンポーネント
@@ -160,19 +176,23 @@ export default function Home({ id, database }) {
     return ulComps;
   };
 
-  /*   // いきたい場所を追加
+  // いきたい場所を追加
   const addPlace = async () => {
-    const place = document.getElementById('addPlaceText').value;
+    const place = document.getElementById("addPlaceText").value;
     const placeObj = {
       name: place,
-      emoji: '0x1F37B',
+      emoji: "0x1F37B",
     };
-    if (place !== '') {
-      await db.collection('users').doc(userData.userId).collection('place').add(placeObj);
+    if (place !== "") {
+      await db
+        .collection("users")
+        .doc(userData.userId)
+        .collection("place")
+        .add(placeObj);
       setPlaceData([...placeData, placeObj]);
     }
-    document.getElementById('addPlaceText').value = '';
-  }; */
+    document.getElementById("addPlaceText").value = "";
+  };
 
   // いきたい場所を削除
   const deletePlace = async (id) => {
@@ -221,9 +241,11 @@ export default function Home({ id, database }) {
       {/* ヘッダー */}
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        <Link href="/login">
-          <a>アカウント作成・ログイン</a>
-        </Link>
+        {currentUser ? (
+          <button onClick={handleLogoutButton}>ログアウト</button>
+        ) : (
+          <button onClick={handleLoginButton}>ログイン</button>
+        )}
       </header>
 
       {/* アカウント */}

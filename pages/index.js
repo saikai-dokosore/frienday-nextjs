@@ -1,8 +1,18 @@
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Index.module.scss";
+import { useAuth } from "../lib/auth";
 
 export default function Index() {
+  const { currentUser, login, logout } = useAuth();
+
+  const handleLoginButton = () => {
+    login();
+  };
+
+  const handleLogoutButton = () => {
+    logout();
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +30,20 @@ export default function Index() {
           <a>saikai_official</a>
         </Link>
       </header>
-      <main className={styles.main}>index</main>
+      <main className={styles.main}>
+        {currentUser && (
+          <div>
+            <h2>ログインしています.</h2>
+            <button onClick={handleLogoutButton}>ログアウト</button>
+          </div>
+        )}
+        {!currentUser && (
+          <div>
+            <h2>ログインしていません.</h2>
+            <button onClick={handleLoginButton}>ログイン</button>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
