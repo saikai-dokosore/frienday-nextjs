@@ -123,7 +123,12 @@ export default function Home({ id, database }) {
                 <div className={styles.name}>{p?.name}</div>
               </div>
               <div className={styles.placeBtnBox}>
-                <button className={styles.placeGo}>いきたい！</button>
+                <button
+                  className={styles.placeGo}
+                  onClick={() => goPlace(p?.id)}
+                >
+                  いきたい！
+                </button>
                 <button
                   className={styles.placeDelete}
                   onClick={() => deletePlace(p?.id)}
@@ -176,6 +181,10 @@ export default function Home({ id, database }) {
         return item.id !== id;
       })
     );
+  };
+
+  const goPlace = async (id) => {
+    console.log("go : " + id);
   };
 
   return (

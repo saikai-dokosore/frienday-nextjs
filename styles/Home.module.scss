@@ -238,7 +238,11 @@ $bp : (mobile : 480px,
           border-radius: 5px;
           mix-blend-mode: color-burn;
           border: 1px solid #272727;
-          
+          transition: all 0.25s ease;
+          &:active {
+            background-color: #272727;
+            color: var(--white100);
+          }
         }
         .placeGo {
   
