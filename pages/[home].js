@@ -117,6 +117,8 @@ export default function Home({ id, database }) {
 
   useEffect(() => {
     console.log(currentUser?.email, "でログイン中");
+    localStorage.email = currentUser?.email;
+    console.log(localStorage);
   }, [currentUser]);
 
   // ProfileImg
