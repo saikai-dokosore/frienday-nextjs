@@ -1,13 +1,12 @@
-import "../styles/globals.scss";
-import "../styles/reset.scss";
-import { useEffect } from "react";
-import { AppProps } from "nexe/app";
-import { useSetRecoilState, RecoilRoot } from "recoil";
-import { currentUserState } from "../states/currentUser";
+import '../styles/globals.scss';
+import '../styles/reset.scss';
+import { useEffect } from 'react';
+import { useSetRecoilState, RecoilRoot } from 'recoil';
+import { currentUserState } from '../states/currentUser';
 
 const fetchCurrentUser = () => {
-  console.log("path : " + router.asPath);
-  return "saikai_official";
+  //console.log('path : ' + router.asPath);
+  return 'saikai_official';
 };
 
 function AppInit() {
@@ -30,9 +29,9 @@ function AppInit() {
   return null;
 }
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps, router }) {
   useEffect(() => {
-    if (router.asPath === "/login") return;
+    if (router.asPath === '/login') return;
     // ログイン処理
   }, [router.asPath]);
 
