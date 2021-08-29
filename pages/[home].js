@@ -112,7 +112,6 @@ export default function Home({ id, database }) {
       .child(`images/${id}.jpg`)
       .getDownloadURL();
     setAccountImgUrl(profileImg);
-    console.log(profileImg);
   }, []);
 
   // いきたいところコンポーネント
@@ -223,7 +222,7 @@ export default function Home({ id, database }) {
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
         <Link href="/login">
-          <a>login</a>
+          <a>アカウント作成・ログイン</a>
         </Link>
       </header>
 

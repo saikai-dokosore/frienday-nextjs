@@ -14,9 +14,6 @@ export default function Login() {
 
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        <Link href="/saikai">
-          <a>go back</a>
-        </Link>
       </header>
 
       <main className={styles.main}>ログインページ</main>
