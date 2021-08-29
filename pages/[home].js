@@ -284,6 +284,7 @@ export default function Home({ id, database }) {
         <div className={styles.placeBox}>
           <PlaceSetBoxs />
         </div>
+        {currentUser?.email + " でログイン中"}
       </main>
 
       {/* メッセージモーダル */}
