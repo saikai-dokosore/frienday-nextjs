@@ -94,6 +94,8 @@ $bp : (mobile : 480px,
     font-size: 20px;
     overflow: hidden;
     img {
+      width: 80px;
+      height: 80px;
       object-fit: cover;
     }
   }

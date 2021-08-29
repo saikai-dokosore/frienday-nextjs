@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
-import firebase, { db } from "../lib/firebaseInit";
+import firebase, { db, storage } from "../lib/firebaseInit";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 // データ取得用の関数
@@ -73,11 +73,11 @@ export const getServerSideProps = async (context) => {
 
 // コンポーネント
 export default function Home({ id, database }) {
-  console.log(id + "で検索をかけました");
-
   const [userData, setUserData] = useState(database); // ユーザープロフィール
   const [placeData, setPlaceData] = useState(database.place); // 行きたい場所
   const [pomu, setPomu] = useState(false);
+  const [accountImgUrl, setAccountImgUrl] = useState("");
+  const storageRef = storage.ref();
   const monthes = [
     "Jan",
     "Feb",
@@ -106,8 +106,14 @@ export default function Home({ id, database }) {
     Nov: "0x1F338",
     Dec: "0x1F338",
   };
-  const profileImg =
-    "https://firebasestorage.googleapis.com/v0/b/frienday-test.appspot.com/o/profile_image.jpg?alt=media&token=7cab9838-52b3-409f-9dab-40dc1437e163";
+
+  useEffect(async () => {
+    const profileImg = await storageRef
+      .child(`images/${id}.jpg`)
+      .getDownloadURL();
+    setAccountImgUrl(profileImg);
+    console.log(profileImg);
+  }, []);
 
   // いきたいところコンポーネント
   const PlaceSetBoxs = () => {
@@ -224,12 +230,11 @@ export default function Home({ id, database }) {
       {/* アカウント */}
       <div className={styles.accountBox}>
         <div className={styles.accountImgBox + " " + styles[userData?.color]}>
-          <Image
-            src={profileImg}
-            alt="Profile Picture"
-            width={200}
-            height={200}
-          />
+          {accountImgUrl === "" ? (
+            <div></div>
+          ) : (
+            <img src={accountImgUrl} alt="Profile Picture" />
+          )}
         </div>
         <div className={styles.accountTextBox}>
           <h3>{userData?.name}</h3>
