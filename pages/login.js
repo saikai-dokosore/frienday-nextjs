@@ -1,22 +1,24 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 import styles from "../styles/Signup.module.scss";
-import { useState, useEffect } from "react";
-import {
-  signupWithEmailAndPassword,
-  signinWithEmailAndPassword,
-} from "../lib/firebaseInit";
+import { useAuth } from "../lib/auth";
+import { useRouter } from "next/router";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // Auth
+  const { currentUser, login, logout } = useAuth();
+  const router = useRouter();
 
-  const signup = async (event) => {
-    event.preventDefault();
-    const user = await signupWithEmailAndPassword(email, password);
-    console.log(user);
+  if (currentUser) {
+    router.push("/getInsta");
+  }
+
+  const handleLoginButton = async () => {
+    await login();
   };
+  const handleLogoutButton = () => {
+    logout();
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -30,21 +32,18 @@ export default function Login() {
       </header>
 
       <main className={styles.main}>
-        <form onSubmit={signup}>
-          <input
-            type="email"
-            placeholder="メールアドレス"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="パスワード"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <button type="submit">送信</button>
-        </form>
+        {currentUser && (
+          <div>
+            <h2>ログインしています.</h2>
+            <button onClick={handleLogoutButton}>ログアウト</button>
+          </div>
+        )}
+        {!currentUser && (
+          <div>
+            <h2>ログインしていません.</h2>
+            <button onClick={handleLoginButton}>ログイン</button>
+          </div>
+        )}
       </main>
     </div>
   );

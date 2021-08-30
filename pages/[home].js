@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
 import { db, storage } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
+import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
 
 // データ取得用の関数
 const getData = async (users) => {
@@ -77,6 +78,7 @@ export default function Home({ id, database }) {
   const [pomu, setPomu] = useState(false);
   const [accountImgUrl, setAccountImgUrl] = useState("");
   const storageRef = storage.ref();
+  const [loggedIn, setLoggedIn] = useState(false);
   const monthes = [
     "Jan",
     "Feb",
@@ -116,10 +118,13 @@ export default function Home({ id, database }) {
   };
 
   useEffect(() => {
-    console.log(currentUser?.email, "でログイン中");
-    localStorage.email = currentUser?.email;
-    console.log(localStorage);
+    if (currentUser) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
   }, [currentUser]);
+  console.log(currentUser);
 
   // ProfileImg
   useEffect(() => {
@@ -243,10 +248,23 @@ export default function Home({ id, database }) {
       {/* ヘッダー */}
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        {currentUser ? (
-          <button onClick={handleLogoutButton}>ログアウト</button>
+        {loggedIn ? (
+          <div className={styles.headerBtnBox}>
+            <div className={styles.nortification}>
+              <HiOutlineBell />
+            </div>
+            <Link href="/getInsta">
+              <a>
+                <div className={styles.user}>
+                  <HiOutlineUserCircle />
+                </div>
+              </a>
+            </Link>
+          </div>
         ) : (
-          <button onClick={handleLoginButton}>ログイン</button>
+          <Link href="/login">
+            <a>ログイン</a>
+          </Link>
         )}
       </header>
 
@@ -256,6 +274,7 @@ export default function Home({ id, database }) {
           {accountImgUrl === "" ? (
             <div></div>
           ) : (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src={accountImgUrl} alt="Profile Picture" />
           )}
         </div>
