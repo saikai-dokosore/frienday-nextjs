@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Signup.module.scss";
 import { useAuth } from "../lib/auth";
 import { useRouter } from "next/router";
+var FormData = require("form-data");
 
 // サーバー上でレンダリング
 export const getServerSideProps = async (context) => {
@@ -14,14 +15,12 @@ export const getServerSideProps = async (context) => {
     body.append("client_id", "2664074760562135");
     body.append("client_secret", "2d6aeaad397af94c0e3fef1a72fc78f5");
     body.append("grant_type", "authorization_code");
-    body.append("redirect_url", "https://frienday.vercel.app/getInsta");
+    body.append("redirect_uri", "https://frienday.vercel.app/getInsta");
     body.append("code", code);
 
     const res = await fetch(getTokenUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      headers: {},
       body: body,
     });
 
