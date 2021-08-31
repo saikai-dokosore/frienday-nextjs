@@ -75,7 +75,11 @@ export default function Login({ profiledata }) {
         </div>
         <button
           onClick={() =>
-            createAccount("さいかい", profiledata.username, currentUser.email)
+            createAccount(
+              document.getElementById("nickname").value,
+              profiledata.username,
+              currentUser.email
+            )
           }
         >
           アカウント作成
