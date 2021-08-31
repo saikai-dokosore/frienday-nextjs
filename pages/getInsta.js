@@ -10,15 +10,15 @@ export const getServerSideProps = async (context) => {
     // おそらくこの下でエラーになっている
     const getTokenUrl = "https://api.instagram.com/oauth/access_token";
     const headers = {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     };
-    const body = {
-      client_id: "2664074760562135",
-      client_secret: "2d6aeaad397af94c0e3fef1a72fc78f5",
-      grant_type: "authorization_code",
-      redirect_uri: "https://frienday.vercel.app/getInsta",
-      code: code,
-    };
+    const body = new FormData();
+    body.append("client_id", "2664074760562135");
+    body.append("client_secret", "2d6aeaad397af94c0e3fef1a72fc78f5");
+    body.append("grant_type", "authorization_code");
+    body.append("redirect_url", "https://frienday.vercel.app/getInsta");
+    body.append("code", code);
+
     const res = await fetch(getTokenUrl, {
       method,
       headers,
