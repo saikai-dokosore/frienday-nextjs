@@ -281,7 +281,11 @@ export default function Home({ id, database }) {
           <h3>{userData?.name}</h3>
           <p className={styles.accountTextJob}>{userData?.job}</p>
           <p className={styles.accountTextBio}>{userData?.bio}</p>
-          <a href="https://www.instagram.com/saikai_official/">
+          <a
+            href="https://www.instagram.com/saikai_official/"
+            target="_blank"
+            rel="noreferrer"
+          >
             https://www.instagram.com/saikai_official/
           </a>
         </div>
