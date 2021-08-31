@@ -18,11 +18,11 @@ export const getServerSideProps = async (context) => {
     body.append("redirect_uri", "https://frienday.vercel.app/getInsta");
     body.append("code", code);
 
-    const res = await fetch(getTokenUrl, {
-      method: "POST",
-      headers: {},
-      body: body,
-    });
+    // const res = await fetch(getTokenUrl, {
+    //   method: "POST",
+    //   headers: {},
+    //   body: body,
+    // });
 
     // const data = await res.json();
     // console.log("data", data);
@@ -32,10 +32,10 @@ export const getServerSideProps = async (context) => {
     // const profres = await fetch(
     //   `https://graph.instagram.com/me?fields=id,username&access_token=${token}`
     // );
-    // const profiledata = await profres.json();
+    // const profiledata = await profres;
 
     return {
-      props: { profiledata: res.status },
+      props: { profiledata: "test" },
     };
   } else {
     return {
