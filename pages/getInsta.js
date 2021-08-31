@@ -24,16 +24,18 @@ export const getServerSideProps = async (context) => {
       body: body,
     });
 
-    const data = await res.json();
-    const token = data.access_token;
+    // const data = await res.json();
+    // console.log("data", data);
+    // const token = data.access_token;
+    // console.log("token", token);
 
-    const profres = await fetch(
-      `https://graph.instagram.com/me?fields=id,username&access_token=${token}`
-    );
-    const profiledata = await profres.json();
+    // const profres = await fetch(
+    //   `https://graph.instagram.com/me?fields=id,username&access_token=${token}`
+    // );
+    // const profiledata = await profres.json();
 
     return {
-      props: { profiledata: profiledata },
+      props: { profiledata: res.status },
     };
   } else {
     return {
