@@ -8,10 +8,6 @@ export default function Login() {
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
 
-  if (currentUser) {
-    router.push("/getInsta");
-  }
-
   const handleLoginButton = async () => {
     await login();
   };

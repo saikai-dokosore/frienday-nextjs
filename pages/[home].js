@@ -261,8 +261,8 @@ export default function Home({ id, database }) {
             </Link>
           </div>
         ) : (
-          <Link href="/login">
-            <a>ログイン</a>
+          <Link href="/welcome">
+            <a>マイページを作成する</a>
           </Link>
         )}
       </header>
