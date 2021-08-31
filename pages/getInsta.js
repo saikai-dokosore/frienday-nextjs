@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 export const getServerSideProps = async (context) => {
   const code = await context.query?.code;
   if (code) {
+    // おそらくこの下でエラーになっている
     const getTokenUrl = "https://api.instagram.com/oauth/access_token";
     const headers = {
       "Content-Type": "application/json",

@@ -124,7 +124,6 @@ export default function Home({ id, database }) {
       setLoggedIn(false);
     }
   }, [currentUser]);
-  console.log(currentUser);
 
   // ProfileImg
   useEffect(() => {
@@ -282,19 +281,21 @@ export default function Home({ id, database }) {
           <h3>{userData?.name}</h3>
           <p className={styles.accountTextJob}>{userData?.job}</p>
           <p className={styles.accountTextBio}>{userData?.bio}</p>
+          <a href="https://www.instagram.com/saikai_official/">
+            https://www.instagram.com/saikai_official/
+          </a>
         </div>
       </div>
 
       {/* ポム */}
       <div className={styles.pomuBox}>
-        <button>ポムられています</button>
         <button
           onClick={() => {
             setPomu(!pomu);
           }}
           className={styles.enable}
         >
-          {pomu ? "ポムっています" : "ポムる"}
+          {pomu ? "ポムっています" : "遊びに行けるよー"}
         </button>
       </div>
 
