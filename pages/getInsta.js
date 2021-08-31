@@ -18,24 +18,25 @@ export const getServerSideProps = async (context) => {
     body.append("redirect_uri", "https://frienday.vercel.app/getInsta");
     body.append("code", code);
 
-    // const res = await fetch(getTokenUrl, {
-    //   method: "POST",
-    //   headers: {},
-    //   body: body,
-    // });
+    const res = await fetch(getTokenUrl, {
+      method: "POST",
+      headers: {},
+      body: body,
+    });
 
-    // const data = await res.json();
-    // console.log("data", data);
-    // const token = data.access_token;
-    // console.log("token", token);
+    const data = await res.json();
+    console.log("data", data);
+    const token = data.access_token;
+    console.log("token", token);
 
-    // const profres = await fetch(
-    //   `https://graph.instagram.com/me?fields=id,username&access_token=${token}`
-    // );
-    // const profiledata = await profres;
+    const profres = await fetch(
+      `https://graph.instagram.com/me?fields=id,username&access_token=${token}`
+    );
+    const profiledata = await profres.json();
+    console.log(profiledata);
 
     return {
-      props: { profiledata: "test" },
+      props: { profiledata: profiledata },
     };
   } else {
     return {
@@ -53,7 +54,7 @@ export default function Login({ profiledata }) {
   const handleLogoutButton = () => {
     logout();
   };
-  console.log(profiledata);
+  console.log(profiledata.username);
 
   if (!currentUser) {
     router.push("/login");
@@ -77,8 +78,8 @@ export default function Login({ profiledata }) {
           <button>インスタ連携</button>
         </a>
         <button onClick={handleLogoutButton}>ログアウト</button>
+        <div>ようこそ、{profiledata.username}さん。</div>
       </main>
-      <div>{profiledata}</div>
     </div>
   );
 }
