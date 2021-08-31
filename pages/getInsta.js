@@ -9,9 +9,7 @@ export const getServerSideProps = async (context) => {
   if (code) {
     // おそらくこの下でエラーになっている
     const getTokenUrl = "https://api.instagram.com/oauth/access_token";
-    const headers = {
-      "Content-Type": "multipart/form-data",
-    };
+
     const body = new FormData();
     body.append("client_id", "2664074760562135");
     body.append("client_secret", "2d6aeaad397af94c0e3fef1a72fc78f5");
@@ -20,10 +18,13 @@ export const getServerSideProps = async (context) => {
     body.append("code", code);
 
     const res = await fetch(getTokenUrl, {
-      method,
-      headers,
-      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: body,
     });
+
     const data = await res.json();
     const token = data.access_token;
 
@@ -76,6 +77,7 @@ export default function Login({ profiledata }) {
         </a>
         <button onClick={handleLogoutButton}>ログアウト</button>
       </main>
+      <div>{profiledata}</div>
     </div>
   );
 }
