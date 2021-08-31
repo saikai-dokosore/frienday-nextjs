@@ -281,7 +281,7 @@ export default function Home({ id, database }) {
           <h3>{userData?.name}</h3>
           <p className={styles.accountTextJob}>{userData?.job}</p>
           <p className={styles.accountTextBio}>{userData?.bio}</p>
-          <a href="instagram://user/saikai_official/">リンク</a>
+          <a href="instagram://camera">リンク</a>
         </div>
       </div>
 
