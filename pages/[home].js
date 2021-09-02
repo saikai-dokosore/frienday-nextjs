@@ -7,7 +7,7 @@ import { useAuth } from "../lib/auth";
 import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
 
 // データ取得用の関数
-const getData = async (users) => {
+const getData = async (user) => {
   let userId = ""; // ユーザードキュメントID
   let userObj = {}; // プロフィールオブジェクト
   let placeObj = {
@@ -28,21 +28,21 @@ const getData = async (users) => {
   }; // 場所オブジェクト
 
   const getUserData = async (u) => {
-    await u.forEach(async (user) => {
-      userId = user.id;
-      userObj = user.data();
+    await u.forEach(async (us) => {
+      userId = us?.id;
+      userObj = us.data();
     });
   };
   const getPlaceData = async (p) => {
     p.forEach(async (place) => {
       placeObj.place[place.data().month].push({
-        ...{ id: place.id },
+        ...{ id: place?.id },
         ...place.data(),
       });
     });
   };
 
-  await getUserData(users);
+  await getUserData(user);
   const places = await db
     .collection("users")
     .doc(userId)
@@ -54,21 +54,31 @@ const getData = async (users) => {
   return { ...userIdObj, ...userObj, ...placeObj };
 };
 
-// サーバー上でレンダリング
-export const getServerSideProps = async (context) => {
-  const userid = await context.params.home;
-  const users = await db
+export const getStaticPaths = async () => {
+  const users = await db.collection("users").get(); // 全ユーザー取得
+  let items = [];
+  users.forEach(function (doc) {
+    items.push(doc);
+  });
+  // useridのパスを生成
+  const paths = items.map((item) => ({
+    params: {
+      userid: item.data().userid,
+    },
+  }));
+  // fallback：事前ビルドしたパス以外にアクセスしたときのパラメータ true:カスタム404Pageを表示 false:404pageを表示
+  return { paths, fallback: true };
+};
+
+export const getStaticProps = async ({ params }) => {
+  const user = await db
     .collection("users")
-    .where("userid", "==", userid)
+    .where("userid", "==", params.userid)
     .get();
-  if (users.size === 0) {
-    context.res.writeHead(302, { Location: "/404" });
-    context.res.end();
-  }
-  const database = await getData(users);
+  const database = await getData(user);
   return {
     props: {
-      id: userid,
+      id: params.userid,
       database: database || "undef",
     },
   };
@@ -77,7 +87,7 @@ export const getServerSideProps = async (context) => {
 // コンポーネント
 export default function Home({ id, database }) {
   const [userData, setUserData] = useState(database); // ユーザープロフィール
-  const [placeData, setPlaceData] = useState(database.place); // 行きたい場所
+  const [placeData, setPlaceData] = useState(database?.place); // 行きたい場所
   const [pomu, setPomu] = useState(false);
   const [accountImgUrl, setAccountImgUrl] = useState("");
   const storageRef = storage.ref();
@@ -230,10 +240,10 @@ export default function Home({ id, database }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{userData.id}</title>
+        <title>{userData?.id}</title>
         <meta
           name="description"
-          content={userData.id + "を気軽に誘っちゃおう"}
+          content={userData?.id + "を気軽に誘っちゃおう"}
         />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
@@ -297,9 +307,8 @@ export default function Home({ id, database }) {
       {/* いきたい場所リスト */}
       <main className={styles.main}>
         <div className={styles.placeBox}>
-          <PlaceSetBoxs />
+          {placeData ? <PlaceSetBoxs /> : <div></div>}
         </div>
-        {currentUser?.email + " でログイン中"}
       </main>
 
       {/* メッセージモーダル */}
