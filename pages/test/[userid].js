@@ -7,7 +7,7 @@ import { useAuth } from "../../lib/auth";
 import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
 
 // データ取得用の関数
-const getData = async (users) => {
+const getData = async (user) => {
   let userId = ""; // ユーザードキュメントID
   let userObj = {}; // プロフィールオブジェクト
   let placeObj = {
