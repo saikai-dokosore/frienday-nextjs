@@ -63,7 +63,7 @@ export const getStaticPaths = async () => {
   // useridのパスを生成
   const paths = items.map((item) => ({
     params: {
-      userid: item.data().userid,
+      home: item.data().userid,
     },
   }));
   // fallback：事前ビルドしたパス以外にアクセスしたときのパラメータ true:カスタム404Pageを表示 false:404pageを表示
@@ -73,12 +73,12 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const user = await db
     .collection("users")
-    .where("userid", "==", params.userid)
+    .where("userid", "==", params.home)
     .get();
   const database = await getData(user);
   return {
     props: {
-      id: params.userid,
+      id: params.home,
       database: database || "undef",
     },
   };
