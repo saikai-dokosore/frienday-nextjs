@@ -25,6 +25,7 @@ export default function Index() {
       </header>
       <main className={styles.main}>
         <h1>notification</h1>
+        <a href="instagram://user?username=middle_shizu">middle_shizu</a>
       </main>
     </div>
   );

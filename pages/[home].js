@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { db, storage } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
 import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
+import { waitForAllSettled } from "recoil";
 
 // データ取得用の関数
 const getData = async (user) => {
@@ -33,7 +34,7 @@ export const getStaticPaths = async () => {
       home: item.data().userid,
     },
   }));
-  return { paths, fallback: true };
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps = async ({ params }) => {
@@ -58,8 +59,9 @@ export default function Home({ id, database }) {
   const [pomu, setPomu] = useState(false);
   const [accountImgUrl, setAccountImgUrl] = useState("");
   const storageRef = storage.ref();
-  const [loggedIn, setLoggedIn] = useState(false);
   const [placeUls, setPlaceUls] = useState(<div></div>);
+  const { currentUser, login, logout } = useAuth();
+  const [isMine, setIsMine] = useState(false);
   const monthEmoji = {
     Jan: "0x1F338",
     Feb: "0x1F338",
@@ -75,15 +77,9 @@ export default function Home({ id, database }) {
     Dec: "0x1F338",
   };
 
-  // Auth
-  const { currentUser, login, logout } = useAuth();
-
+  // マイページ判定
   useEffect(() => {
-    if (currentUser) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
+    setIsMine(currentUser?.email === userData?.email ? true : false);
   }, [currentUser]);
 
   // ProfileImg
@@ -94,7 +90,7 @@ export default function Home({ id, database }) {
         .getDownloadURL();
       setAccountImgUrl(profileImg);
     })();
-  }, []);
+  }, [database]);
 
   // Place
   useEffect(() => {
@@ -117,7 +113,6 @@ export default function Home({ id, database }) {
         });
       });
       setPlaceData(placeObj);
-      console.log(placeObj);
       // 各月ごとにコンポーネントの配列にする
       let ulComps = [];
       for (let i = 0; i < Object.keys(placeObj).length; i++) {
@@ -151,7 +146,7 @@ export default function Home({ id, database }) {
       }
       setPlaceUls(ulComps);
     })();
-  }, [userData]);
+  }, [database]);
 
   // いきたい場所を追加
   const addPlace = async () => {
@@ -218,12 +213,16 @@ export default function Home({ id, database }) {
       {/* ヘッダー */}
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        {loggedIn ? (
+        {currentUser ? (
           <div className={styles.headerBtnBox}>
-            <div className={styles.nortification}>
-              <HiOutlineBell />
-            </div>
-            <Link href="/getInsta">
+            <Link href="/nortification">
+              <a>
+                <div className={styles.nortification}>
+                  <HiOutlineBell />
+                </div>
+              </a>
+            </Link>
+            <Link href={currentUser ? `/${userData?.userid}` : "/getInsta"}>
               <a>
                 <div className={styles.user}>
                   <HiOutlineUserCircle />
@@ -240,7 +239,7 @@ export default function Home({ id, database }) {
 
       {/* アカウント */}
       <div className={styles.accountBox}>
-        <div className={styles.accountImgBox + " " + styles[userData?.color]}>
+        <div className={styles.accountImgBox + " " + styles.green100}>
           {accountImgUrl === "" ? (
             <div></div>
           ) : (
@@ -252,7 +251,6 @@ export default function Home({ id, database }) {
           <h3>{userData?.name}</h3>
           <p className={styles.accountTextJob}>{userData?.job}</p>
           <p className={styles.accountTextBio}>{userData?.bio}</p>
-          <a href="instagram://user?username=middle_shizu">リンク</a>
         </div>
       </div>
 

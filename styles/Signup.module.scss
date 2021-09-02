@@ -68,64 +68,102 @@ $bp : (mobile : 480px,
 // ボディ
 .main {
   width: 100%;
-  padding: 50px 10px;
-  flex: 1;
+  height: 100%;
+  padding: 100px 50px;
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
+  background: url(/images/signin.svg);
   @include query (tablet) {
     flex-flow: column;
     justify-content: center;
-    padding: 0;
+    padding: 50px 30px;
   }
-  button {
+  .process {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--insta-blue);
-    color: var(--white100);
-    font-size: 12px;
-    padding: 10px 15px;
-    border-radius: 8px;
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      font-size: 10px;
+    }
+    .line {
+      height: 1px;
+      width: 80px;
+      margin: 0 10px;
+      background-color: rgba(0,0,0,0.1);
+    }
   }
-}
-
-.textBox {
-  flex: 1;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 20px;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.inputBox {
-  flex: 1;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  input {
+  .title {
+    width: 100%;
+    flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    h1 {
+      font-size: 26px;
+      font-weight: 400;
+    }
+    p {
+      margin-top: 5px;
+      font-size: 12px;
+      font-weight: 300;
+      opacity: 0.6;
+    }
+  }
+  .actionBox {
+    width: 100%;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    p {
+      font-weight: 400;
+      line-height: 2rem;
+      letter-spacing: 0.2rem;
+      opacity: 0.7;
+    }
+  }
+  .btnBox {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    width: 300px;
-    height: 50px;
-    padding: 15px;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
+    .nextText {
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        font-size: 18px;
+      }
+    }
+    .nextArrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 4px solid var(--gray100);
+      background-color: white;
+      font-size: 30px;
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
-  ::placeholder {
-    color: var(--gray200);
-  }
-}
-.btnBox {
-  flex: 1;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
 }

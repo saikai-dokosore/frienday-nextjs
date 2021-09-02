@@ -6,7 +6,7 @@ import { db, storage } from "../lib/firebaseInit";
 import { useRouter } from "next/router";
 var FormData = require("form-data");
 
-// サーバー上でレンダリング
+// サーバーサイド
 export const getServerSideProps = async (context) => {
   const code = await context.query?.code;
   if (code) {
@@ -43,14 +43,15 @@ export const getServerSideProps = async (context) => {
   }
 };
 
+// クライアントサイド
 export default function Login({ profiledata }) {
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2FgetInsta&scope=user_profile,user_media&response_type=code`;
 
-  if (!currentUser) {
-    router.push("/welcome");
-  }
+  // if (!currentUser) {
+  //   router.push("/welcome");
+  // }
 
   const createAccount = async (name, id, email) => {
     console.log(name, id, email);
