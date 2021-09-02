@@ -8,50 +8,17 @@ import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
 
 // データ取得用の関数
 const getData = async (user) => {
-  let userId = ""; // ユーザードキュメントID
+  let id = ""; // ユーザードキュメントID
   let userObj = {}; // プロフィールオブジェクト
-  let placeObj = {
-    place: {
-      Jan: [],
-      Feb: [],
-      Mar: [],
-      Apr: [],
-      May: [],
-      Jun: [],
-      Jul: [],
-      Aug: [],
-      Sep: [],
-      Oct: [],
-      Nov: [],
-      Dec: [],
-    },
-  }; // 場所オブジェクト
-
   const getUserData = async (u) => {
     await u.forEach(async (us) => {
-      userId = us?.id;
+      id = us?.id;
       userObj = us.data();
     });
   };
-  const getPlaceData = async (p) => {
-    p.forEach(async (place) => {
-      placeObj.place[place.data().month].push({
-        ...{ id: place?.id },
-        ...place.data(),
-      });
-    });
-  };
-
   await getUserData(user);
-  const places = await db
-    .collection("users")
-    .doc(userId)
-    .collection("place")
-    .get();
-  await getPlaceData(places);
-  const userIdObj = { userId: userId };
-
-  return { ...userIdObj, ...userObj, ...placeObj };
+  const userIdObj = { id: id };
+  return { ...userIdObj, ...userObj };
 };
 
 export const getStaticPaths = async () => {
@@ -66,7 +33,6 @@ export const getStaticPaths = async () => {
       home: item.data().userid,
     },
   }));
-  // fallback：事前ビルドしたパス以外にアクセスしたときのパラメータ true:カスタム404Pageを表示 false:404pageを表示
   return { paths, fallback: true };
 };
 
@@ -88,25 +54,12 @@ export const getStaticProps = async ({ params }) => {
 // コンポーネント
 export default function Home({ id, database }) {
   const [userData, setUserData] = useState(database); // ユーザープロフィール
-  const [placeData, setPlaceData] = useState(database?.place); // 行きたい場所
+  const [placeData, setPlaceData] = useState(); // 行きたい場所
   const [pomu, setPomu] = useState(false);
   const [accountImgUrl, setAccountImgUrl] = useState("");
   const storageRef = storage.ref();
   const [loggedIn, setLoggedIn] = useState(false);
-  const monthes = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const [placeUls, setPlaceUls] = useState(<div></div>);
   const monthEmoji = {
     Jan: "0x1F338",
     Feb: "0x1F338",
@@ -135,21 +88,41 @@ export default function Home({ id, database }) {
 
   // ProfileImg
   useEffect(() => {
-    const getProfileImg = async () => {
+    (async () => {
       const profileImg = await storageRef
         .child(`images/${id}.jpg`)
         .getDownloadURL();
       setAccountImgUrl(profileImg);
-    };
-    getProfileImg();
+    })();
   }, []);
 
-  // いきたいところコンポーネント
-  const PlaceSetBoxs = () => {
-    let monthComps = {};
-    for (let i = 0; i < 12; i++) {
-      if (placeData[monthes[i]].length !== 0) {
-        monthComps[monthes[i]] = placeData[monthes[i]].map((p, i) => {
+  // Place
+  useEffect(() => {
+    let placeObj = {};
+    (async () => {
+      // DBから取得
+      const places = await db
+        .collection("users")
+        .doc(userData.id)
+        .collection("place")
+        .get();
+      // 予定がある月をキーとして予定を配列に入れる
+      places.forEach(async (p) => {
+        if (!placeObj[p.data().month]) {
+          placeObj[p.data().month] = [];
+        }
+        placeObj[p.data().month].push({
+          ...{ id: p.id },
+          ...p.data(),
+        });
+      });
+      setPlaceData(placeObj);
+      console.log(placeObj);
+      // 各月ごとにコンポーネントの配列にする
+      let ulComps = [];
+      for (let i = 0; i < Object.keys(placeObj).length; i++) {
+        let key = Object.keys(placeObj)[i];
+        let comp = placeObj[key].map((p, i) => {
           return (
             <li key={i} className={styles.placeListBox}>
               <div className={styles.emoji}>
@@ -165,30 +138,20 @@ export default function Home({ id, database }) {
                 >
                   いきたい！
                 </button>
-                <button
-                  className={styles.placeDelete}
-                  onClick={() => deletePlace(p?.id)}
-                >
-                  削除
-                </button>
               </div>
             </li>
           );
         });
+        ulComps.push(
+          <ul key={i} className={styles.placeUlBox + " " + styles[key]}>
+            <h3>{String.fromCodePoint(monthEmoji[key]) + " " + key}</h3>
+            {comp}
+          </ul>
+        );
       }
-    }
-    let ulComps = [];
-    for (let i = 0; i < Object.keys(monthComps).length; i++) {
-      let key = Object.keys(monthComps)[i];
-      ulComps.push(
-        <ul key={i} className={styles.placeUlBox + " " + styles[key]}>
-          <h3>{String.fromCodePoint(monthEmoji[key]) + " " + key}</h3>
-          {monthComps[key]}
-        </ul>
-      );
-    }
-    return ulComps;
-  };
+      setPlaceUls(ulComps);
+    })();
+  }, [userData]);
 
   // いきたい場所を追加
   const addPlace = async () => {
@@ -241,10 +204,10 @@ export default function Home({ id, database }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{userData?.id}</title>
+        <title>{userData.userid}</title>
         <meta
           name="description"
-          content={userData?.id + "を気軽に誘っちゃおう"}
+          content={userData.userid + "を気軽に誘っちゃおう"}
         />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
@@ -307,9 +270,7 @@ export default function Home({ id, database }) {
 
       {/* いきたい場所リスト */}
       <main className={styles.main}>
-        <div className={styles.placeBox}>
-          {placeData ? <PlaceSetBoxs /> : <div></div>}
-        </div>
+        <div className={styles.placeBox}>{placeUls}</div>
       </main>
 
       {/* メッセージモーダル */}
