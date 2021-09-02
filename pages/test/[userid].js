@@ -123,7 +123,7 @@ export default function Home({ id, database }) {
   };
 
   // Auth
-  const { currentUser } = useAuth();
+  const { currentUser, login, logout } = useAuth();
 
   useEffect(() => {
     if (currentUser) {
@@ -143,6 +143,79 @@ export default function Home({ id, database }) {
     };
     getProfileImg();
   }, []);
+
+  // いきたいところコンポーネント
+  const PlaceSetBoxs = () => {
+    let monthComps = {};
+    for (let i = 0; i < 12; i++) {
+      if (placeData[monthes[i]].length !== 0) {
+        monthComps[monthes[i]] = placeData[monthes[i]].map((p, i) => {
+          return (
+            <li key={i} className={styles.placeListBox}>
+              <div className={styles.emoji}>
+                {String.fromCodePoint(p?.emoji)}
+              </div>
+              <div className={styles.placeTextBox}>
+                <div className={styles.name}>{p?.name}</div>
+              </div>
+              <div className={styles.placeBtnBox}>
+                <button
+                  className={styles.placeGo}
+                  onClick={() => goPlace(p?.id)}
+                >
+                  いきたい！
+                </button>
+              </div>
+            </li>
+          );
+        });
+      }
+    }
+    let ulComps = [];
+    for (let i = 0; i < Object.keys(monthComps).length; i++) {
+      let key = Object.keys(monthComps)[i];
+      ulComps.push(
+        <ul key={i} className={styles.placeUlBox + " " + styles[key]}>
+          <h3>{String.fromCodePoint(monthEmoji[key]) + " " + key}</h3>
+          {monthComps[key]}
+        </ul>
+      );
+    }
+    return ulComps;
+  };
+
+  // いきたい場所を追加
+  const addPlace = async () => {
+    const place = document.getElementById("addPlaceText").value;
+    const placeObj = {
+      name: place,
+      emoji: "0x1F37B",
+    };
+    if (place !== "") {
+      await db
+        .collection("users")
+        .doc(userData.userId)
+        .collection("place")
+        .add(placeObj);
+      setPlaceData([...placeData, placeObj]);
+    }
+    document.getElementById("addPlaceText").value = "";
+  };
+
+  const goPlace = async (id) => {
+    console.log("go : " + id);
+    document.getElementById("modal").style.display = "flex";
+  };
+  const closeModal = () => {
+    modal.style.display = "none";
+  };
+  if (typeof window !== "undefined") {
+    window.onclick = function (event) {
+      if (event.target == document.getElementById("modal")) {
+        document.getElementById("modal").style.display = "none";
+      }
+    };
+  }
 
   return (
     <div className={styles.container}>
@@ -180,6 +253,55 @@ export default function Home({ id, database }) {
           </Link>
         )}
       </header>
+
+      {/* アカウント */}
+      <div className={styles.accountBox}>
+        <div className={styles.accountImgBox + " " + styles[userData?.color]}>
+          {accountImgUrl === "" ? (
+            <div></div>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={accountImgUrl} alt="Profile Picture" />
+          )}
+        </div>
+        <div className={styles.accountTextBox}>
+          <h3>{userData?.name}</h3>
+          <p className={styles.accountTextJob}>{userData?.job}</p>
+          <p className={styles.accountTextBio}>{userData?.bio}</p>
+          <a href="instagram://user?username=middle_shizu">リンク</a>
+        </div>
+      </div>
+
+      {/* ポム */}
+      {/* <div className={styles.pomuBox}>
+        <button
+          onClick={() => {
+            setPomu(!pomu);
+          }}
+          className={styles.enable}
+        >
+          {pomu ? "ポムっています" : "遊びに行けるよー"}
+        </button>
+      </div> */}
+
+      {/* いきたい場所リスト */}
+      <main className={styles.main}>
+        <div className={styles.placeBox}>
+          <PlaceSetBoxs />
+        </div>
+        {currentUser?.email + " でログイン中"}
+      </main>
+
+      {/* メッセージモーダル */}
+      <div id="modal" className={styles.modalBack}>
+        <div className={styles.modal}>
+          <h3>メッセージを送ろう</h3>
+          <form>
+            <textarea placeholder="〇〇グループで行こう！"></textarea>
+            <button type="submit">送る</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
