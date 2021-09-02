@@ -42,7 +42,7 @@ const getData = async (users) => {
     });
   };
 
-  await getUserData(users);
+  await getUserData(user);
   const places = await db
     .collection("users")
     .doc(userId)
@@ -55,14 +55,15 @@ const getData = async (users) => {
 };
 
 export const getStaticPaths = async () => {
-  const users = await db.collection("users").get();
+  const users = await db.collection("users").get(); // 全ユーザー取得
   let items = [];
   users.forEach(function (doc) {
-    items.push(doc.data());
+    items.push(doc);
   });
+  // useridのパスを生成
   const paths = items.map((item) => ({
     params: {
-      userid: item.userid.toString(),
+      userid: item.data().userid,
     },
   }));
   // fallback：事前ビルドしたパス以外にアクセスしたときのパラメータ true:カスタム404Pageを表示 false:404pageを表示
@@ -70,11 +71,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const users = await db
+  const user = await db
     .collection("users")
     .where("userid", "==", params.userid)
     .get();
-  const database = await getData(users);
+  const database = await getData(user);
   return {
     props: {
       id: params.userid,
