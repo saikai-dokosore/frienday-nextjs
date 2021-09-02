@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Link from "next/link";
-import styles from "../styles/Signup.module.scss";
+import styles from "../../styles/Signup.module.scss";
 import { useAuth } from "../../lib/auth";
-import { db, storage } from "../../lib/firebaseInit";
 import { useRouter } from "next/router";
 var FormData = require("form-data");
 import { MdKeyboardArrowRight } from "react-icons/md";
