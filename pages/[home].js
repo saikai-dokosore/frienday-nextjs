@@ -233,7 +233,9 @@ export default function Home({ id, database }) {
                 </div>
               </a>
             </Link>
-            <Link href={currentUser ? `/${userData?.userid}` : "/getInsta"}>
+            <Link
+              href={currentUser ? `/${userData?.userid}` : "/signup/welcome"}
+            >
               <a>
                 <div className={styles.user}>
                   <HiOutlineUserCircle />
@@ -242,7 +244,7 @@ export default function Home({ id, database }) {
             </Link>
           </div>
         ) : (
-          <Link href="/welcome">
+          <Link href="/signup/welcome">
             <a>マイページを作成する</a>
           </Link>
         )}

@@ -1,21 +1,17 @@
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Signup.module.scss";
-import { useAuth } from "../lib/auth";
+import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function Welcome() {
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
-  const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2FgetInsta&scope=user_profile,user_media&response_type=code`;
 
-  // if (currentUser) {
-  //   router.push(getCodeUrl);
-  // }
-
-  const handleLoginButton = async () => {
-    await login();
+  const createAccount = async (name, id, email) => {
+    console.log(name, id, email);
+    router.push("/" + id);
   };
 
   return (
@@ -25,6 +21,10 @@ export default function Welcome() {
         <meta name="description" content="超気軽に誘っちゃおう" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <header className={styles.header}>
+        <h1>FRIENDAY</h1>
+      </header>
 
       <main className={styles.main}>
         <ul className={styles.process}>
@@ -39,33 +39,30 @@ export default function Welcome() {
           <p>Welcome to Frienday</p>
         </div>
         <div className={styles.actionBox}>
-          <p>
-            あなたのInstagramの
-            <br />
-            リンク欄は空いていますか？
-            <br />
-            FriendayはInstagramのリンク欄に
-            <br />
-            貼っておくだけで、
-            <br />
-            友達に誘われるかもしれないサービスです。
-            <br />
-            あなたのインスタライフが
-            <br />
-            少しだけ充実しますよ。
-          </p>
+          <p>最後にとっておきのニックネームをつけましょう</p>
+          <div className={styles.inputBox}>
+            <p>Name</p>
+            <input id="nickname" type="text" />
+          </div>
         </div>
         <div className={styles.btnBox}>
           <div className={styles.nextText}>
-            <p>マイページを作成</p>
+            <p>ページを発行</p>
           </div>
-          <Link href="/getInsta">
-            <div className={styles.nextArrow}>
-              <a>
-                <MdKeyboardArrowRight />
-              </a>
-            </div>
-          </Link>
+          <div
+            className={styles.nextArrow}
+            onClick={() =>
+              createAccount(
+                document.getElementById("nickname").value,
+                profiledata.username,
+                currentUser.email
+              )
+            }
+          >
+            <a>
+              <MdKeyboardArrowRight />
+            </a>
+          </div>
         </div>
       </main>
     </div>

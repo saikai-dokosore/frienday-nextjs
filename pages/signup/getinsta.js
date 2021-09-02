@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Signup.module.scss";
-import { useAuth } from "../lib/auth";
-import { db, storage } from "../lib/firebaseInit";
+import { useAuth } from "../../lib/auth";
+import { db, storage } from "../../lib/firebaseInit";
 import { useRouter } from "next/router";
 var FormData = require("form-data");
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 // サーバーサイド
 export const getServerSideProps = async (context) => {
@@ -16,7 +17,7 @@ export const getServerSideProps = async (context) => {
     body.append("client_id", process.env.NEXT_PUBLIC_INSTA_CLIENT_ID);
     body.append("client_secret", process.env.NEXT_PUBLIC_INSTA_CLIENT_SECRET);
     body.append("grant_type", "authorization_code");
-    body.append("redirect_uri", "https://frienday.vercel.app/getInsta");
+    body.append("redirect_uri", "https://frienday.vercel.app/signup/getinsta");
     body.append("code", code);
 
     const res = await fetch(getTokenUrl, {
@@ -47,14 +48,15 @@ export const getServerSideProps = async (context) => {
 export default function Login({ profiledata }) {
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
-  const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2FgetInsta&scope=user_profile,user_media&response_type=code`;
+  const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
-  // if (!currentUser) {
-  //   router.push("/welcome");
-  // }
+  if (currentUser) {
+    router.push("/signup/setname");
+  }
 
-  const createAccount = async (name, id, email) => {
-    console.log(name, id, email);
+  const handleLoginButton = async () => {
+    console.log("ok");
+    await login();
   };
 
   return (
@@ -70,21 +72,37 @@ export default function Login({ profiledata }) {
       </header>
 
       <main className={styles.main}>
-        <h1>ニックネームを入力</h1>
-        <div>
-          <input id="nickname" type="text" value="さいかい" />
+        <ul className={styles.process}>
+          <li>1</li>
+          <div className={styles.line}></div>
+          <li>2</li>
+          <div className={styles.line}></div>
+          <li>3</li>
+        </ul>
+        <div className={styles.title}>
+          <h1>{profiledata.username}</h1>
+          <p>{profiledata.username}</p>
         </div>
-        <button
-          onClick={() =>
-            createAccount(
-              document.getElementById("nickname").value,
-              profiledata.username,
-              currentUser.email
-            )
-          }
-        >
-          アカウント作成
-        </button>
+        <div className={styles.actionBox}>
+          <p>
+            あなたのInstagramIDを取得しました。
+            <br />
+            次はGoogleアカウントでのログインです。
+          </p>
+        </div>
+        <div className={styles.btnBox}>
+          <div className={styles.nextText}>
+            <p>ログイン</p>
+          </div>
+          <button
+            className={styles.nextArrow}
+            onClick={() => handleLoginButton}
+          >
+            <a>
+              <MdKeyboardArrowRight />
+            </a>
+          </button>
+        </div>
       </main>
     </div>
   );
