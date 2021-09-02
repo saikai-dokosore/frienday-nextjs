@@ -86,6 +86,7 @@ export const getStaticProps = async ({ params }) => {
 
 // コンポーネント
 export default function Home({ id, database }) {
+  console.log(id, database);
   const [userData, setUserData] = useState(database); // ユーザープロフィール
   const [placeData, setPlaceData] = useState(database?.place); // 行きたい場所
   const [pomu, setPomu] = useState(false);
