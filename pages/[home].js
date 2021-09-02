@@ -4,7 +4,11 @@ import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
 import { db, storage } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
-import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
+import {
+  HiOutlineUserCircle,
+  HiOutlineBell,
+  HiOutlineCog,
+} from "react-icons/hi";
 import { waitForAllSettled } from "recoil";
 
 // データ取得用の関数
@@ -219,6 +223,13 @@ export default function Home({ id, database }) {
               <a>
                 <div className={styles.nortification}>
                   <HiOutlineBell />
+                </div>
+              </a>
+            </Link>
+            <Link href="/setting">
+              <a>
+                <div className={styles.user}>
+                  <HiOutlineCog />
                 </div>
               </a>
             </Link>
