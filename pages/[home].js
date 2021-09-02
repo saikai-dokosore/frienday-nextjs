@@ -56,8 +56,11 @@ const getData = async (users) => {
 
 // サーバー上でレンダリング
 export const getServerSideProps = async (context) => {
-  const id = await context.params.home;
-  const users = await db.collection("users").where("id", "==", id).get();
+  const userid = await context.params.home;
+  const users = await db
+    .collection("users")
+    .where("userid", "==", userid)
+    .get();
   if (users.size === 0) {
     context.res.writeHead(302, { Location: "/404" });
     context.res.end();
@@ -65,7 +68,7 @@ export const getServerSideProps = async (context) => {
   const database = await getData(users);
   return {
     props: {
-      id: id,
+      id: userid,
       database: database || "undef",
     },
   };
@@ -110,12 +113,6 @@ export default function Home({ id, database }) {
 
   // Auth
   const { currentUser, login, logout } = useAuth();
-  const handleLoginButton = () => {
-    login();
-  };
-  const handleLogoutButton = () => {
-    logout();
-  };
 
   useEffect(() => {
     if (currentUser) {

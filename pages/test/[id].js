@@ -58,11 +58,11 @@ export const getStaticPaths = async () => {
   const users = await db.collection("users").get();
   let items = [];
   users.forEach(function (doc) {
-    items.push(doc);
+    items.push(doc.data());
   });
-  const paths = items.map((post) => ({
+  const paths = items.map((item) => ({
     params: {
-      id: post.id.toString(),
+      userid: item.userid.toString(),
     },
   }));
   // fallback：事前ビルドしたパス以外にアクセスしたときのパラメータ true:カスタム404Pageを表示 false:404pageを表示
@@ -70,11 +70,14 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const users = await db.collection("users").where("id", "==", params.id).get();
+  const users = await db
+    .collection("users")
+    .where("userid", "==", params.userid)
+    .get();
   const database = await getData(users);
   return {
     props: {
-      id: params.id,
+      id: params.userid,
       database: database || "undef",
     },
   };
@@ -118,13 +121,7 @@ export default function Home({ id, database }) {
   };
 
   // Auth
-  const { currentUser, login, logout } = useAuth();
-  const handleLoginButton = () => {
-    login();
-  };
-  const handleLogoutButton = () => {
-    logout();
-  };
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (currentUser) {
