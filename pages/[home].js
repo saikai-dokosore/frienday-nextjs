@@ -81,6 +81,7 @@ export const getStaticProps = async ({ params }) => {
       id: params.home,
       database: database || "undef",
     },
+    revalidate: 5,
   };
 };
 
