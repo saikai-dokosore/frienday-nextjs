@@ -235,6 +235,13 @@ export default function Home({ id, database }) {
           <a href="instagram://user?username=middle_shizu">リンク</a>
         </div>
       </div>
+
+      {/* いきたい場所リスト */}
+      <main className={styles.main}>
+        <div className={styles.placeBox}>
+          {placeData ? <PlaceSetBoxs /> : <div></div>}
+        </div>
+      </main>
     </div>
   );
 }
