@@ -75,6 +75,8 @@ $bp : (mobile : 480px,
   justify-content: center;
   align-items: center;
   background: url(/images/signin.svg);
+  background-position: center;
+  background-size: cover;
   @include query (tablet) {
     flex-flow: column;
     justify-content: center;
@@ -147,6 +149,7 @@ $bp : (mobile : 480px,
       align-items: center;
       p {
         font-size: 18px;
+        font-weight: 700;
       }
     }
     .nextArrow {
