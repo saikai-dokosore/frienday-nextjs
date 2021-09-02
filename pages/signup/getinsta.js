@@ -48,13 +48,13 @@ export default function Login({ profiledata }) {
   const router = useRouter();
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
-  if (currentUser) {
-    router.push("/signup/setname");
-  }
+  // if (currentUser) {
+  //   router.push("/signup/setname");
+  // }
 
   const handleLoginButton = async () => {
-    console.log("ok");
     await login();
+    router.push("/signup/setname");
   };
 
   return (
