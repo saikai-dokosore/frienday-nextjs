@@ -163,7 +163,7 @@ export default function Home({ id, database }) {
     if (place !== "") {
       await db
         .collection("users")
-        .doc(userData.userId)
+        .doc(userData?.userId)
         .collection("place")
         .add(placeObj);
       setPlaceData([...placeData, placeObj]);
@@ -175,7 +175,7 @@ export default function Home({ id, database }) {
   const deletePlace = async (id) => {
     await db
       .collection("users")
-      .doc(userData.userId)
+      .doc(userData?.userId)
       .collection("place")
       .doc(id)
       .delete();
@@ -204,10 +204,10 @@ export default function Home({ id, database }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{userData.userid}</title>
+        <title>{userData?.userid}</title>
         <meta
           name="description"
-          content={userData.userid + "を気軽に誘っちゃおう"}
+          content={userData?.userid + "を気軽に誘っちゃおう"}
         />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
