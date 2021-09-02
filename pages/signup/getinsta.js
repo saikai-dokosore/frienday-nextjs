@@ -96,9 +96,7 @@ export default function Login({ profiledata }) {
             className={styles.nextArrow}
             onClick={() => handleLoginButton}
           >
-            <a>
-              <MdKeyboardArrowRight />
-            </a>
+            <MdKeyboardArrowRight />
           </button>
         </div>
       </main>
