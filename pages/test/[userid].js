@@ -273,55 +273,6 @@ export default function Home({ id, database }) {
           </Link>
         )}
       </header>
-
-      {/* アカウント */}
-      <div className={styles.accountBox}>
-        <div className={styles.accountImgBox + " " + styles[userData?.color]}>
-          {accountImgUrl === "" ? (
-            <div></div>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={accountImgUrl} alt="Profile Picture" />
-          )}
-        </div>
-        <div className={styles.accountTextBox}>
-          <h3>{userData?.name}</h3>
-          <p className={styles.accountTextJob}>{userData?.job}</p>
-          <p className={styles.accountTextBio}>{userData?.bio}</p>
-          <a href="instagram://user?username=middle_shizu">リンク</a>
-        </div>
-      </div>
-
-      {/* ポム */}
-      {/* <div className={styles.pomuBox}>
-        <button
-          onClick={() => {
-            setPomu(!pomu);
-          }}
-          className={styles.enable}
-        >
-          {pomu ? "ポムっています" : "遊びに行けるよー"}
-        </button>
-      </div> */}
-
-      {/* いきたい場所リスト */}
-      <main className={styles.main}>
-        <div className={styles.placeBox}>
-          <PlaceSetBoxs />
-        </div>
-        {currentUser?.email + " でログイン中"}
-      </main>
-
-      {/* メッセージモーダル */}
-      <div id="modal" className={styles.modalBack}>
-        <div className={styles.modal}>
-          <h3>メッセージを送ろう</h3>
-          <form>
-            <textarea placeholder="〇〇グループで行こう！"></textarea>
-            <button type="submit">送る</button>
-          </form>
-        </div>
-      </div>
     </div>
   );
 }
