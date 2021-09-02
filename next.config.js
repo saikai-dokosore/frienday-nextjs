@@ -4,4 +4,8 @@ module.exports = {
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
+  pwa: {
+    dest: "public", // swの出力ディレクトリ
+    // runtimeCaching: []
+  },
 };

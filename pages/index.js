@@ -31,18 +31,7 @@ export default function Index() {
         </Link>
       </header>
       <main className={styles.main}>
-        {currentUser && (
-          <div>
-            <h2>ログインしています.</h2>
-            <button onClick={handleLogoutButton}>ログアウト</button>
-          </div>
-        )}
-        {!currentUser && (
-          <div>
-            <h2>ログインしていません.</h2>
-            <button onClick={handleLoginButton}>ログイン</button>
-          </div>
-        )}
+        <h1>Frienday</h1>
       </main>
     </div>
   );
