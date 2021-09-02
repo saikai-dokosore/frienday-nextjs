@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/Home.module.scss";
+import styles from "../../styles/Home.module.scss";
 import { useState, useEffect } from "react";
-import { db, storage } from "../lib/firebaseInit";
-import { useAuth } from "../lib/auth";
+import { db, storage } from "../../lib/firebaseInit";
+import { useAuth } from "../../lib/auth";
 import { HiOutlineUserCircle, HiOutlineBell } from "react-icons/hi";
 
 // データ取得用の関数
@@ -54,18 +54,27 @@ const getData = async (users) => {
   return { ...userIdObj, ...userObj, ...placeObj };
 };
 
-// サーバー上でレンダリング
-export const getServerSideProps = async (context) => {
-  const id = await context.params.home;
-  const users = await db.collection("users").where("id", "==", id).get();
-  if (users.size === 0) {
-    context.res.writeHead(302, { Location: "/404" });
-    context.res.end();
-  }
+export const getStaticPaths = async () => {
+  const users = await db.collection("users").get();
+  let items = [];
+  users.forEach(function (doc) {
+    items.push(doc);
+  });
+  const paths = items.map((post) => ({
+    params: {
+      id: post.id.toString(),
+    },
+  }));
+  // fallback：事前ビルドしたパス以外にアクセスしたときのパラメータ true:カスタム404Pageを表示 false:404pageを表示
+  return { paths, fallback: true };
+};
+
+export const getStaticProps = async ({ params }) => {
+  const users = await db.collection("users").where("id", "==", params.id).get();
   const database = await getData(users);
   return {
     props: {
-      id: id,
+      id: params.id,
       database: database || "undef",
     },
   };
