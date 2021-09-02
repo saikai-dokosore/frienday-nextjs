@@ -28,9 +28,9 @@ const getData = async (user) => {
   }; // 場所オブジェクト
 
   const getUserData = async (u) => {
-    await u.forEach(async (user) => {
-      userId = user.id;
-      userObj = user.data();
+    await u.forEach(async (us) => {
+      userId = us.id;
+      userObj = us.data();
     });
   };
   const getPlaceData = async (p) => {
