@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "../styles/Signup.module.scss";
 import { useAuth } from "../lib/auth";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import {
   HiOutlineUserCircle,
   HiOutlineBell,
