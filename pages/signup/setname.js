@@ -3,23 +3,37 @@ import styles from "../../styles/Signup.module.scss";
 import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { db, storage } from "../../lib/firebaseInit";
 
 export default function Welcome() {
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
+  const instaUserId = router.query.id;
+  const usersCollection = db.collection("users");
 
   const createAccount = async (name, id, email) => {
-    console.log(name, id, email);
+    const newUser = {
+      name: name,
+      email: email,
+      bio: "",
+      job: "",
+    };
     if (name === "") {
       alert("ニックネームが空です");
-    }
-    if (id === "") {
+    } else if (id === undefined) {
       alert("Instagram連携ができていません");
-    }
-    if (email === "") {
+    } else if (email === undefined) {
       alert("Googleログインができていません");
+    } else {
+      const user = await usersCollection.doc(id).get();
+      if (!user.data()) {
+        await usersCollection.doc(id).set(newUser);
+        router.push("/" + id);
+      } else {
+        alert("ユーザー作成済みです");
+        router.push("/" + id);
+      }
     }
-    router.push("/" + id);
   };
 
   return (
@@ -62,7 +76,7 @@ export default function Welcome() {
             onClick={() =>
               createAccount(
                 document.getElementById("nickname").value,
-                profiledata?.username, // profiledataは前のページから持ってくる
+                instaUserId,
                 currentUser?.email
               )
             }
