@@ -48,11 +48,8 @@ export default function Login({ profiledata }) {
   const router = useRouter();
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
-  // if (currentUser) {
-  //   router.push("/signup/setname");
-  // }
-
   const handleLoginButton = async () => {
+    console.log("ok");
     await login();
     router.push("/signup/setname");
   };
@@ -75,18 +72,27 @@ export default function Login({ profiledata }) {
           <div className={styles.line}></div>
           <li>2</li>
           <div className={styles.line}></div>
-          <li>3</li>
+          <li className={styles.yet}>3</li>
         </ul>
         <div className={styles.title}>
-          <h1>{profiledata.username}</h1>
-          <p>{profiledata.username}</p>
+          <h1>
+            {profiledata.username}さん、
+            <br />
+            ようこそ。
+          </h1>
         </div>
         <div className={styles.actionBox}>
-          <p>
-            あなたのInstagramIDを取得しました。
-            <br />
-            次はGoogleアカウントでのログインです。
-          </p>
+          {currentUser ? (
+            <p>
+              あなたはGoogleアカウントでログイン済みです。次のステップへ進んでください。
+            </p>
+          ) : (
+            <p>
+              あなたのInstagramIDを取得しました。
+              <br />
+              次はGoogleアカウントでのログインです。
+            </p>
+          )}
         </div>
         <div className={styles.btnBox}>
           <div className={styles.nextText}>
@@ -94,7 +100,11 @@ export default function Login({ profiledata }) {
           </div>
           <button
             className={styles.nextArrow}
-            onClick={() => handleLoginButton}
+            onClick={() => {
+              currentUser
+                ? router.push("/signup/setname")
+                : handleLoginButton();
+            }}
           >
             <MdKeyboardArrowRight />
           </button>

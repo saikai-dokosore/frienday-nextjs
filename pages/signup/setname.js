@@ -10,6 +10,15 @@ export default function Welcome() {
 
   const createAccount = async (name, id, email) => {
     console.log(name, id, email);
+    if (name === "") {
+      alert("ニックネームが空です");
+    }
+    if (id === "") {
+      alert("Instagram連携ができていません");
+    }
+    if (email === "") {
+      alert("Googleログインができていません");
+    }
     router.push("/" + id);
   };
 
@@ -48,20 +57,18 @@ export default function Welcome() {
           <div className={styles.nextText}>
             <p>ページを発行</p>
           </div>
-          <div
+          <button
             className={styles.nextArrow}
             onClick={() =>
               createAccount(
                 document.getElementById("nickname").value,
-                profiledata.username,
-                currentUser.email
+                profiledata?.username, // profiledataは前のページから持ってくる
+                currentUser?.email
               )
             }
           >
-            <a>
-              <MdKeyboardArrowRight />
-            </a>
-          </div>
+            <MdKeyboardArrowRight />
+          </button>
         </div>
       </main>
     </div>

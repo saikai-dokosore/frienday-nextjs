@@ -30,9 +30,9 @@ export default function Welcome() {
         <ul className={styles.process}>
           <li>1</li>
           <div className={styles.line}></div>
-          <li>2</li>
+          <li className={styles.yet}>2</li>
           <div className={styles.line}></div>
-          <li>3</li>
+          <li className={styles.yet}>3</li>
         </ul>
         <div className={styles.title}>
           <h1>Friendayへようこそ</h1>
@@ -61,11 +61,11 @@ export default function Welcome() {
           </div>
           <button
             className={styles.nextArrow}
-            onClick={() => router.push(getCodeUrl)}
+            onClick={() => {
+              router.push(getCodeUrl);
+            }}
           >
-            <a>
-              <MdKeyboardArrowRight />
-            </a>
+            <MdKeyboardArrowRight />
           </button>
         </div>
         <div className={styles.other}>
