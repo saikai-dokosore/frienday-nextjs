@@ -16,64 +16,69 @@ export default function Index() {
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
   const [nortifications, setNortifications] = useState(<div></div>);
-  if (!currentUser) {
-    //router.push("/signup/welcome");
-  }
-
-  console.log("nortifications", nortifications);
 
   useEffect(() => {
-    (async () => {
-      const allMessages = {};
-      const getAllMessages = async () => {
-        const placeCollections = await db
-          .collection("users")
-          .doc("saikai_official")
-          .collection("place");
-        const places = await placeCollections.get();
-        places.forEach(async (p) => {
-          let name = p.data().name;
-          let emoji = p.data().emoji;
-          let month = p.data().month;
-          const messages = await placeCollections
-            .doc(p.id)
-            .collection("messages")
-            .get();
-          messages.forEach(async (m) => {
-            if (!allMessages[name]) {
-              allMessages[name] = [];
-            }
-            allMessages[name].push({
-              content: m.data().content,
-              read: m.data().read,
-              sentby: m.data().sentby,
-              senttime: m.data().senttime,
-            });
+    if (!currentUser) {
+      router.push("/signup/welcome");
+    }
+  }, [currentUser, router]);
+
+  useEffect(() => {
+    const allMessages = {};
+    const getAllMessages = async () => {
+      const placeCollections = await db
+        .collection("users")
+        .doc("saikai_official")
+        .collection("place");
+      const places = await placeCollections.get();
+      places.forEach(async (p) => {
+        let name = p.data().name;
+        let emoji = p.data().emoji;
+        let month = p.data().month;
+        const messages = await placeCollections
+          .doc(p.id)
+          .collection("messages")
+          .get();
+        messages.forEach(async (m) => {
+          if (!allMessages[name]) {
+            allMessages[name] = [];
+          }
+          allMessages[name].push({
+            content: m.data().content,
+            read: m.data().read,
+            sentby: m.data().sentby,
+            senttime: m.data().senttime,
           });
         });
-      };
-      await getAllMessages();
-
+      });
+    };
+    const setMessagesComps = async () => {
       let ulComps = [];
-      console.log("size", Object.keys(allMessages).length, allMessages);
       for (let i = 0; i < Object.keys(allMessages).length; i++) {
         let key = Object.keys(allMessages)[i];
         let comp = allMessages[key].map((p, i) => {
           return (
             <li key={i}>
               <p>{p?.content}</p>
+              <p>{p?.sentby}</p>
             </li>
           );
         });
         ulComps.push(
           <ul key={i}>
-            <p>key</p>
+            <p>{key}</p>
             {comp}
           </ul>
         );
       }
-      console.log("ulComps", ulComps);
       setNortifications(<div>{ulComps}</div>);
+    };
+
+    // なぜか2回実行しないと反映されない
+    (async () => {
+      await getAllMessages();
+      await getAllMessages();
+      await setMessagesComps();
     })();
   }, []);
 

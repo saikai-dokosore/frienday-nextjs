@@ -13,9 +13,12 @@ export default function Index() {
   // Auth
   const { currentUser, login, logout } = useAuth();
   const router = useRouter();
-  if (!currentUser) {
-    router.push("/signup/welcome");
-  }
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/signup/welcome");
+    }
+  }, [currentUser, router]);
 
   const handleLoginButton = async () => {
     await login();
