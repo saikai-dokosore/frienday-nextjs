@@ -51,17 +51,21 @@ $bp : (mobile : 480px,
     font-size: 16px;
     letter-spacing: 0.3em;
   }
-  a {
-    height: 30px;
-    padding: 0 20px;
+
+  .headerBtnBox {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    font-weight: 500;
-    font-size: 14px;
-    background-color: var(--gray100);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-radius: 15px;
+    height: 100%;
+    font-size: 25px;
+    .nortification, .user {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      margin-left: 10px;
+      opacity: 0.8;
+    }
   }
 }
 
@@ -156,6 +160,15 @@ $bp : (mobile : 480px,
         height: 100%;
         padding: 0 10px;
       }
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: var(--white100);
+      border-radius: 10px;
+      margin: 10px 0;
     }
   }
   .btnBox {

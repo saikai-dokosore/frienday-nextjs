@@ -32,6 +32,7 @@ export default function Login() {
           <div>
             <h2>ログインしています.</h2>
             <button onClick={handleLogoutButton}>ログアウト</button>
+            <button onClick={() => router.push("/")}>マイページへ</button>
           </div>
         )}
         {!currentUser && (

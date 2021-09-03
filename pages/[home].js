@@ -9,22 +9,6 @@ import {
   HiOutlineBell,
   HiOutlineCog,
 } from "react-icons/hi";
-import { waitForAllSettled } from "recoil";
-
-// データ取得用の関数
-const getData = async (user) => {
-  let id = ""; // ユーザードキュメントID
-  let userObj = {}; // プロフィールオブジェクト
-  const getUserData = async (u) => {
-    await u.forEach(async (us) => {
-      id = us?.id;
-      userObj = us.data();
-    });
-  };
-  await getUserData(user);
-  const userIdObj = { id: id };
-  return { ...userIdObj, ...userObj };
-};
 
 export const getStaticPaths = async () => {
   const users = await db.collection("users").get(); // 全ユーザー取得
@@ -35,22 +19,20 @@ export const getStaticPaths = async () => {
   // useridのパスを生成
   const paths = items.map((item) => ({
     params: {
-      home: item.data().userid,
+      home: item.id,
     },
   }));
   return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps = async ({ params }) => {
-  const user = await db
-    .collection("users")
-    .where("userid", "==", params.home)
-    .get();
-  const database = await getData(user);
+  const user = await db.collection("users").doc(params.home).get();
+  let userObj = {};
+  userObj = await user.data();
   return {
     props: {
       id: params.home,
-      database: database || "undef",
+      database: userObj || "undef",
     },
     revalidate: 5,
   };
@@ -66,6 +48,8 @@ export default function Home({ id, database }) {
   const [placeUls, setPlaceUls] = useState(<div></div>);
   const { currentUser, login, logout } = useAuth();
   const [isMine, setIsMine] = useState(false);
+  const [message, setMessage] = useState("");
+  const [acctionBtnId, setAcctionBtnId] = useState("");
   const monthEmoji = {
     Jan: "0x1F338",
     Feb: "0x1F338",
@@ -103,7 +87,7 @@ export default function Home({ id, database }) {
       // DBから取得
       const places = await db
         .collection("users")
-        .doc(userData.id)
+        .doc(id)
         .collection("place")
         .get();
       // 予定がある月をキーとして予定を配列に入れる
@@ -186,7 +170,7 @@ export default function Home({ id, database }) {
   };
 
   const goPlace = async (id) => {
-    console.log("go : " + id);
+    setAcctionBtnId(id);
     document.getElementById("modal").style.display = "flex";
   };
   const closeModal = () => {
@@ -199,6 +183,24 @@ export default function Home({ id, database }) {
       }
     };
   }
+  const sendMessage = async () => {
+    const m = {
+      content: message,
+      read: false,
+      sentby: "saikai_official",
+      senttime: new Date(),
+    };
+    closeModal();
+    if (acctionBtnId !== "") {
+      await db
+        .collection("users")
+        .doc("saikai_official")
+        .collection("place")
+        .doc(acctionBtnId)
+        .collection("messages")
+        .add(m);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -288,10 +290,15 @@ export default function Home({ id, database }) {
       <div id="modal" className={styles.modalBack}>
         <div className={styles.modal}>
           <h3>メッセージを送ろう</h3>
-          <form>
-            <textarea placeholder="〇〇グループで行こう！"></textarea>
-            <button type="submit">送る</button>
-          </form>
+          <div className={styles.form}>
+            <textarea
+              name="sendtext"
+              placeholder="〇〇グループで行こう！"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+            ></textarea>
+            <button onClick={sendMessage}>送る</button>
+          </div>
         </div>
       </div>
     </div>

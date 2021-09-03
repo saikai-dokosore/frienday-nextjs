@@ -102,7 +102,7 @@ export default function Login({ profiledata }) {
             className={styles.nextArrow}
             onClick={() => {
               currentUser
-                ? router.push("/signup/setname")
+                ? router.push(`/signup/setname?id=${profiledata.username}`)
                 : handleLoginButton();
             }}
           >

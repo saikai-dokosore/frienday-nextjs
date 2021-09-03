@@ -1,10 +1,81 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/Index.module.scss";
+import styles from "../styles/Signup.module.scss";
 import { useAuth } from "../lib/auth";
+import { useRouter } from "next/router";
+import { db, storage } from "../lib/firebaseInit";
+import { useState, useEffect } from "react";
+import {
+  HiOutlineUserCircle,
+  HiOutlineBell,
+  HiOutlineCog,
+} from "react-icons/hi";
 
 export default function Index() {
+  // Auth
   const { currentUser, login, logout } = useAuth();
+  const router = useRouter();
+  const [nortifications, setNortifications] = useState(<div></div>);
+  if (!currentUser) {
+    //router.push("/signup/welcome");
+  }
+
+  console.log("nortifications", nortifications);
+
+  useEffect(() => {
+    (async () => {
+      const allMessages = {};
+      const getAllMessages = async () => {
+        const placeCollections = await db
+          .collection("users")
+          .doc("saikai_official")
+          .collection("place");
+        const places = await placeCollections.get();
+        places.forEach(async (p) => {
+          let name = p.data().name;
+          let emoji = p.data().emoji;
+          let month = p.data().month;
+          const messages = await placeCollections
+            .doc(p.id)
+            .collection("messages")
+            .get();
+          messages.forEach(async (m) => {
+            if (!allMessages[name]) {
+              allMessages[name] = [];
+            }
+            allMessages[name].push({
+              content: m.data().content,
+              read: m.data().read,
+              sentby: m.data().sentby,
+              senttime: m.data().senttime,
+            });
+          });
+        });
+      };
+      await getAllMessages();
+
+      let ulComps = [];
+      console.log("size", Object.keys(allMessages).length, allMessages);
+      for (let i = 0; i < Object.keys(allMessages).length; i++) {
+        let key = Object.keys(allMessages)[i];
+        let comp = allMessages[key].map((p, i) => {
+          return (
+            <li key={i}>
+              <p>{p?.content}</p>
+            </li>
+          );
+        });
+        ulComps.push(
+          <ul key={i}>
+            <p>key</p>
+            {comp}
+          </ul>
+        );
+      }
+      console.log("ulComps", ulComps);
+      setNortifications(<div>{ulComps}</div>);
+    })();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -19,13 +90,35 @@ export default function Index() {
 
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        <Link href="/saikai_official">
-          <a>saikai_official</a>
-        </Link>
+        <div className={styles.headerBtnBox}>
+          <Link href="/nortification">
+            <a>
+              <div className={styles.nortification}>
+                <HiOutlineBell />
+              </div>
+            </a>
+          </Link>
+          <Link href="/setting">
+            <a>
+              <div className={styles.user}>
+                <HiOutlineCog />
+              </div>
+            </a>
+          </Link>
+          <Link href={currentUser ? `/saikai_official` : "/signup/welcome"}>
+            <a>
+              <div className={styles.user}>
+                <HiOutlineUserCircle />
+              </div>
+            </a>
+          </Link>
+        </div>
       </header>
       <main className={styles.main}>
-        <h1>notification</h1>
-        <a href="instagram://user?username=middle_shizu">middle_shizu</a>
+        <div className={styles.title}>
+          <h1>通知一覧</h1>
+        </div>
+        <div className={styles.actionBox}>{nortifications}</div>
       </main>
     </div>
   );
