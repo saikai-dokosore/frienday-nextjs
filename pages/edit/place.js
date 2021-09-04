@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "../../styles/Signup.module.scss";
 import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
+import { db, storage } from "../../lib/firebaseInit";
 import { useState, useEffect } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
@@ -16,6 +17,9 @@ export default function Index() {
   // Auth
   const { currentUser, userId, login, logout, getUserId } = useAuth();
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [job, setJob] = useState("");
+  const [bio, setBio] = useState("");
 
   useEffect(() => {
     if (!currentUser) {
@@ -23,11 +27,25 @@ export default function Index() {
     }
   }, [currentUser, router]);
 
-  const handleLoginButton = async () => {
-    await login();
-  };
-  const handleLogoutButton = () => {
-    logout();
+  useEffect(() => {
+    (async () => {
+      if (userId) {
+        const user = await db.collection("users").doc(userId).get();
+        setName(user.data().name);
+        setJob(user.data().job);
+        setBio(user.data().bio);
+      }
+    })();
+  }, [userId]);
+
+  const updateInfo = async () => {
+    if (userId) {
+      const user = await db.collection("users").doc(userId).update({
+        name: name,
+        job: job,
+        bio: bio,
+      });
+    }
   };
 
   return (
@@ -58,7 +76,7 @@ export default function Index() {
               </div>
             </a>
           </Link>
-          <Link href={currentUser ? `/saikai_official` : "/signup/welcome"}>
+          <Link href={currentUser ? `/${userId}` : "/signup/welcome"}>
             <a>
               <div className={styles.user}>
                 <HiOutlineUserCircle />
@@ -69,23 +87,47 @@ export default function Index() {
       </header>
       <main className={styles.main}>
         <div className={styles.title}>
-          <h1>設定</h1>
+          <h1>アカウント情報編集</h1>
           <p></p>
         </div>
         <div className={styles.actionBox}>
-          <button
-            onClick={() => {
-              handleLogoutButton();
-            }}
-          >
-            ログアウト
-          </button>
-          <button
-            onClick={() => {
-              handleLogoutButton();
-            }}
-          >
-            アカウント削除
+          <div className={styles.name}>
+            <h3>Name</h3>
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+            />
+          </div>{" "}
+          <div className={styles.job}>
+            <h3>Job</h3>
+            <input
+              type="text"
+              value={job}
+              onChange={(event) => {
+                setJob(event.target.value);
+              }}
+            />
+          </div>{" "}
+          <div className={styles.bio}>
+            <h3>Bio</h3>
+            <textarea
+              type="text"
+              value={bio}
+              onChange={(event) => {
+                setBio(event.target.value);
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.btnBox}>
+          <div className={styles.nextText}>
+            <p>更新</p>
+          </div>
+          <button className={styles.nextArrow} onClick={() => updateInfo()}>
+            <MdKeyboardArrowRight />
           </button>
         </div>
       </main>

@@ -40,12 +40,13 @@ export default function Index() {
 
   const updateInfo = async () => {
     if (userId) {
-      const user = await db.collection("users").doc(userId).update({
+      await db.collection("users").doc(userId).update({
         name: name,
         job: job,
         bio: bio,
       });
     }
+    alert("更新しました");
   };
 
   return (
@@ -90,7 +91,7 @@ export default function Index() {
           <h1>アカウント情報編集</h1>
           <p></p>
         </div>
-        <div className={styles.actionBox}>
+        <form className={styles.actionBox}>
           <div className={styles.name}>
             <h3>Name</h3>
             <input
@@ -121,7 +122,7 @@ export default function Index() {
               }}
             />
           </div>
-        </div>
+        </form>
         <div className={styles.btnBox}>
           <div className={styles.nextText}>
             <p>更新</p>
