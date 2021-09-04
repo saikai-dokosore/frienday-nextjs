@@ -44,7 +44,7 @@ export const getServerSideProps = async (context) => {
 
 // クライアントサイド
 export default function Login({ profiledata }) {
-  const { currentUser, login, logout } = useAuth();
+  const { currentUser, userId, login, logout, getUserId } = useAuth();
   const router = useRouter();
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
@@ -53,6 +53,12 @@ export default function Login({ profiledata }) {
     await login();
     router.push("/signup/setname");
   };
+
+  useEffect(() => {
+    if (profiledata?.name) {
+      getUserId(profiledata.username);
+    }
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -102,7 +108,7 @@ export default function Login({ profiledata }) {
             className={styles.nextArrow}
             onClick={() => {
               currentUser
-                ? router.push(`/signup/setname?id=${profiledata.username}`)
+                ? router.push("/signup/setname")
                 : handleLoginButton();
             }}
           >

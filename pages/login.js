@@ -2,11 +2,19 @@ import Head from "next/head";
 import styles from "../styles/Signup.module.scss";
 import { useAuth } from "../lib/auth";
 import { useRouter } from "next/router";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { useEffect } from "react";
 
 export default function Login() {
   // Auth
-  const { currentUser, login, logout } = useAuth();
+  const { currentUser, userId, login, logout, getUserId } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser && userId) {
+      router.push("/" + userId);
+    }
+  }, [currentUser, userId]);
 
   const handleLoginButton = async () => {
     await login();
@@ -28,19 +36,22 @@ export default function Login() {
       </header>
 
       <main className={styles.main}>
-        {currentUser && (
-          <div>
-            <h2>ログインしています.</h2>
-            <button onClick={handleLogoutButton}>ログアウト</button>
-            <button onClick={() => router.push("/")}>マイページへ</button>
+        <div className={styles.title}>
+          <h1>ログイン</h1>
+          <p>Login</p>
+        </div>
+
+        <div className={styles.btnBox}>
+          <div className={styles.nextText}>
+            <p>ログインする</p>
           </div>
-        )}
-        {!currentUser && (
-          <div>
-            <h2>ログインしていません.</h2>
-            <button onClick={handleLoginButton}>ログイン</button>
-          </div>
-        )}
+          <button
+            className={styles.nextArrow}
+            onClick={() => handleLoginButton()}
+          >
+            <MdKeyboardArrowRight />
+          </button>
+        </div>
       </main>
     </div>
   );

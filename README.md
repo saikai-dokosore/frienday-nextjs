@@ -26,3 +26,8 @@
 - https://developers.facebook.com/docs/instagram-basic-display-api/guides/getting-profiles-and-media
 - https://developers.facebook.com/docs/instagram-basic-display-api/reference
 - https://qiita.com/harapeko_momiji/items/446ab28c4f5c937d0962
+
+### 今後
+
+- 一つの email で複数のアカウントがあるかもしれないことを考慮する
+- ポムの際に FireStore への通信が増えてしまう可能性がある

@@ -6,9 +6,8 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { db, storage } from "../../lib/firebaseInit";
 
 export default function Welcome() {
-  const { currentUser, login, logout } = useAuth();
+  const { currentUser, userId, login, logout, getUserId } = useAuth();
   const router = useRouter();
-  const instaUserId = router.query.id;
   const usersCollection = db.collection("users");
 
   const createAccount = async (name, id, email) => {
@@ -20,7 +19,7 @@ export default function Welcome() {
     };
     if (name === "") {
       alert("ニックネームが空です");
-    } else if (id === undefined) {
+    } else if (!id) {
       alert("Instagram連携ができていません");
     } else if (email === undefined) {
       alert("Googleログインができていません");
@@ -76,7 +75,7 @@ export default function Welcome() {
             onClick={() =>
               createAccount(
                 document.getElementById("nickname").value,
-                instaUserId,
+                userId,
                 currentUser?.email
               )
             }

@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 import { db, storage } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
 import {
@@ -42,14 +44,19 @@ export const getStaticProps = async ({ params }) => {
 export default function Home({ id, database }) {
   const [userData, setUserData] = useState(database); // ユーザープロフィール
   const [placeData, setPlaceData] = useState(); // 行きたい場所
-  const [pomu, setPomu] = useState(false);
+  const [pomu, setPomu] = useState([]);
+  const [isFollowYou, setIsFollowYou] = useState(false);
+  const [followersNum, setFollowersNum] = useState(0);
+  const [followNow, setfollowNow] = useState(true);
   const [accountImgUrl, setAccountImgUrl] = useState("");
   const storageRef = storage.ref();
   const [placeUls, setPlaceUls] = useState(<div></div>);
-  const { currentUser, login, logout } = useAuth();
+  const { currentUser, userId, login, logout, getUserId } = useAuth();
   const [isMine, setIsMine] = useState(false);
   const [message, setMessage] = useState("");
   const [acctionBtnId, setAcctionBtnId] = useState("");
+  const router = useRouter();
+
   const monthEmoji = {
     Jan: "0x1F338",
     Feb: "0x1F338",
@@ -67,8 +74,8 @@ export default function Home({ id, database }) {
 
   // マイページ判定
   useEffect(() => {
-    setIsMine(currentUser?.email === userData?.email ? true : false);
-  }, [currentUser]);
+    setIsMine(userId === id ? true : false);
+  }, [userId]);
 
   // ProfileImg
   useEffect(() => {
@@ -135,6 +142,74 @@ export default function Home({ id, database }) {
       setPlaceUls(ulComps);
     })();
   }, [database]);
+
+  // FollowersNomを取得
+  useEffect(() => {
+    (async () => {
+      // DBから取得
+      const followers = await db
+        .collection("users")
+        .doc(id)
+        .collection("followers")
+        .get();
+      let num = 0;
+      followers.forEach(async (p) => {
+        num = num + 1;
+      });
+      setFollowersNum(num);
+    })();
+  }, [userId]);
+
+  // isFollowYouを取得
+  useEffect(() => {
+    (async () => {
+      if (userId) {
+        // DBから取得
+        const followYou = await db
+          .collection("users")
+          .doc(id)
+          .collection("follows")
+          .doc(userId)
+          .get();
+        if (followYou.exists) {
+          setIsFollowYou(true);
+        } else {
+          setIsFollowYou(false);
+        }
+      }
+    })();
+  }, [userId]);
+
+  // followNowを取得
+  useEffect(() => {
+    (async () => {
+      if (userId) {
+        // DBから取得
+        const follow = await db
+          .collection("users")
+          .doc(userId)
+          .collection("follows")
+          .doc(id)
+          .get();
+        if (follow.size == 0) {
+          setfollowNow(false);
+        } else if (follow.size == 1) {
+          setfollowNow(true);
+        }
+      }
+    })();
+  }, [userId]);
+
+  // ポムを押したときの挙動
+  const acctionfollowNow = async () => {
+    setfollowNow(!followNow);
+    await db
+      .collection("users")
+      .doc(userId)
+      .collection("follows")
+      .doc(id)
+      .set({});
+  };
 
   // いきたい場所を追加
   const addPlace = async () => {
@@ -235,9 +310,7 @@ export default function Home({ id, database }) {
                 </div>
               </a>
             </Link>
-            <Link
-              href={currentUser ? `/${userData?.userid}` : "/signup/welcome"}
-            >
+            <Link href={currentUser ? `/${userId}` : "/signup/welcome"}>
               <a>
                 <div className={styles.user}>
                   <HiOutlineUserCircle />
@@ -264,26 +337,58 @@ export default function Home({ id, database }) {
         </div>
         <div className={styles.accountTextBox}>
           <h3>{userData?.name}</h3>
-          <p className={styles.accountTextJob}>{userData?.job}</p>
+          <p className={styles.accountTextJob}>
+            {userData?.job} <span>{followersNum}人にポムられています</span>
+          </p>
+          {isFollowYou ? (
+            <p className={styles.accountTextJob}>あなたをポムっています</p>
+          ) : (
+            <div></div>
+          )}
           <p className={styles.accountTextBio}>{userData?.bio}</p>
         </div>
+        {isMine ? (
+          <div className={styles.editBtn}>
+            <button
+              onClick={() => {
+                router.push("/edit/account");
+              }}
+            >
+              編集
+            </button>
+          </div>
+        ) : (
+          <div className={styles.pomuBtn}>
+            <button
+              onClick={() => {
+                acctionfollowNow();
+              }}
+              className={followNow ? styles.enable : styles.disable}
+            >
+              {String.fromCodePoint("0x270C")}
+            </button>
+          </div>
+        )}
       </div>
-
-      {/* ポム */}
-      {/* <div className={styles.pomuBox}>
-        <button
-          onClick={() => {
-            setPomu(!pomu);
-          }}
-          className={styles.enable}
-        >
-          {pomu ? "ポムっています" : "遊びに行けるよー"}
-        </button>
-      </div> */}
 
       {/* いきたい場所リスト */}
       <main className={styles.main}>
-        <div className={styles.placeBox}>{placeUls}</div>
+        <div className={styles.placeBox}>
+          {isMine ? (
+            <div className={styles.editBtn}>
+              <button
+                onClick={() => {
+                  router.push("/edit/place");
+                }}
+              >
+                編集
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {placeUls}
+        </div>
       </main>
 
       {/* メッセージモーダル */}

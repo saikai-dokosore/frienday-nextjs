@@ -114,6 +114,7 @@ $bp : (mobile : 480px,
   }
 
   .accountTextBox {
+    width: 100%;
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -129,7 +130,12 @@ $bp : (mobile : 480px,
       font-size: 10px;
       font-weight: 500;
       opacity: 0.5;
+      span {
+        margin-left: 10px;
+        font-weight: 700;
+      }
     }
+    
     .accountTextBio {
       margin-top: 10px;
       padding-left: 2px;
@@ -143,33 +149,61 @@ $bp : (mobile : 480px,
       font-weight: 500;
     }
   }
-}
-
-// ポム
-.pomuBox {
-  display: flex;
-  flex-flow: row;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  height: auto;
-  padding: 0 20px;
-  button {
+  .editBtn {
+    position: relative;
+    top: 0;
+    right: 0;
+    min-width: 40px;
+    height: 100%;
+    font-size: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--insta-gray);
-    color: var(--black100);
-    font-size: 10px;
-    padding: 6px 12px;
-    border-radius: 5px;
-    margin-left: 5px;
+    button {
+      width: 100%;
+      opacity: 0.5;
+      border: 1px solid var(--black100);
+      border-radius: 5px;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
-  .enable {
-    background-color: var(--insta-blue);
-    color: var(--white100);
+
+  .pomuBtn {
+    position: relative;
+    top: 0;
+    right: 0;
+    height: 100%;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .enable {
+      box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+      transform: translateY(2px);
+      background-color: var(--red100);
+    }
+    .disable {
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      background-color: var(--green100);
+    }
   }
+
 }
+
+
 
 // ボディ
 .main {
@@ -192,10 +226,30 @@ $bp : (mobile : 480px,
   display: flex;
   flex-flow: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   max-width: 600px;
   padding: 20px 10px;
+  .editBtn {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    font-size: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px 5px;
+    button {
+      opacity: 0.5;
+      border: 1px solid var(--black100);
+      border-radius: 5px;
+      padding: 5px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
   .placeUlBox {
     display: flex;
     flex-flow: column;

@@ -10,10 +10,6 @@ export default function Welcome() {
   const router = useRouter();
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
-  // if (currentUser) {
-  //   router.push(getCodeUrl);
-  // }
-
   return (
     <div className={styles.container}>
       <Head>
