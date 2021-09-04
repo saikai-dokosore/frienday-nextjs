@@ -40,7 +40,7 @@ export default function Index() {
 
   const updateInfo = async () => {
     if (userId) {
-      const user = await db.collection("users").doc(userId).set({
+      const user = await db.collection("users").doc(userId).update({
         name: name,
         job: job,
         bio: bio,
