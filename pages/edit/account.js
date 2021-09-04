@@ -5,7 +5,7 @@ import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
 import { useState, useEffect } from "react";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowRight, MdFileUpload } from "react-icons/md";
 
 import {
   HiOutlineUserCircle,
@@ -16,8 +16,20 @@ import {
 export default function Index() {
   // Auth
   const { currentUser, userId, login, logout, getUserId } = useAuth();
-  const { name, job, bio, setName, setJob, setBio, setAccountInfo } = useAuth();
+  const {
+    name,
+    job,
+    bio,
+    accountImgUrl,
+    setName,
+    setJob,
+    setBio,
+    setAccountInfo,
+    setAccountImgUrl,
+  } = useAuth();
   const router = useRouter();
+  const [uploadImage, setUploadImage] = useState();
+  console.log("uploadImage", uploadImage);
 
   useEffect(() => {
     if (!currentUser) {
@@ -39,6 +51,16 @@ export default function Index() {
   const updateInfo = async () => {
     await setAccountInfo();
     alert("更新しました");
+  };
+
+  const previewImg = (event) => {
+    const img = event.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = () => {
+      document.getElementById("image").src = reader.result;
+    };
+    setUploadImage(img);
   };
 
   return (
@@ -84,6 +106,25 @@ export default function Index() {
           <p></p>
         </div>
         <div className={styles.actionBox}>
+          <div className={styles.imgBox}>
+            <div className={styles.accountImgBox + " " + styles.green100}>
+              <img
+                id="image"
+                src={accountImgUrl === "" ? "" : accountImgUrl}
+                alt=""
+              />
+            </div>
+            <label htmlFor="file-upload" className={styles.select}>
+              <MdFileUpload />
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              onChange={(event) => {
+                previewImg(event);
+              }}
+            />
+          </div>
           <div className={styles.name}>
             <h3>Name</h3>
             <input

@@ -188,6 +188,51 @@ $bp : (mobile : 480px,
         padding: 0 10px;
       }
     }
+    .imgBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      .green100 {
+        background-color: var(--green100);
+      }
+      .red100 {
+        background-color: var(--red100);
+      }
+      .blue100 {
+        background-color: var(--blue100);
+      }
+      .accountImgBox {
+        width: 120px;
+        height: 120px;
+        min-width: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-size: 20px;
+        overflow: hidden;
+        img {
+          width: 120px;
+          height: 120px;
+          object-fit: cover;
+        }
+      }
+      input[type="file"] {
+        display: none;
+      }
+      .select {
+        position: absolute;
+        color: var(--white100);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        font-size: 25px;
+    }
+    }
   }
   .btnBox {
     width: 100%;

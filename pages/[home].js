@@ -36,7 +36,7 @@ export const getStaticProps = async ({ params }) => {
       id: params.home,
       database: userObj || "undef",
     },
-    revalidate: 1,
+    revalidate: 5,
   };
 };
 
@@ -47,8 +47,7 @@ export default function Home({ id, database }) {
   const [pomu, setPomu] = useState([]);
   const [isFollowYou, setIsFollowYou] = useState(false);
   const [followersNum, setFollowersNum] = useState(0);
-  const [followNow, setfollowNow] = useState(true);
-  const [accountImgUrl, setAccountImgUrl] = useState("");
+  const [followNow, setFollowNow] = useState(true);
   const storageRef = storage.ref();
   const [placeUls, setPlaceUls] = useState(<div></div>);
   const { currentUser, userId, login, logout, getUserId } = useAuth();
@@ -56,7 +55,17 @@ export default function Home({ id, database }) {
   const [message, setMessage] = useState("");
   const [acctionBtnId, setAcctionBtnId] = useState("");
   const router = useRouter();
-  const { name, job, bio, setName, setJob, setBio, setAccountInfo } = useAuth();
+  const {
+    name,
+    job,
+    bio,
+    accountImgUrl,
+    setName,
+    setJob,
+    setBio,
+    setAccountInfo,
+    setAccountImgUrl,
+  } = useAuth();
 
   useEffect(() => {
     setName(database?.name);
@@ -83,16 +92,6 @@ export default function Home({ id, database }) {
   useEffect(() => {
     setIsMine(userId === id ? true : false);
   }, [userId]);
-
-  // ProfileImg
-  useEffect(() => {
-    (async () => {
-      const profileImg = await storageRef
-        .child(`images/${id}.jpg`)
-        .getDownloadURL();
-      setAccountImgUrl(profileImg);
-    })();
-  }, [database]);
 
   // Place
   useEffect(() => {
@@ -161,7 +160,9 @@ export default function Home({ id, database }) {
         .get();
       let num = 0;
       followers.forEach(async (p) => {
-        num = num + 1;
+        if (p?.data()?.now) {
+          num = num + 1;
+        }
       });
       setFollowersNum(num);
     })();
@@ -178,7 +179,7 @@ export default function Home({ id, database }) {
           .collection("follows")
           .doc(userId)
           .get();
-        if (followYou.exists) {
+        if (followYou?.data()?.now) {
           setIsFollowYou(true);
         } else {
           setIsFollowYou(false);
@@ -198,10 +199,10 @@ export default function Home({ id, database }) {
           .collection("follows")
           .doc(id)
           .get();
-        if (follow.size == 0) {
-          setfollowNow(false);
-        } else if (follow.size == 1) {
-          setfollowNow(true);
+        if (follow?.data()?.now) {
+          setFollowNow(true);
+        } else {
+          setFollowNow(false);
         }
       }
     })();
@@ -209,13 +210,18 @@ export default function Home({ id, database }) {
 
   // ポムを押したときの挙動
   const acctionfollowNow = async () => {
-    setfollowNow(!followNow);
+    const now = !followNow;
+    setFollowersNum(now ? followersNum + 1 : followersNum - 1);
+    setFollowNow(now);
+    await db.collection("users").doc(userId).collection("follows").doc(id).set({
+      now: now,
+    });
     await db
       .collection("users")
-      .doc(userId)
-      .collection("follows")
       .doc(id)
-      .set({});
+      .collection("followers")
+      .doc(userId)
+      .set({ now: now });
   };
 
   // いきたい場所を追加
