@@ -56,6 +56,13 @@ export default function Home({ id, database }) {
   const [message, setMessage] = useState("");
   const [acctionBtnId, setAcctionBtnId] = useState("");
   const router = useRouter();
+  const { name, job, bio, setName, setJob, setBio, setAccountInfo } = useAuth();
+
+  useEffect(() => {
+    setName(userData?.name);
+    setJob(userData?.job);
+    setBio(userData?.bio);
+  }, [database]);
 
   const monthEmoji = {
     Jan: "0x1F338",
@@ -336,16 +343,16 @@ export default function Home({ id, database }) {
           )}
         </div>
         <div className={styles.accountTextBox}>
-          <h3>{userData?.name}</h3>
+          <h3>{name}</h3>
           <p className={styles.accountTextJob}>
-            {userData?.job} <span>{followersNum}人にポムられています</span>
+            {job} <span>{followersNum}人にポムられています</span>
           </p>
           {isFollowYou ? (
             <p className={styles.accountTextJob}>あなたをポムっています</p>
           ) : (
             <div></div>
           )}
-          <p className={styles.accountTextBio}>{userData?.bio}</p>
+          <p className={styles.accountTextBio}>{bio}</p>
         </div>
         {isMine ? (
           <div className={styles.editBtn}>

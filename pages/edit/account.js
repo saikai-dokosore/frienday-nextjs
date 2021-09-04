@@ -16,14 +16,12 @@ import {
 export default function Index() {
   // Auth
   const { currentUser, userId, login, logout, getUserId } = useAuth();
+  const { name, job, bio, setName, setJob, setBio, setAccountInfo } = useAuth();
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [job, setJob] = useState("");
-  const [bio, setBio] = useState("");
 
   useEffect(() => {
     if (!currentUser) {
-      router.push("/signup/welcome");
+      //router.push("/signup/welcome");
     }
   }, [currentUser, router]);
 
@@ -39,13 +37,7 @@ export default function Index() {
   }, [userId]);
 
   const updateInfo = async () => {
-    if (userId) {
-      await db.collection("users").doc(userId).update({
-        name: name,
-        job: job,
-        bio: bio,
-      });
-    }
+    await setAccountInfo();
     alert("更新しました");
   };
 
@@ -91,7 +83,7 @@ export default function Index() {
           <h1>アカウント情報編集</h1>
           <p></p>
         </div>
-        <form className={styles.actionBox}>
+        <div className={styles.actionBox}>
           <div className={styles.name}>
             <h3>Name</h3>
             <input
@@ -122,7 +114,7 @@ export default function Index() {
               }}
             />
           </div>
-        </form>
+        </div>
         <div className={styles.btnBox}>
           <div className={styles.nextText}>
             <p>更新</p>

@@ -221,6 +221,10 @@ $bp : (mobile : 480px,
         align-items: center;
       }
     }
+    .nextArrow:active { 
+      background-color: var(--black100);
+      color: var(--white100);
+    }
   }
   .other {
     width: 100%;
