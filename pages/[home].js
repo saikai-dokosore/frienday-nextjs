@@ -36,7 +36,7 @@ export const getStaticProps = async ({ params }) => {
       id: params.home,
       database: userObj || "undef",
     },
-    revalidate: 5,
+    revalidate: 1,
   };
 };
 
@@ -59,10 +59,10 @@ export default function Home({ id, database }) {
   const { name, job, bio, setName, setJob, setBio, setAccountInfo } = useAuth();
 
   useEffect(() => {
-    setName(userData?.name);
-    setJob(userData?.job);
-    setBio(userData?.bio);
-  }, [database]);
+    setName(database?.name);
+    setJob(database?.job);
+    setBio(database?.bio);
+  }, []);
 
   const monthEmoji = {
     Jan: "0x1F338",
