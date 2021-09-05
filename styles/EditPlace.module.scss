@@ -84,7 +84,7 @@ $bp : (mobile : 480px,
   @include query (tablet) {
     flex-flow: column;
     justify-content: center;
-    padding: 50px 30px 30px 30px;
+    padding: 50px 5px 30px 5px;
   }
   .process {
     flex: 1;
@@ -136,103 +136,7 @@ $bp : (mobile : 480px,
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    p {
-      font-weight: 400;
-      line-height: 2rem;
-      letter-spacing: 0.2rem;
-      opacity: 0.7;
-    }
-    .inputBox {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      height: 40px;
-      margin-top: 20px;
-      border-bottom: 1px solid var(--black100);
-      p {
-        font-weight: 500;
-        letter-spacing: 0.1rem;
-        opacity: 1;
-      }
-      input {
-        width: 100%;
-        height: 100%;
-        padding: 0 10px;
-      }
-    }
-    button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: var(--white100);
-      border-radius: 10px;
-      margin: 10px 0;
-    }
-    .name, .job, .bio {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      margin-top: 20px;
-      border-bottom: 1px solid var(--black100);
-      input {
-        width: 100%;
-        height: 40px;
-        padding: 0 10px;
-      }
-      textarea {
-        width: 100%;
-        height: 100px;
-        padding: 0 10px;
-      }
-    }
-    .imgBox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-        .green100 {
-          background-color: var(--green100);
-        }
-        .red100 {
-          background-color: var(--red100);
-        }
-        .blue100 {
-          background-color: var(--blue100);
-        }
-        .accountImgBox {
-          width: 120px;
-          height: 120px;
-          min-width: 120px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-          font-size: 20px;
-          overflow: hidden;
-          img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-          }
-        }
-        input[type="file"] {
-          display: none;
-        }
-        .select {
-          position: absolute;
-          color: var(--white100);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;
-          font-size: 25px;
-      }
-    }
+    
   }
   .btnBox {
     width: 100%;
@@ -288,3 +192,146 @@ $bp : (mobile : 480px,
 
 
 
+
+// いきたい場所
+.placeBox {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px 10px;
+
+  .placeUlBox {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 15px 15px 0px 15px;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    h3 {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    li+ li {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .placeListBox {
+      display: flex;
+      flex-direction: Row;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+      margin-bottom: 5px;
+      width: 100%;
+      height: auto;
+      .emoji {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        background-color: var(--white100);
+        border-radius: 50%;
+      }
+      .placeTextBox {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        .name {
+          margin-left: 10px;
+          font-size: 12px;
+          font-weight: 500; 
+        }
+      }
+      .placeBtnBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 80px;
+          height: 25px;
+          font-size: 10px;
+          font-weight: 400;
+          border-radius: 5px;
+          mix-blend-mode: color-burn;
+          border: 1px solid #272727;
+          transition: all 0.25s ease;
+          &:active {
+            background-color: #272727;
+            color: var(--white100);
+          }
+        }
+        .placeGo {
+  
+        }
+        .placeDelete {
+          display: none;
+        }
+      }
+    }
+    .placeSetBoxPlus {
+      font-size: 12px;
+      background-color: var(--white100);
+      border: 1px solid rgba(0,0,0,0.1);
+      input {
+        width: 60%;
+      }
+      ::placeholder {
+        color: var(--black100);
+        opacity: 0.4;
+      }
+    }
+  }
+  .Apr {
+    background-color: var(--green100);
+  }
+  .May {
+    background-color: var(--blue100);
+  }
+  .Jun {
+    background-color: var(--purple100);
+  }
+
+  .addPlaceBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 50px;
+    input {
+      flex: 5;
+      border-bottom: 1px solid var(--black100);
+    }
+    select {
+      text-align: center;
+      background-color: var(--gray100);
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-left: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    button {
+      flex: 1;
+      background-color: var(--gray100);
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-left: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
