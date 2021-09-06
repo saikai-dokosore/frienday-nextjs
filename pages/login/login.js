@@ -1,6 +1,6 @@
 import Head from "next/head";
-import styles from "../styles/Signup.module.scss";
-import { useAuth } from "../lib/auth";
+import styles from "../../styles/Signup.module.scss";
+import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect } from "react";

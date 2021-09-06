@@ -5,13 +5,13 @@
 
 ## 変数名
 
-| 変数名     | 用途                         | 例                     |
-| ---------- | ---------------------------- | ---------------------- |
-| myId       | 自分の ID                    | saikai_official        |
-| ViewUserId | 表示中ユーザーの ID          | "middle_shizu"         |
-| email      | 自分の Google メールアドレス | sa"ika"i0011@gmail.com |
-| job        | 自分の職業                   | 学生                   |
-| name       | 自分のニックネーム           | さいかい               |
+| 変数名     | 用途                         | 例                   |
+| ---------- | ---------------------------- | -------------------- |
+| myId       | 自分の ID                    | saikai_official      |
+| viewUserId | 表示中ユーザーの ID          | middle_shizu         |
+| email      | 自分の Google メールアドレス | saikai0011@gmail.com |
+| job        | 自分の職業                   | 学生                 |
+| name       | 自分のニックネーム           | さいかい             |
 
 ## DB (FireStore)
 

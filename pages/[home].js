@@ -309,14 +309,14 @@ export default function Home({ id, database }) {
         <h1>FRIENDAY</h1>
         {currentUser ? (
           <div className={styles.headerBtnBox}>
-            <Link href="/nortification">
+            <Link href="/user/nortification">
               <a>
                 <div className={styles.nortification}>
                   <HiOutlineBell />
                 </div>
               </a>
             </Link>
-            <Link href="/setting">
+            <Link href="/user/setting">
               <a>
                 <div className={styles.user}>
                   <HiOutlineCog />

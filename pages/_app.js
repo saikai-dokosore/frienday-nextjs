@@ -1,10 +1,8 @@
 import "../styles/globals.scss";
 import "../styles/reset.scss";
-import { useEffect } from "react";
-import { useSetRecoilState, RecoilRoot } from "recoil";
 import AuthProvider from "../lib/auth";
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Component {...pageProps} />

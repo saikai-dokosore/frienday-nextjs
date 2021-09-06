@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/Signup.module.scss";
-import { useAuth } from "../lib/auth";
+import styles from "../../styles/Signup.module.scss";
+import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import {
@@ -42,14 +42,14 @@ export default function Index() {
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
         <div className={styles.headerBtnBox}>
-          <Link href="/nortification">
+          <Link href="/user/nortification">
             <a>
               <div className={styles.nortification}>
                 <HiOutlineBell />
               </div>
             </a>
           </Link>
-          <Link href="/setting">
+          <Link href="/user/setting">
             <a>
               <div className={styles.user}>
                 <HiOutlineCog />
