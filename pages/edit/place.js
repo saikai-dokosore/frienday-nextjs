@@ -12,6 +12,7 @@ import {
   HiOutlineBell,
   HiOutlineCog,
 } from "react-icons/hi";
+
 export default function Index() {
   // Auth
   const { currentUser, userId, login, logout, getUserId } = useAuth();
@@ -121,6 +122,7 @@ export default function Index() {
               <option value="Jun">June</option>
             </select>
             <input
+              id="newPlace"
               type="text"
               value={newPlace}
               onChange={(event) => {
