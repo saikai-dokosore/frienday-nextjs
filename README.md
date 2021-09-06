@@ -1,7 +1,7 @@
 # 設計方針
 
-- リンク欄からタップされた時の挙動は少しでも速くなるようにする
-- できるだけアプリと近いような動きを目指す
+1. リンク欄からタップされた時の挙動は少しでも速くなるようにする
+2. できるだけアプリと近いような動きを目指す
 
 ## 変数名
 
@@ -17,7 +17,7 @@
 
 ```json
 {
-  users: {
+  "users": {
      saikai_official: {
         email : "saikai0011@gmail.com",
         name : "さいかい",
@@ -48,14 +48,14 @@
 }
 ```
 
-### Instagram 基本表示 API
-
-- https://developers.facebook.com/docs/instagram-basic-display-api/guides/getting-profiles-and-media
-- https://developers.facebook.com/docs/instagram-basic-display-api/reference
-- https://qiita.com/harapeko_momiji/items/446ab28c4f5c937d0962
-
 ### 今後実装
 
 - 一つの email で複数のアカウントがあるかもしれないことを考慮する
 - ポムの際に FireStore への通信が増えてしまう可能性がある
 - 画像をアップロードして Rename してサイズを変えて保存
+
+### Instagram 基本表示 API
+
+- https://developers.facebook.com/docs/instagram-basic-display-api/guides/getting-profiles-and-media
+- https://developers.facebook.com/docs/instagram-basic-display-api/reference
+- https://qiita.com/harapeko_momiji/items/446ab28c4f5c937d0962
