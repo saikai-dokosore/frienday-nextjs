@@ -5,46 +5,46 @@
 
 ## 変数名
 
-| 変数名     | 用途                         | 例                   |
-| ---------- | ---------------------------- | -------------------- |
-| myId       | 自分の ID                    | saikai_official      |
-| ViewUserId | 表示中ユーザーの ID          | middle_shizu         |
-| email      | 自分の Google メールアドレス | saikai0011@gmail.com |
-| job        | 自分の職業                   | 学生                 |
-| name       | 自分のニックネーム           | さいかい             |
+| 変数名     | 用途                         | 例                     |
+| ---------- | ---------------------------- | ---------------------- |
+| myId       | 自分の ID                    | saikai_official        |
+| ViewUserId | 表示中ユーザーの ID          | "middle_shizu"         |
+| email      | 自分の Google メールアドレス | sa"ika"i0011@gmail.com |
+| job        | 自分の職業                   | 学生                   |
+| name       | 自分のニックネーム           | さいかい               |
 
 ## DB (FireStore)
 
 ```json
 {
   "users": {
-     saikai_official: {
-        email : "saikai0011@gmail.com",
-        name : "さいかい",
-        job: "学生",
-        places : {
-          [randomID] : {
-            name: "焼肉",
-            month: 5,
-            emoji: "0x1F37B",
-          },
-          ...
-        },
-        follows : {
-          middle_shizu : {
-            now : true,
-          },
-          ...
-        },
-        followers : {
-          middle_shizu : {
-            now : true,
-          },
-          ...
-        },
-    },
-    ...
-  },
+    "saikai_official": {
+      "email": "saikai0011@gmail.com",
+      "name": "さいかい",
+      "job": "学生",
+      "places": {
+        "[randomID]": {
+          "name": "焼肉",
+          "month": 5,
+          "emoji": "0x1F37B"
+        }
+        // placeが5個くらい
+      },
+      "follows": {
+        "middle_shizu": {
+          "now": true
+        }
+        // 要するにポムなので5~10人くらい
+      },
+      "followers": {
+        "middle_shizu": {
+          "now": true
+        }
+        // ポムられている人も多くて5人くらい
+      }
+    }
+    // ユーザーはIDを固有のものとして10万人くらい
+  }
 }
 ```
 
