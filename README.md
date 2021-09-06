@@ -25,20 +25,20 @@
       "places": {
         "[randomID]": {
           "name": "焼肉",
-          "month": 5,
+          "month": 8,
           "emoji": "0x1F37B"
         }
         "// placeが5個くらい"
       },
       "follows": {
         "middle_shizu": {
-          "now": true
+          "num": 12
         }
         "// 要するにポムなので5~10人くらい"
       },
       "followers": {
         "middle_shizu": {
-          "now": true
+          "num": 50
         }
         "// ポムられている人も多くて5人くらい"
       }
