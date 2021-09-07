@@ -139,7 +139,7 @@ $bp : (mobile : 480px,
   padding: 30px 0;
   width: 100vw;
   overflow: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   h3 {
     margin-left: 15px;
     font-size: 12px;
