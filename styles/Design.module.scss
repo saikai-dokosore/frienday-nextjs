@@ -124,6 +124,9 @@ $bp : (mobile : 480px,
       font-weight: 400;
       border-radius: 8px;
     }
+    button:active {
+      opacity: 0.5;
+    }
   }
 }
 
