@@ -3,7 +3,6 @@ import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
 import { db, storage } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
 import {
@@ -21,27 +20,35 @@ export const getStaticPaths = async () => {
   // useridのパスを生成
   const paths = items.map((item) => ({
     params: {
-      home: item.id,
+      viewUserId: item.id,
     },
   }));
   return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps = async ({ params }) => {
-  const user = await db.collection("users").doc(params.home).get();
-  let userObj = {};
-  userObj = await user.data();
+  const user = await db.collection("users").doc(params.viewUserId).get();
+
+  // 作成されていないPathなら404へリダイレクト
+  if (!user.data()) {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
-      id: params.home,
-      database: userObj || "undef",
+      id: params.viewUserId,
+      database: user.data(),
     },
-    revalidate: 5,
+    revalidate: 5, // 5秒間はキャッシュを更新しない
   };
 };
 
 // コンポーネント
-export default function Home({ id, database }) {
+export default function Index({ id, database }) {
   const [userData, setUserData] = useState(database); // ユーザープロフィール
   const [placeData, setPlaceData] = useState(); // 行きたい場所
   const [pomu, setPomu] = useState([]);
