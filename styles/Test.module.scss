@@ -74,8 +74,10 @@ $bp : (mobile : 480px,
     a {
       background-color: var(--insta-blue);
       color: var(--white100);
+      font-size: 12px;
       font-weight: 400;
-      padding: 10px 40px;
+      width: 150px;
+      padding: 10px;
       border-radius: 5px;
       margin: 10px;
       display: flex;
