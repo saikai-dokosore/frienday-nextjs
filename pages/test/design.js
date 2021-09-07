@@ -49,14 +49,19 @@ export default function Index() {
         </div>
       </div>
       <div className={styles.placeBox}>
-        <h3>今月行きたいところ</h3>
+        {/* <h3>今月行きたいところ</h3> */}
         <div className={styles.places}>
           <div className={styles.imgBox}>
-            <Image src={"/images/cafe.jpeg"} alt="" width={500} height={500} />
+            <Image
+              src={"/images/cafe02.jpeg"}
+              alt=""
+              width={500}
+              height={500}
+            />
           </div>
           <div className={styles.imgBox}>
             <Image
-              src={"/images/disney.jpeg"}
+              src={"/images/disney02.jpeg"}
               alt=""
               width={500}
               height={500}
