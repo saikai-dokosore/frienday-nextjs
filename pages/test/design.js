@@ -2,8 +2,19 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../../styles/Design.module.scss";
+import { useState, useEffect } from "react";
+import anime from "animejs";
 
 export default function Index() {
+  const animation = () => {
+    const elem = document.getElementById("elem");
+    anime({
+      targets: elem,
+      translateY: 100,
+      duration: 2000,
+      direction: "alternate",
+    });
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -19,7 +30,9 @@ export default function Index() {
         <div className={styles.title}>
           <h1>FRIENDAY</h1>
         </div>
-        <div className={styles.cover}></div>
+        <div className={styles.cover}>
+          <div className={styles.ball} id="elem"></div>
+        </div>
       </div>
       <div className={styles.prifileBox}>
         <div className={styles.image}>
@@ -40,7 +53,7 @@ export default function Index() {
           </p>
           <button
             onClick={() => {
-              console.log("pomu");
+              animation();
             }}
             className={styles.pomu}
           >
@@ -60,6 +73,7 @@ export default function Index() {
               width={500}
               height={500}
             />
+            <p># 表参道カフェ</p>
           </div>
           <div className={styles.imgBox}>
             <Image

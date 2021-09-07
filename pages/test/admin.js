@@ -35,6 +35,9 @@ export default function Index() {
           <Link href="/test/design">
             <a>design</a>
           </Link>
+          <Link href="https://vsco.co/saikai0011">
+            <a>VSCO</a>
+          </Link>
         </div>
       </main>
     </div>
