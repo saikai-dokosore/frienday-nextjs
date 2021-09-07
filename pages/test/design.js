@@ -48,8 +48,10 @@ export default function Index() {
           </button>
         </div>
       </div>
+      <div className={styles.placeTitle}>
+        <h3>今月行きたいところ</h3>
+      </div>
       <div className={styles.placeBox}>
-        {/* <h3>今月行きたいところ</h3> */}
         <div className={styles.places}>
           <div className={styles.imgBox}>
             <Image
