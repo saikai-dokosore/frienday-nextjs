@@ -7,9 +7,9 @@ import anime from "animejs";
 
 export default function Index() {
   const animation = () => {
-    const elem = document.getElementById("elem");
+    const ball = document.getElementById("ball");
     anime({
-      targets: elem,
+      targets: ball,
       translateY: 100,
       duration: 2000,
       direction: "alternate",
@@ -30,8 +30,8 @@ export default function Index() {
         <div className={styles.title}>
           <h1>FRIENDAY</h1>
         </div>
-        <div className={styles.cover}>
-          <div className={styles.ball} id="elem"></div>
+        <div className={styles.cover} id="cover">
+          <div className={styles.ball} id="ball"></div>
         </div>
       </div>
       <div className={styles.prifileBox}>
