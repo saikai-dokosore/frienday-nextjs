@@ -35,6 +35,9 @@ export default function Index() {
           <Link href="/test/06">
             <a>デモ06</a>
           </Link>
+          <Link href="/test/07">
+            <a>デモ07</a>
+          </Link>
           <Link href="/saikai_official">
             <a>saikai_official</a>
           </Link>
