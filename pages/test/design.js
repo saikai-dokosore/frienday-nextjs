@@ -28,7 +28,7 @@ export default function Index() {
 
       <div className={styles.coverBox}>
         <div className={styles.title}>
-          <h1>FRIENDAY</h1>
+          <h1>Instago</h1>
         </div>
         <div className={styles.cover} id="cover">
           <div className={styles.ball} id="ball"></div>
