@@ -6,15 +6,6 @@ import { useState, useEffect } from "react";
 import anime from "animejs";
 
 export default function Index() {
-  const animation = () => {
-    const ball = document.getElementById("ball");
-    anime({
-      targets: ball,
-      translateY: 100,
-      duration: 2000,
-      direction: "alternate",
-    });
-  };
   return (
     <div className={styles.container}>
       <Head>
@@ -31,13 +22,13 @@ export default function Index() {
           <h1>Instago</h1>
         </div>
         <div className={styles.cover} id="cover">
-          <div className={styles.ball} id="ball"></div>
+          <p>4 人にグッドされています</p>
         </div>
       </div>
       <div className={styles.prifileBox}>
         <div className={styles.image}>
           <Image
-            src={"/images/profile_image.jpg"}
+            src={"/images/profile.png"}
             alt="Profile Picture"
             width={100}
             height={100}
@@ -45,19 +36,14 @@ export default function Index() {
         </div>
         <div className={styles.profile}>
           <p className={styles.name}>さいかい</p>
-          <p className={styles.isPomed}>ポムられています</p>
+          <p className={styles.isPomed}>あなたをグッドしています</p>
           <p className={styles.bio}>
             お盆は12〜16日まで帰省してますので、
             <br />
             皆さん遊んで〜
           </p>
-          <button
-            onClick={() => {
-              animation();
-            }}
-            className={styles.pomu}
-          >
-            ポムる
+          <button onClick={() => {}} className={styles.pomu}>
+            グッド
           </button>
         </div>
       </div>
@@ -66,26 +52,42 @@ export default function Index() {
       </div>
       <div className={styles.placeBox}>
         <div className={styles.places}>
-          <div className={styles.imgBox}>
-            <Image
-              src={"/images/cafe02.jpeg"}
-              alt=""
-              width={500}
-              height={500}
-            />
-            <p># 表参道カフェ</p>
-          </div>
-          <div className={styles.imgBox}>
-            <Image
-              src={"/images/disney02.jpeg"}
-              alt=""
-              width={500}
-              height={500}
-            />
-          </div>
-          <div className={styles.imgBox}>
-            <Image src={"/images/apex.jpeg"} alt="" width={500} height={500} />
-          </div>
+          <Link href={"/test/design/place?id=01"}>
+            <a>
+              <div className={styles.imgBox}>
+                <Image
+                  src={"/images/place01.png"}
+                  alt=""
+                  width={500}
+                  height={500}
+                />
+              </div>
+            </a>
+          </Link>
+          <Link href={"/test/design/place?id=02"}>
+            <a>
+              <div className={styles.imgBox}>
+                <Image
+                  src={"/images/place02.png"}
+                  alt=""
+                  width={500}
+                  height={500}
+                />
+              </div>
+            </a>
+          </Link>
+          <Link href={"/test/design/place?id=03"}>
+            <a>
+              <div className={styles.imgBox}>
+                <Image
+                  src={"/images/place03.png"}
+                  alt=""
+                  width={500}
+                  height={500}
+                />
+              </div>
+            </a>
+          </Link>
         </div>
       </div>
     </div>
