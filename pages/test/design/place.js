@@ -26,7 +26,7 @@ export default function Index() {
           width={100}
           height={100}
         />
-        <p>グッドされていません</p>
+        <p>あなたはグッドされていません</p>
         <button onClick={() => {}}>いきたい！</button>
       </div>
     </div>
