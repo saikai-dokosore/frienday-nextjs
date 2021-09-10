@@ -20,8 +20,8 @@ export default function Index() {
           <Link href="/test/05">
             <a>デモ05</a>
           </Link>
-          <Link href="/test/07">
-            <a>デモ07</a>
+          <Link href="/test/06">
+            <a>デモ06</a>
           </Link>
           <Link href="/test/08">
             <a>デモ08</a>
