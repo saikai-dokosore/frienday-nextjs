@@ -26,6 +26,9 @@ export default function Index() {
           width={100}
           height={100}
         />
+        <Link href={"instagram://tag?name=andpeople"}>
+          <a>#andpeople</a>
+        </Link>
         <p>あなたはグッドされていません</p>
         <button onClick={() => {}}>いきたい！</button>
       </div>
