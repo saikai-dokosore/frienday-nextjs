@@ -26,7 +26,7 @@ $bp : (mobile : 480px,
   height: 100vh;
   width: 100vw;
   padding: 0 100px;
-  overflow: auto;
+  overflow: hidden;
     @include query (tablet) {
       padding: 0;
     }
@@ -198,7 +198,7 @@ $bp : (mobile : 480px,
   font-size: 12px;
   font-weight: 500;
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .placeBox {
   display: flex;

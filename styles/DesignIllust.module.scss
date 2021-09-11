@@ -184,7 +184,7 @@ $bp : (mobile : 480px,
   font-size: 12px;
   font-weight: 500;
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .placeBox {
   display: flex;
@@ -200,8 +200,8 @@ $bp : (mobile : 480px,
     width: 100%;
     
     .imgBox {
-      width: 100px;
-      height: 120px;
+      width: 110px;
+      height: 132px;
       margin: 0px;
       border-radius: 10px;
       img {

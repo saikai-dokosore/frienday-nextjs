@@ -59,8 +59,8 @@ export default function Index() {
                 <Image
                   src={"/images/illust/place01.png"}
                   alt=""
-                  width={100}
-                  height={120}
+                  width={150}
+                  height={180}
                 />
               </div>
             </a>
@@ -71,8 +71,8 @@ export default function Index() {
                 <Image
                   src={"/images/illust/place02.png"}
                   alt=""
-                  width={100}
-                  height={120}
+                  width={150}
+                  height={180}
                 />
               </div>
             </a>
@@ -83,8 +83,8 @@ export default function Index() {
                 <Image
                   src={"/images/illust/place03.png"}
                   alt=""
-                  width={100}
-                  height={120}
+                  width={150}
+                  height={180}
                 />
               </div>
             </a>
@@ -97,8 +97,8 @@ export default function Index() {
                 <Image
                   src={"/images/illust/place01.png"}
                   alt=""
-                  width={100}
-                  height={120}
+                  width={150}
+                  height={180}
                 />
               </div>
             </a>
@@ -109,8 +109,8 @@ export default function Index() {
                 <Image
                   src={"/images/illust/place02.png"}
                   alt=""
-                  width={100}
-                  height={120}
+                  width={150}
+                  height={180}
                 />
               </div>
             </a>
@@ -121,8 +121,8 @@ export default function Index() {
                 <Image
                   src={"/images/illust/place03.png"}
                   alt=""
-                  width={100}
-                  height={120}
+                  width={150}
+                  height={180}
                 />
               </div>
             </a>
