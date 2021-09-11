@@ -36,7 +36,7 @@ export default function Index() {
         <div className={styles.profile}>
           <p className={styles.name}>さいかい</p>
           <p className={styles.goodnum}>{goodNum}Goods</p>
-          <p className={styles.isgooded}>グッドされています</p>
+          <p className={styles.isgooded}>Goodされています</p>
 
           <button
             onClick={() => {
@@ -44,7 +44,7 @@ export default function Index() {
             }}
             className={styles.pomu}
           >
-            グッド
+            Good
           </button>
         </div>
       </div>
