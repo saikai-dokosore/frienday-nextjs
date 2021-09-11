@@ -18,11 +18,11 @@ export const getServerSideProps = async (context) => {
     body.append("redirect_uri", "https://frienday.vercel.app/signup/getinsta");
     body.append("code", code);
 
-    const res = await fetch(getTokenUrl, {
-      method: "POST",
-      headers: {},
-      body: body,
-    });
+    // const res = await fetch(getTokenUrl, {
+    //   method: "POST",
+    //   headers: {},
+    //   body: body,
+    // });
 
     const data = await res.json();
     const token = data.access_token;
