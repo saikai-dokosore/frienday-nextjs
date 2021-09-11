@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../../styles/Signup.module.scss";
 import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 var FormData = require("form-data");
 import { MdKeyboardArrowRight } from "react-icons/md";
 
@@ -18,11 +19,11 @@ export const getServerSideProps = async (context) => {
     body.append("redirect_uri", "https://frienday.vercel.app/signup/getinsta");
     body.append("code", code);
 
-    // const res = await fetch(getTokenUrl, {
-    //   method: "POST",
-    //   headers: {},
-    //   body: body,
-    // });
+    const res = await fetch(getTokenUrl, {
+      method: "POST",
+      headers: {},
+      body: body,
+    });
 
     const data = await res.json();
     const token = data.access_token;
@@ -55,6 +56,7 @@ export default function Login({ profiledata }) {
   };
 
   useEffect(() => {
+    console.log("useEffect", profiledata?.name);
     if (profiledata?.name) {
       getUserId(profiledata.username);
     }
