@@ -23,8 +23,8 @@ export default function Index() {
         <Image
           src={`/images/illust/place${router.query.id}.png`}
           alt="Profile Picture"
-          width={100}
-          height={100}
+          width={200}
+          height={240}
         />
         <p>Goodされています!</p>
         <button onClick={() => {}}>いきたい！</button>
