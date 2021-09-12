@@ -22,7 +22,7 @@ export default function Index() {
       <div className={styles.placePage}>
         <Image
           src={`/images/illust/place${router.query.id}.png`}
-          alt="Profile Picture"
+          alt=""
           width={200}
           height={240}
         />

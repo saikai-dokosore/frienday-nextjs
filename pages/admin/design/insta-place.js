@@ -8,6 +8,22 @@ import { useRouter } from "next/router";
 
 export default function Index() {
   const router = useRouter();
+  const [hashtagImages, setHashtagImages] = useState(
+    <div className={styles.hashtags}></div>
+  );
+
+  useEffect(() => {
+    let list = [];
+    for (let i = 1; i < 10; i++) {
+      list.push(
+        <div className={styles.imageBox}>
+          <img src={`/images/hashtag/andpeople0${i}.png`} alt="" />
+        </div>
+      );
+    }
+    setHashtagImages(<div className={styles.hashtags}>{list}</div>);
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,6 +37,7 @@ export default function Index() {
 
       <div className={styles.placePage}>
         <div className={styles.place + " " + styles.a}>#andpeople</div>
+        {hashtagImages}
         <p>Goodされています!</p>
         <button onClick={() => {}}>いきたい！</button>
       </div>
