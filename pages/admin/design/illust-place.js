@@ -26,6 +26,9 @@ export default function Index() {
           width={200}
           height={240}
         />
+        <div className={styles.hashtags}>
+          <img src={"/images/hashtag/andpeople_illust.png"} alt="" />
+        </div>
         <p>Goodされています!</p>
         <button onClick={() => {}}>いきたい！</button>
       </div>
