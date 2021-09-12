@@ -35,7 +35,7 @@ export default function Index() {
         </div>
         <div className={styles.profile}>
           <p className={styles.name}>さいかい</p>
-          <p className={styles.goodnum}>{goodNum}Goods</p>
+          <p className={styles.goodnum}>{goodNum} Goods</p>
           <p className={styles.isgooded}>Goodされています</p>
 
           <button
