@@ -58,12 +58,16 @@
     "saikai_official": {
       "email": "saikai0011@gmail.com",
       "name": "さいかい",
-      "job": "学生",
       "places": {
         "[randomID]": {
-          "name": "焼肉",
-          "month": 8,
-          "emoji": "0x1F37B"
+          "name": "#表参道カフェ",
+          "[randomID]": {
+            "middle_shizu": {
+              "messages": "テニサーで行こう！",
+              "created_at": "2021-09-12",
+            }
+            "// 1,2個くらいのはず"
+          }
         }
         "// placeが5個くらい"
       },
@@ -92,6 +96,7 @@
 - 画像をアップロードして Rename してサイズを変えて保存[画像](https://zenn.dev/fujiyama/articles/50b0a73acd89b7)
 - [Falling Balls](https://codepen.io/asha23/pen/rewmp)
 - [ハッシュタグ検索](https://developers.facebook.com/docs/instagram-api/guides/hashtag-search)
+- Good 関係を後から admin 用に記録していくシステム
 
 ### Instagram 基本表示 API
 

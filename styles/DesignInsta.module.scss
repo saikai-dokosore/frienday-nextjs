@@ -23,7 +23,6 @@ $bp : (mobile : 480px,
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 100vh;
   width: 100vw;
   padding: 0 100px;
   overflow: hidden;
@@ -38,7 +37,7 @@ $bp : (mobile : 480px,
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   .place {
     width: 150px;
