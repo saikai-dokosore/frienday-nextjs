@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "../styles/DesignIllust.module.scss";
+import styles from "../styles/ViewUserId.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { db, storage } from "../lib/firebaseInit";
@@ -48,6 +48,7 @@ export const getStaticProps = async ({ params }) => {
 
 // コンポーネント
 export default function Index({ viewUserId }) {
+  const { myInfo, setMyInfo } = useAuth(); // ログインユーザー情報
   const [placeData, setPlaceData] = useState(); // 行きたい場所
   const [pomu, setPomu] = useState([]);
   const [isFollowYou, setIsFollowYou] = useState(false);
@@ -55,22 +56,10 @@ export default function Index({ viewUserId }) {
   const [followNow, setFollowNow] = useState(true);
   const storageRef = storage.ref();
   const [placeUls, setPlaceUls] = useState(<div></div>);
-  const { currentUser, userId, login, logout, getUserId } = useAuth();
   const [isMine, setIsMine] = useState(false);
   const [message, setMessage] = useState("");
   const [acctionBtnId, setAcctionBtnId] = useState("");
   const router = useRouter();
-  const {
-    name,
-    job,
-    bio,
-    accountImgUrl,
-    setName,
-    setJob,
-    setBio,
-    setAccountInfo,
-    setAccountImgUrl,
-  } = useAuth();
 
   const monthEmoji = {
     Jan: "0x1F338",
@@ -89,8 +78,10 @@ export default function Index({ viewUserId }) {
 
   // マイページ判定
   useEffect(() => {
-    setIsMine(userId === viewUserId ? true : false);
-  }, [userId]);
+    if (myInfo) {
+      setIsMine(myInfo.id === viewUserId ? true : false);
+    }
+  }, [myInfo]);
 
   // // Place
   // useEffect(() => {
@@ -165,18 +156,18 @@ export default function Index({ viewUserId }) {
       });
       setFollowersNum(num);
     })();
-  }, [userId]);
+  }, [viewUserId]);
 
   // isFollowYouを取得
   useEffect(() => {
     (async () => {
-      if (userId) {
+      if (myInfo) {
         // DBから取得
         const followYou = await db
           .collection("users")
           .doc(viewUserId)
           .collection("follows")
-          .doc(userId)
+          .doc(myInfo.id)
           .get();
         if (followYou?.data()?.now) {
           setIsFollowYou(true);
@@ -185,16 +176,16 @@ export default function Index({ viewUserId }) {
         }
       }
     })();
-  }, [userId]);
+  }, [myInfo]);
 
   // followNowを取得
   useEffect(() => {
     (async () => {
-      if (userId) {
+      if (myInfo) {
         // DBから取得
         const follow = await db
           .collection("users")
-          .doc(userId)
+          .doc(myInfo.id)
           .collection("follows")
           .doc(viewUserId)
           .get();
@@ -205,27 +196,31 @@ export default function Index({ viewUserId }) {
         }
       }
     })();
-  }, [userId]);
+  }, [myInfo]);
 
   // ポムを押したときの挙動
   const acctionfollowNow = async () => {
-    const now = !followNow;
-    setFollowersNum(now ? followersNum + 1 : followersNum - 1);
-    setFollowNow(now);
-    await db
-      .collection("users")
-      .doc(userId)
-      .collection("follows")
-      .doc(viewUserId)
-      .set({
-        now: now,
-      });
-    await db
-      .collection("users")
-      .doc(viewUserId)
-      .collection("followers")
-      .doc(userId)
-      .set({ now: now });
+    if (myInfo) {
+      const now = !followNow;
+      setFollowersNum(now ? followersNum + 1 : followersNum - 1);
+      setFollowNow(now);
+      await db
+        .collection("users")
+        .doc(myInfo.id)
+        .collection("follows")
+        .doc(viewUserId)
+        .set({
+          now: now,
+        });
+      await db
+        .collection("users")
+        .doc(viewUserId)
+        .collection("followers")
+        .doc(myInfo.id)
+        .set({ now: now });
+    } else {
+      alert("ログインできていません");
+    }
   };
 
   return (
@@ -242,27 +237,35 @@ export default function Index({ viewUserId }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <div className={styles.coverBox}>
-        <div className={styles.title}>
-          <h1>Instago</h1>
-        </div>
-        <div className={styles.cover} id="cover"></div>
-      </div>
-      <div className={styles.prifileBox}>
-        <div className={styles.image}>
-          <Image
-            src={"/images/illust/profile.png"}
-            alt="Profile Picture"
-            width={100}
-            height={100}
-          />
-        </div>
-        <div className={styles.profile}>
-          <p className={styles.name}>さいかい</p>
-          <p className={styles.goodnum}>10Goods</p>
-          <p className={styles.isgooded}>Goodされています</p>
+      <header className={styles.header}>
+        <h1>Instago</h1>
+      </header>
 
-          <button onClick={() => {}} className={styles.pomu}>
+      <div className={styles.profileBox}>
+        <div className={styles.profile}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/profiles/profile_illust.png"}
+              alt="Profile Picture"
+              width={95}
+              height={95}
+            />
+          </div>
+          <p className={styles.name}>maki kataoka</p>
+          <p className={styles.isGooded}>あなたをGoodしています</p>
+        </div>
+        <div className={styles.goodBox}>
+          <div className={styles.goodNum}>
+            <div className={styles.total}>
+              <p>240</p>
+              <p>Total</p>
+            </div>
+            <div className={styles.you}>
+              <p>0</p>
+              <p>You</p>
+            </div>
+          </div>
+          <button onClick={() => {}} className={styles.goodBtn}>
             Good
           </button>
         </div>

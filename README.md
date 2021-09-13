@@ -61,12 +61,12 @@
       "places": {
         "[randomID]": {
           "name": "#表参道カフェ",
-          "[randomID]": {
-            "middle_shizu": {
-              "messages": "テニサーで行こう！",
+          "gowith": {
+            "[randomID]": {
+              "name": "middle_shizu",
+              "message": "テニサーで行こう！",
               "created_at": "2021-09-12",
             }
-            "// 1,2個くらいのはず"
           }
         }
         "// placeが5個くらい"
