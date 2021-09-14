@@ -68,6 +68,8 @@ export default function Index({ viewUserId }) {
     setPlaceCards,
     profileColor,
     setProfileColor,
+    login,
+    logout,
   } = useAuth();
   const [isMine, setIsMine] = useState(false);
   const [isFollowYou, setIsFollowYou] = useState(false);
@@ -331,6 +333,23 @@ export default function Index({ viewUserId }) {
         <h3>\ 9月の気になる場所 /</h3>
       </div>
       {placeCards}
+
+      <div className={styles.loginBox}>
+        <button
+          onClick={() => {
+            logout();
+          }}
+        >
+          ログアウトボタン
+        </button>
+        <button
+          onClick={() => {
+            login();
+          }}
+        >
+          ログインボタン
+        </button>
+      </div>
     </div>
   );
 }
