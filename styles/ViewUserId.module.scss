@@ -32,13 +32,14 @@ $bp : (mobile : 480px,
   justify-content: flex-start;
   align-items: center;
   height: 54px;
-  padding: 0 15px;
+  padding: 0 16px;
   width: 100%;
+  border-bottom: 0.5px solid #E2E2E2;
   z-index: 100;
   h1 {
     font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 0.3em;
+    font-size: 20px;
+    letter-spacing: 0.2em;
   }
 }
 
@@ -49,7 +50,7 @@ $bp : (mobile : 480px,
   align-items: flex-end;
   width: 100%;
   height: auto;
-  padding: 0 20px;
+  padding: 0 25px;
 
   .profile {
     display: flex;
@@ -137,7 +138,7 @@ $bp : (mobile : 480px,
   letter-spacing: 0.05em;
 }
 .placeCardBox {
-  padding: 0 36px;
+  padding: 0 8px;
   display: flex;
   justify-content: center;
   align-items: center;
