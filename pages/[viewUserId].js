@@ -64,6 +64,8 @@ export default function Index({ viewUserId }) {
   const [placeCards, setPlaceCards] = useState(
     <div className={styles.placeCardBox}></div>
   );
+  const [youGoods, setYouGoods] = useState(0);
+  const [totalGoods, setTotalGoods] = useState(240);
 
   const monthEmoji = {
     Jan: "0x1F338",
@@ -284,15 +286,21 @@ export default function Index({ viewUserId }) {
         <div className={styles.goodBox}>
           <div className={styles.goodNum}>
             <div className={styles.total}>
-              <p className={styles.num}>240</p>
+              <p className={styles.num}>{totalGoods}</p>
               <p>Total</p>
             </div>
             <div className={styles.you}>
-              <p className={styles.num}>0</p>
+              <p className={styles.num}>{youGoods}</p>
               <p>You</p>
             </div>
           </div>
-          <button onClick={() => {}} className={styles.goodBtn}>
+          <button
+            onClick={() => {
+              setYouGoods(youGoods + 1);
+              setTotalGoods(totalGoods + 1);
+            }}
+            className={styles.goodBtn}
+          >
             Good
           </button>
         </div>
