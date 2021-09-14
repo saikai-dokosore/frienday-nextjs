@@ -48,25 +48,34 @@ export const getStaticProps = async ({ params }) => {
 
 // コンポーネント
 export default function Index({ viewUserId }) {
-  const { myInfo, setMyInfo } = useAuth(); // ログインユーザー情報
   const [placeData, setPlaceData] = useState(); // 行きたい場所
   const [pomu, setPomu] = useState([]);
-  const [isFollowYou, setIsFollowYou] = useState(false);
-  const [followersNum, setFollowersNum] = useState(0);
-  const [followNow, setFollowNow] = useState(true);
-  const storageRef = storage.ref();
   const [placeUls, setPlaceUls] = useState(<div></div>);
-  const [isMine, setIsMine] = useState(false);
+  const [followNow, setFollowNow] = useState(true);
   const [message, setMessage] = useState("");
   const [acctionBtnId, setAcctionBtnId] = useState("");
-  const router = useRouter();
+  const [followersNum, setFollowersNum] = useState(0);
 
-  const [profileImg, setProfileImg] = useState(<div></div>);
-  const [placeCards, setPlaceCards] = useState(
-    <div className={styles.placeCardBox}></div>
-  );
+  const router = useRouter();
+  const storageRef = storage.ref();
+
+  const {
+    myInfo,
+    setMyInfo,
+    profileImg,
+    setProfileImg,
+    placeCards,
+    setPlaceCards,
+    profileColor,
+    setProfileColor,
+  } = useAuth();
+  const [isMine, setIsMine] = useState(false);
+  const [isFollowYou, setIsFollowYou] = useState(false);
+
   const [youGoods, setYouGoods] = useState(0);
   const [totalGoods, setTotalGoods] = useState(240);
+
+  const colors = ["blue", "red", "yellow", "green"];
 
   const monthEmoji = {
     Jan: "0x1F338",
@@ -85,9 +94,10 @@ export default function Index({ viewUserId }) {
 
   // マイページ判定
   useEffect(() => {
-    if (myInfo) {
-      setIsMine(myInfo.id === viewUserId ? true : false);
-    }
+    // if (myInfo) {
+    //   setIsMine(myInfo.id === viewUserId ? true : false);
+    // }
+    setIsMine(true);
   }, [myInfo]);
 
   // // Place
@@ -230,11 +240,7 @@ export default function Index({ viewUserId }) {
     }
   };
 
-  useEffect(() => {
-    const randomNum = Math.floor(Math.random() * 104) + 1;
-    setProfileImg(<img src={`/images/avatar/peep-${randomNum}.svg`} alt="" />);
-  }, []);
-
+  // いきたい場所リストの取得
   useEffect(() => {
     let _placeCards = [];
     for (let i = 0; i < 6; i++) {
@@ -278,11 +284,27 @@ export default function Index({ viewUserId }) {
 
       <div className={styles.profileBox}>
         <div className={styles.profile}>
-          <div className={styles.image}>{profileImg}</div>
-          <p className={styles.name}>maki kataoka</p>
-          <p className={styles.isGooded}>あなたをGoodしています</p>
+          <div className={styles.image + " " + styles[profileColor]}>
+            {profileImg}
+          </div>
+          <p className={styles.name}>{myInfo?.name}</p>
+          {isFollowYou ? (
+            <p className={styles.isGooded}>あなたをGoodしています</p>
+          ) : (
+            <p className={styles.isGooded}>あなたをGoodしています</p>
+          )}
         </div>
         <div className={styles.goodBox}>
+          {isMine ? (
+            // eslint-disable-next-line @next/next/link-passhref
+            <Link href={"/edit/account"}>
+              <div className={styles.edit}>
+                <a>プロフィール編集</a>
+              </div>
+            </Link>
+          ) : (
+            <div></div>
+          )}
           <div className={styles.goodNum}>
             <div className={styles.total}>
               <p className={styles.num}>{totalGoods}</p>

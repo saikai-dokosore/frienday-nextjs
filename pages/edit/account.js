@@ -1,73 +1,36 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../../styles/Signup.module.scss";
-import { useAuth } from "../../lib/auth";
+import Image from "next/image";
+import styles from "../../styles/EditAccount.module.scss";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
-import { useState, useEffect } from "react";
-import { MdKeyboardArrowRight, MdFileUpload } from "react-icons/md";
+import { useAuth } from "../../lib/auth";
 
-import {
-  HiOutlineUserCircle,
-  HiOutlineBell,
-  HiOutlineCog,
-} from "react-icons/hi";
-
+// コンポーネント
 export default function Index() {
-  // Auth
-  const { currentUser, userId, login, logout, getUserId } = useAuth();
-  const {
-    name,
-    job,
-    bio,
-    accountImgUrl,
-    setName,
-    setJob,
-    setBio,
-    setAccountInfo,
-    setAccountImgUrl,
-  } = useAuth();
   const router = useRouter();
-  const [uploadImage, setUploadImage] = useState();
-  console.log("uploadImage", uploadImage);
+  const storageRef = storage.ref();
+
+  const {
+    myInfo,
+    setMyInfo,
+    profileImg,
+    setProfileImg,
+    placeCards,
+    setPlaceCards,
+    profileColor,
+    setProfileColor,
+  } = useAuth();
 
   useEffect(() => {
-    if (!currentUser) {
-      //router.push("/signup/welcome");
-    }
-  }, [currentUser, router]);
-
-  useEffect(() => {
-    (async () => {
-      if (userId) {
-        const user = await db.collection("users").doc(userId).get();
-        setName(user.data().name);
-        setJob(user.data().job);
-        setBio(user.data().bio);
-      }
-    })();
-  }, [userId]);
-
-  const updateInfo = async () => {
-    await setAccountInfo();
-    alert("更新しました");
-  };
-
-  const previewImg = (event) => {
-    const img = event.target.files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(img);
-    reader.onload = () => {
-      document.getElementById("image").src = reader.result;
-    };
-    setUploadImage(img);
-  };
-
+    document.getElementById("name").value = myInfo.name;
+  }, []);
   return (
     <div className={styles.container}>
       <Head>
-        <title>home</title>
-        <meta name="description" content="test" />
+        <title>アカウント編集</title>
+        <meta name="description" content="アカウント編集画面" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
         <meta name="og:title" content="test" />
@@ -75,96 +38,56 @@ export default function Index() {
       </Head>
 
       <header className={styles.header}>
-        <h1>FRIENDAY</h1>
-        <div className={styles.headerBtnBox}>
-          <Link href="/user/nortification">
-            <a>
-              <div className={styles.nortification}>
-                <HiOutlineBell />
-              </div>
-            </a>
-          </Link>
-          <Link href="/user/setting">
-            <a>
-              <div className={styles.user}>
-                <HiOutlineCog />
-              </div>
-            </a>
-          </Link>
-          <Link href={currentUser ? `/${userId}` : "/signup/welcome"}>
-            <a>
-              <div className={styles.user}>
-                <HiOutlineUserCircle />
-              </div>
-            </a>
-          </Link>
-        </div>
+        <h1>Instago</h1>
       </header>
-      <main className={styles.main}>
-        <div className={styles.title}>
-          <h1>アカウント情報編集</h1>
-          <p></p>
-        </div>
-        <div className={styles.actionBox}>
-          <div className={styles.imgBox}>
-            <div className={styles.accountImgBox + " " + styles.green100}>
-              <img
-                id="image"
-                src={accountImgUrl === "" ? "" : accountImgUrl}
-                alt=""
-              />
-            </div>
-            <label htmlFor="file-upload" className={styles.select}>
-              <MdFileUpload />
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              onChange={(event) => {
-                previewImg(event);
+
+      <div className={styles.backBtnBox}>
+        <Link href={`/${myInfo.id}`}>
+          <a>Back</a>
+        </Link>
+      </div>
+
+      <div className={styles.profileBox}>
+        <div className={styles.profile}>
+          <div className={styles.image + " " + styles[profileColor]}>
+            {profileImg}
+          </div>
+          <div className={styles.colorBox}>
+            <button
+              className={styles.red}
+              onClick={() => {
+                setProfileColor("red");
               }}
-            />
+            ></button>
+            <button
+              className={styles.blue}
+              onClick={() => {
+                setProfileColor("blue");
+              }}
+            ></button>
+            <button
+              className={styles.yellow}
+              onClick={() => {
+                setProfileColor("yellow");
+              }}
+            ></button>
+            <button
+              className={styles.green}
+              onClick={() => {
+                setProfileColor("green");
+              }}
+            ></button>
           </div>
           <div className={styles.name}>
-            <h3>Name</h3>
             <input
-              type="text"
-              value={name}
+              id="name"
               onChange={(event) => {
-                setName(event.target.value);
-              }}
-            />
-          </div>{" "}
-          <div className={styles.job}>
-            <h3>Job</h3>
-            <input
-              type="text"
-              value={job}
-              onChange={(event) => {
-                setJob(event.target.value);
-              }}
-            />
-          </div>{" "}
-          <div className={styles.bio}>
-            <h3>Bio</h3>
-            <textarea
-              type="text"
-              value={bio}
-              onChange={(event) => {
-                setBio(event.target.value);
+                setMyInfo(Object.assign(myInfo, { name: event.target.value }));
               }}
             />
           </div>
         </div>
-        <div className={styles.btnBox}>
-          <div className={styles.nextText}>
-            <p>更新</p>
-          </div>
-          <button className={styles.nextArrow} onClick={() => updateInfo()}>
-            <MdKeyboardArrowRight />
-          </button>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }

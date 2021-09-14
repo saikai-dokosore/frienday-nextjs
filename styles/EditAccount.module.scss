@@ -1,0 +1,131 @@
+// レスポンシブ設定
+$bp : (mobile : 480px,
+    tablet : 768px,
+    desktop : 1440px,
+);
+@mixin query($display) {
+
+    @each $key,
+    $value in $bp {
+        @if ($display==$key) {
+            @media (max-width: $value) {
+                @content;
+            }
+        }
+    }
+}
+
+// 全体
+.container {
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 54px;
+  padding: 0 16px;
+  width: 100%;
+  border-bottom: 0.5px solid #E2E2E2;
+  z-index: 100;
+  h1 {
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+  }
+}
+
+.backBtnBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 54px;
+  width: 100%;
+  padding: 0 36px;
+  margin-top: 20px;
+
+}
+
+.profileBox {
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .red {
+      background-color: #DB1D00;
+    }
+    .blue{
+      background-color: #257BD4;
+    }
+    .yellow {
+      background-color: #E7EB21;
+    }
+    .green {
+      background-color: #00A867;
+    }
+    .image {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        width: 110px;
+        object-fit: cover;
+        object-position: -10px 0px;
+      }
+    }
+    .colorBox {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        border-radius: 10px;
+      }
+      .red {
+        background-color: #DB1D00;
+      }
+      .blue{
+        background-color: #257BD4;
+      }
+      .yellow {
+        background-color: #E7EB21;
+      }
+      .green {
+        background-color: #00A867;
+      }
+    }
+
+    .name {
+      margin-top: 40px;
+      input {
+        border-bottom: 0.5px solid rgba(0,0,0,0.2);
+        line-height: 36px;
+        text-align: center;
+      }
+    }
+
+  }
+
+}
