@@ -61,6 +61,7 @@ export default function Index({ viewUserId }) {
   const [acctionBtnId, setAcctionBtnId] = useState("");
   const router = useRouter();
 
+  const [profileImg, setProfileImg] = useState(<div></div>);
   const [placeCards, setPlaceCards] = useState(
     <div className={styles.placeCardBox}></div>
   );
@@ -230,6 +231,18 @@ export default function Index({ viewUserId }) {
   };
 
   useEffect(() => {
+    const randomNum = Math.floor(Math.random() * 104) + 1;
+    setProfileImg(
+      <Image
+        src={`/images/avatar/peep-${randomNum}.svg`}
+        alt=""
+        width={160}
+        height={160}
+      />
+    );
+  }, []);
+
+  useEffect(() => {
     let _placeCards = [];
     for (let i = 0; i < 6; i++) {
       const randomNum = Math.floor(Math.random() * 104) + 1;
@@ -272,14 +285,7 @@ export default function Index({ viewUserId }) {
 
       <div className={styles.profileBox}>
         <div className={styles.profile}>
-          <div className={styles.image}>
-            <Image
-              src={"/images/profiles/profile_illust.png"}
-              alt="Profile Picture"
-              width={95}
-              height={95}
-            />
-          </div>
+          <div className={styles.image}>{profileImg}</div>
           <p className={styles.name}>maki kataoka</p>
           <p className={styles.isGooded}>あなたをGoodしています</p>
         </div>

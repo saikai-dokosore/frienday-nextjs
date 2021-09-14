@@ -58,7 +58,15 @@ $bp : (mobile : 480px,
     justify-content: center;
     align-items: flex-start;
     .image {
-      min-width: 95px;
+      width: 95px;
+      height: 95px;
+      background-color: #257BD4;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        object-fit: cover;
+        object-position: -2px 4px;
+      }
     }
     .name {
       margin-top: 5px;
@@ -163,7 +171,6 @@ $bp : (mobile : 480px,
       height: 64px;
       overflow: hidden;
       img {
-        width: 200px;
         object-fit: cover;
         object-position: top;
       }
