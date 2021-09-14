@@ -257,17 +257,102 @@ export default function Index({ viewUserId }) {
         <div className={styles.goodBox}>
           <div className={styles.goodNum}>
             <div className={styles.total}>
-              <p>240</p>
+              <p className={styles.num}>240</p>
               <p>Total</p>
             </div>
             <div className={styles.you}>
-              <p>0</p>
+              <p className={styles.num}>0</p>
               <p>You</p>
             </div>
           </div>
           <button onClick={() => {}} className={styles.goodBtn}>
             Good
           </button>
+        </div>
+      </div>
+
+      <div className={styles.placeTitle}>
+        <h3>\ 9月の気になる場所 /</h3>
+      </div>
+      <div className={styles.placeCardBox}>
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/avatar/peep-1.svg"}
+              alt="Profile Picture"
+              width={160}
+              height={160}
+            />
+          </div>
+          <div className={styles.hashtag}>
+            <p>#表参道カフェ</p>
+          </div>
+        </div>
+
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/avatar/peep-1.svg"}
+              alt="Profile Picture"
+              width={160}
+              height={160}
+            />
+          </div>
+          <div className={styles.hashtag}>
+            <p>#表参道カフェ</p>
+          </div>
+        </div>
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/avatar/peep-1.svg"}
+              alt="Profile Picture"
+              width={160}
+              height={160}
+            />
+          </div>
+          <div className={styles.hashtag}>
+            <p>#表参道カフェ</p>
+          </div>
+        </div>
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/avatar/peep-1.svg"}
+              alt="Profile Picture"
+              width={160}
+              height={160}
+            />
+          </div>
+          <div className={styles.hashtag}>
+            <p>#表参道カフェ</p>
+          </div>
+        </div>
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/avatar/peep-1.svg"}
+              alt="Profile Picture"
+              width={160}
+              height={160}
+            />
+          </div>
+          <div className={styles.hashtag}>
+            <p>#表参道カフェ</p>
+          </div>
+        </div>
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={"/images/avatar/peep-1.svg"}
+              alt="Profile Picture"
+              width={160}
+              height={160}
+            />
+          </div>
+          <div className={styles.hashtag}>
+            <p>#表参道カフェ</p>
+          </div>
         </div>
       </div>
     </div>
