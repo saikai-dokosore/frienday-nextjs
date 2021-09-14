@@ -232,14 +232,7 @@ export default function Index({ viewUserId }) {
 
   useEffect(() => {
     const randomNum = Math.floor(Math.random() * 104) + 1;
-    setProfileImg(
-      <Image
-        src={`/images/avatar/peep-${randomNum}.svg`}
-        alt=""
-        width={160}
-        height={160}
-      />
-    );
+    setProfileImg(<img src={`/images/avatar/peep-${randomNum}.svg`} alt="" />);
   }, []);
 
   useEffect(() => {

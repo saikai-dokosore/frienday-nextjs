@@ -64,8 +64,9 @@ $bp : (mobile : 480px,
       border-radius: 50%;
       overflow: hidden;
       img {
+        width: 110px;
         object-fit: cover;
-        object-position: -2px 4px;
+        object-position: -10px 0px;
       }
     }
     .name {
