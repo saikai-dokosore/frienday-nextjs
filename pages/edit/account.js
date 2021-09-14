@@ -24,8 +24,9 @@ export default function Index() {
   } = useAuth();
 
   useEffect(() => {
-    document.getElementById("name").value = myInfo.name;
+    document.getElementById("name").value = myInfo?.name;
   }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -42,7 +43,7 @@ export default function Index() {
       </header>
 
       <div className={styles.backBtnBox}>
-        <Link href={`/${myInfo.id}`}>
+        <Link href={`/${myInfo?.id}`}>
           <a>Back</a>
         </Link>
       </div>
