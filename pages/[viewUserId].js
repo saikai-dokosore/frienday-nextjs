@@ -248,19 +248,23 @@ export default function Index({ viewUserId }) {
     for (let i = 0; i < 6; i++) {
       const randomNum = Math.floor(Math.random() * 104) + 1;
       _placeCards.push(
-        <div className={styles.placeCard}>
-          <div className={styles.image}>
-            <Image
-              src={`/images/avatar/peep-${randomNum}.svg`}
-              alt=""
-              width={160}
-              height={160}
-            />
-          </div>
-          <div className={styles.hashtag}>
-            <p>#表参道カフェ</p>
-          </div>
-        </div>
+        <Link href={`/admin/design/place?id=${randomNum}`}>
+          <a>
+            <div className={styles.placeCard}>
+              <div className={styles.image}>
+                <Image
+                  src={`/images/avatar/peep-${randomNum}.svg`}
+                  alt=""
+                  width={160}
+                  height={160}
+                />
+              </div>
+              <div className={styles.hashtag}>
+                <p>#表参道カフェ</p>
+              </div>
+            </div>
+          </a>
+        </Link>
       );
     }
     setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
@@ -322,7 +326,7 @@ export default function Index({ viewUserId }) {
               setYouGoods(youGoods + 1);
               setTotalGoods(totalGoods + 1);
             }}
-            className={styles.goodBtn}
+            className={styles.goodBtn + " " + styles[profileColor]}
           >
             Good
           </button>

@@ -18,17 +18,14 @@ export default function Index() {
         <h1>DEMO PAGE</h1>
         <div>
           <p>好み調査</p>
-          <Link href="/admin/design/illust">
-            <a>A：イラストベース</a>
+          <Link href="/admin/design/center">
+            <a>A：中央寄せ</a>
           </Link>
-          <Link href="/admin/design/insta">
-            <a>B：インスタ寄せ</a>
+          <Link href="/saikai_official">
+            <a>B：左寄せ</a>
           </Link>
 
           <p>参考</p>
-          <Link href="/saikai_official">
-            <a>saikai_official</a>
-          </Link>
           <Link href="https://vsco.co/saikai0011">
             <a>VSCO</a>
           </Link>
