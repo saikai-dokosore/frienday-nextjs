@@ -65,8 +65,8 @@ export default function Index() {
         {hashtagImages}
         <p className={styles.isGood}>{myInfo?.name}はあなたをGoodしています!</p>
         <div className={styles.sendBox}>
-          <input type="text" placeholder="いつメンで行こう！" />
-          <button onClick={() => {}}>一緒にいきたい！</button>
+          <input type="text" placeholder="一緒に行こう！" />
+          <button onClick={() => {}}>送信</button>
         </div>
       </div>
     </div>

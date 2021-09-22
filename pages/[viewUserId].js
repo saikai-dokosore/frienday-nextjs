@@ -245,7 +245,7 @@ export default function Index({ viewUserId }) {
   // いきたい場所リストの取得
   useEffect(() => {
     let _placeCards = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
       const randomNum = Math.floor(Math.random() * 104) + 1;
       _placeCards.push(
         <Link href={`/admin/design/place?id=${randomNum}`}>
@@ -289,38 +289,36 @@ export default function Index({ viewUserId }) {
       </header>
 
       <div className={styles.profileBox}>
-        <div className={styles.profile}>
+        <div className={styles.profileTop}>
+          <div className={styles.total}>
+            <p className={styles.num}>{totalGoods}</p>
+            <p>Total</p>
+          </div>
           <div className={styles.image + " " + styles[profileColor]}>
             {profileImg}
           </div>
-          <p className={styles.name}>{myInfo?.name}</p>
-          {isFollowYou ? (
-            <p className={styles.isGooded}>あなたをGoodしています</p>
-          ) : (
-            <p className={styles.isGooded}>あなたをGoodしています</p>
-          )}
-        </div>
-        <div className={styles.goodBox}>
-          {isMine ? (
-            // eslint-disable-next-line @next/next/link-passhref
-            <Link href={"/edit/account"}>
-              <div className={styles.edit}>
-                <a>プロフィール編集</a>
-              </div>
-            </Link>
-          ) : (
-            <div></div>
-          )}
-          <div className={styles.goodNum}>
-            <div className={styles.total}>
-              <p className={styles.num}>{totalGoods}</p>
-              <p>Total</p>
-            </div>
-            <div className={styles.you}>
-              <p className={styles.num}>{youGoods}</p>
-              <p>You</p>
-            </div>
+          <div className={styles.you}>
+            <p className={styles.num}>{youGoods}</p>
+            <p>You</p>
           </div>
+        </div>
+        <p className={styles.name}>{myInfo?.name}</p>
+        {isFollowYou ? (
+          <p className={styles.isGooded}>あなたをGoodしています</p>
+        ) : (
+          <div></div>
+        )}
+        {isMine ? (
+          <Link href={"/edit/account"}>
+            <div className={styles.edit}>
+              <a>プロフィール編集</a>
+            </div>
+          </Link>
+        ) : (
+          <div></div>
+        )}
+
+        <div className={styles.goodBtnBox}>
           <button
             onClick={() => {
               setYouGoods(youGoods + 1);
@@ -334,7 +332,7 @@ export default function Index({ viewUserId }) {
       </div>
 
       <div className={styles.placeTitle}>
-        <h3>\ 9月の気になる場所 /</h3>
+        <h3>今月気になっているところ</h3>
       </div>
       {placeCards}
 
