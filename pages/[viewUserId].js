@@ -246,21 +246,22 @@ export default function Index({ viewUserId }) {
   useEffect(() => {
     let _placeCards = [];
     for (let i = 0; i < 4; i++) {
-      const randomNum = Math.floor(Math.random() * 104) + 1;
+      const randomNum = Math.floor(Math.random() * 15) + 1;
+      const num = ("00" + randomNum).slice(-2);
       _placeCards.push(
         <Link href={`/admin/design/place?id=${randomNum}`}>
           <a>
             <div className={styles.placeCard}>
               <div className={styles.image}>
                 <Image
-                  src={`/images/avatar/peep-${randomNum}.svg`}
+                  src={`/images/avatars/${num}.svg`}
                   alt=""
                   width={160}
                   height={160}
                 />
               </div>
               <div className={styles.hashtag}>
-                <p>#表参道カフェ</p>
+                <p>#東京クラフトビール</p>
               </div>
             </div>
           </a>
@@ -286,6 +287,7 @@ export default function Index({ viewUserId }) {
 
       <header className={styles.header}>
         <h1>Instago</h1>
+        <div className={styles.icon}>{profileImg}</div>
       </header>
 
       <div className={styles.profileBox}>

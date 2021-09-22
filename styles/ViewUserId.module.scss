@@ -29,21 +29,34 @@ $bp : (mobile : 480px,
 
 .header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  height: 48px;
+  height: 54px;
   padding: 0 16px;
   width: 100%;
   z-index: 100;
   h1 {
+    font-family: 'Jost', sans-serif;
     font-weight: 300;
     font-size: 20px;
     letter-spacing: 0.2em;
   }
+  .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 0.2px solid rgba(0,0,0,0.2);
+    img {
+      width: 28px;
+      object-fit: cover;
+      object-position: -1px 0;
+    }
+  }
 }
 
 .profileBox {
-  margin-top: 16px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,9 +89,9 @@ $bp : (mobile : 480px,
       overflow: hidden;
       border: 1.5px solid #000000;
       img {
-        width: 120px;
+        width: 104px;
         object-fit: cover;
-        object-position: -12px -4px;
+        object-position: -2px 0;
       }
     }
     .total, .you {
@@ -88,7 +101,7 @@ $bp : (mobile : 480px,
       justify-content: center;
       align-items: center;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 400;
       .num {
         font-size: 32px;
         font-weight: 500;
@@ -174,7 +187,7 @@ $bp : (mobile : 480px,
   letter-spacing: 0.05em;
 }
 .placeCardBox {
-  padding: 0 8px;
+  padding: 0;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -193,11 +206,11 @@ $bp : (mobile : 480px,
     border: 1px solid #000000;
     border-radius: 10px;
     padding: 2px 10px 8px 10px;
-    box-shadow: 0px 5px 10px rgba(0, 41, 25, 0.15);
+    box-shadow: 0px 5px 10px rgba(112, 112, 112, 0.15);
 
     .image {
       width: 80px;
-      height: 64px;
+      height: 72px;
       overflow: hidden;
       img {
         object-fit: cover;
@@ -206,7 +219,7 @@ $bp : (mobile : 480px,
     }
 
     .hashtag {
-      width: 80px;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
