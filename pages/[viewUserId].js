@@ -272,6 +272,15 @@ export default function Index({ viewUserId }) {
     setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
   }, []);
 
+  if (typeof window !== "undefined") {
+    window.onclick = (event) => {
+      const menu = document.getElementById("menu");
+      if (event.target == menu) {
+        menu.style.display = "none";
+      }
+    };
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -288,7 +297,38 @@ export default function Index({ viewUserId }) {
 
       <header className={headerStyles.header}>
         <h1>Instago</h1>
-        <div className={headerStyles.icon}>{profileImg}</div>
+        <div
+          className={headerStyles.icon}
+          onClick={() => {
+            document.getElementById("menu").style.display = "block";
+          }}
+        >
+          {profileImg}
+        </div>
+        <div id="menu" className={headerStyles.menu}>
+          <div className={headerStyles.menuContent}>
+            <Link href={"/user/nortification"}>
+              <div className={headerStyles.items}>
+                <a>通知一覧</a>
+              </div>
+            </Link>
+            <Link href={"/user/goods"}>
+              <div className={headerStyles.items}>
+                <a>Good一覧</a>
+              </div>
+            </Link>
+            <Link href={`/${myInfo?.id}`}>
+              <div className={headerStyles.items}>
+                <a>マイページ編集</a>
+              </div>
+            </Link>
+            <Link href={"/user/setting"}>
+              <div className={headerStyles.items}>
+                <a>設定</a>
+              </div>
+            </Link>
+          </div>
+        </div>
       </header>
 
       <div className={styles.profileBox}>
