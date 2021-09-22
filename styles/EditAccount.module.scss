@@ -84,10 +84,11 @@ $bp : (mobile : 480px,
       height: 95px;
       border-radius: 50%;
       overflow: hidden;
+      border: 1.5px solid #000000;
       img {
-        width: 110px;
+        width: 95px;
         object-fit: cover;
-        object-position: -10px 0px;
+        object-position: -2px 0px;
       }
     }
     .colorBox {

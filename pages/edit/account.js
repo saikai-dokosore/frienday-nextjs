@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../../styles/EditAccount.module.scss";
+import headerStyles from "../../styles/Header.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
@@ -38,8 +39,9 @@ export default function Index() {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <header className={styles.header}>
+      <header className={headerStyles.header}>
         <h1>Instago</h1>
+        <div className={headerStyles.icon}>{profileImg}</div>
       </header>
 
       <div className={styles.backBtnBox}>
