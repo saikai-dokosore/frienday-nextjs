@@ -75,7 +75,7 @@ export default function Index({ viewUserId }) {
   const [isFollowYou, setIsFollowYou] = useState(false);
 
   const [youGoods, setYouGoods] = useState(0);
-  const [totalGoods, setTotalGoods] = useState(240);
+  const [totalGoods, setTotalGoods] = useState(120);
 
   const colors = ["blue", "red", "yellow", "green"];
 

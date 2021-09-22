@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
 
 :root {
   --black100: #272727;
@@ -27,7 +27,7 @@ html {
 body {
   background-color: var(--white100);
   color: var(--black100);
-  font: 14px 'Lato', 'Noto Sans JP', sans-serif;
+  font: 14px 'Roboto', 'Noto Sans JP', sans-serif;
   font-weight: 500;
   margin: 0;
   padding: 0;
