@@ -123,6 +123,7 @@ $bp : (mobile : 480px,
       font-size: 12px;
       font-weight: 400;
       border-radius: 8px;
+      border: 1px solid #000000;
     }
     .goodBtn:active {
       -webkit-transform: translateY(4px);
@@ -131,19 +132,19 @@ $bp : (mobile : 480px,
     }
     .red {
       background-color: #FA6B6B;
-      border-bottom: solid 3px #B74040;
+      box-shadow: 0 2px 0 0.5px #B74040;
     }
     .blue{
       background-color: #257BD4;
-      border-bottom: solid 3px #385471;
+      box-shadow: 0 2px 0 0.5px #385471;
     }
     .yellow {
       background-color: #EEC532;
-      border-bottom: solid 3px #A48C38;
+      box-shadow: 0 2px 0 0.5px #A48C38;
     }
     .green {
       background-color: #00A867;
-      border-bottom: solid 3px #175F43;
+      box-shadow: 0 2px 0 0.5px #175F43;
     }
   }
 }
