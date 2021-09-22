@@ -126,9 +126,9 @@ $bp : (mobile : 480px,
       border: 1.5px solid #000000;
     }
     .goodBtn:active {
-      -webkit-transform: translateY(4px);
-      transform: translateY(4px);
-      border-bottom: none;
+      -webkit-transform: translateY(2px);
+      transform: translateY(2px);
+      box-shadow: none;
     }
     .red {
       background-color: #FA6B6B;
