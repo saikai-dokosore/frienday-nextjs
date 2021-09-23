@@ -22,7 +22,7 @@ $bp : (mobile : 480px,
   height: 54px;
   padding: 0 16px;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
   h1 {
     font-family: 'Jost', sans-serif;
     font-weight: 300;
@@ -53,24 +53,68 @@ $bp : (mobile : 480px,
   .menu {
     position: fixed;
     display: none;
-    z-index: 2;
     left: 0;
     top: 0;
     width: 100vw;
     height: 100vh;
     overflow: auto;
+    background-color: rgba(0,0,0,0.5);
     .menuContent {
       position: absolute;
       top: 0;
-      right: 0;
-      width: 160px;
+      left: 0;
+      width: 270px;
       height: 100vh;
-      background-color: rgba(0,0,0,0.8);
+      background-color: #FFFFFF;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      padding: 36px 8px;
+
+      .profileBox {
+        width: 100%;
+        padding: 36px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        border-bottom: 0.5px solid #D2D2D2;
+        .red {
+          background-color: #FA6B6B;
+        }
+        .blue{
+          background-color: #257BD4;
+        }
+        .yellow {
+          background-color: #EEC532;
+        }
+        .green {
+          background-color: #00A867;
+        }
+        .image {
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 1.5px solid #000000;
+          img {
+            width: 54px;
+            object-fit: cover;
+            object-position: -2px -1px;
+          }
+        }
+        .name {
+          margin-top: 12px;
+          margin-left: 2px;
+        }
+        .id {
+          margin-top: 0px;
+          margin-left: 2px;
+          font-size: 10px;
+          font-weight: 400;
+          color: #ABABAB;
+        }
+      }
       .items {
         display: flex;
         justify-content: flex-start;
@@ -79,7 +123,6 @@ $bp : (mobile : 480px,
         height: 50px;
         margin-top: 5px;
         padding: 0 8px;
-        color: white;
         font-weight: 400;
         letter-spacing: 0.1em;
       }

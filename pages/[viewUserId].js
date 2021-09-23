@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { db } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
 import Header from "../lib/header";
+import { MdEdit } from "react-icons/md";
 
 export const getStaticPaths = async () => {
   const users = await db.collection("users").get(); // 全ユーザー取得
@@ -48,12 +49,20 @@ export const getStaticProps = async ({ params }) => {
 
 // コンポーネント
 export default function Index({ viewUserInfo }) {
-  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
-    useAuth();
-  const [isMine, setIsMine] = useState(false);
+  const {
+    isMine,
+    setIsMine,
+    myInfo,
+    setMyInfo,
+    myPlaces,
+    setMyPlaces,
+    login,
+    logout,
+  } = useAuth();
   const [isFollowYou, setIsFollowYou] = useState(false);
   const [youGoods, setYouGoods] = useState(0);
   const [totalGoods, setTotalGoods] = useState(0);
+  const [placeCards, setPlaceCards] = useState(<div></div>);
 
   // マイページ判定
   useEffect(() => {
@@ -147,36 +156,76 @@ export default function Index({ viewUserInfo }) {
   // 行きたい場所リストの取得
   useEffect(() => {
     (async () => {
-      let _placeCards = [];
-      const places = await db
-        .collection("users")
-        .doc(viewUserInfo?.id)
-        .collection("places")
-        .get();
-      places.forEach(async (p) => {
-        _placeCards.push(
-          <Link href={`/admin/design/place?id=${p.data().icon}`}>
-            <a>
-              <div className={styles.placeCard}>
-                <div className={styles.image}>
-                  <Image
-                    src={`/images/avatars/${p.data().icon}.svg`}
-                    alt="場所カード"
-                    width="160"
-                    height="160"
-                  />
+      if (!isMine) {
+        let _placeCards = [];
+        const places = await db
+          .collection("users")
+          .doc(viewUserInfo?.id)
+          .collection("places")
+          .get();
+        places.forEach(async (p) => {
+          _placeCards.push(
+            <Link href={`/admin/design/place?id=${p.data().icon}`}>
+              <a>
+                <div className={styles.placeCard}>
+                  <div className={styles.image}>
+                    <Image
+                      src={`/images/avatars/${p.data().icon}.svg`}
+                      alt="場所カード"
+                      width="160"
+                      height="160"
+                    />
+                  </div>
+                  <div className={styles.hashtag}>
+                    <p>#{p.data().name}</p>
+                  </div>
                 </div>
-                <div className={styles.hashtag}>
-                  <p>#{p.data().name}</p>
-                </div>
-              </div>
-            </a>
-          </Link>
-        );
-      });
-      setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
+              </a>
+            </Link>
+          );
+        });
+        setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
+      }
     })();
-  }, []);
+  }, [isMine]);
+
+  // isMineの場合
+  useEffect(() => {
+    (async () => {
+      if (isMine && myPlaces) {
+        let _placeCards = [];
+
+        const keys = Object.keys(myPlaces);
+        for (let i = 0; i < keys.length; i++) {
+          _placeCards.push(
+            <Link href={`/admin/design/place?id=${myPlaces[keys[i]].icon}`}>
+              <a>
+                <Link href={`/edit/place?id=${keys[i]}`}>
+                  <a className={styles.edit}>
+                    <MdEdit />
+                  </a>
+                </Link>
+                <div className={styles.placeCard}>
+                  <div className={styles.image}>
+                    <Image
+                      src={`/images/avatars/${myPlaces[keys[i]].icon}.svg`}
+                      alt="場所カード"
+                      width="160"
+                      height="160"
+                    />
+                  </div>
+                  <div className={styles.hashtag}>
+                    <p>#{myPlaces[keys[i]].name}</p>
+                  </div>
+                </div>
+              </a>
+            </Link>
+          );
+        }
+        setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
+      }
+    })();
+  }, [myPlaces, isMine]);
 
   // メニューモーダル
   if (typeof window !== "undefined") {
@@ -268,12 +317,14 @@ export default function Index({ viewUserInfo }) {
 
       {isMine ? (
         <div className={styles.addBtnBox}>
-          <button
-            onClick={() => {}}
-            className={styles.addBtn + " " + styles[myInfo?.color]}
-          >
-            場所を追加
-          </button>
+          <Link href={"/edit/place"}>
+            <a
+              onClick={() => {}}
+              className={styles.addBtn + " " + styles[myInfo?.color]}
+            >
+              場所を追加
+            </a>
+          </Link>
         </div>
       ) : (
         <div></div>

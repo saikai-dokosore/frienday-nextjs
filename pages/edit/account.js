@@ -2,7 +2,6 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../../styles/EditAccount.module.scss";
-import headerStyles from "../../styles/Header.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
@@ -11,7 +10,7 @@ import Header from "../../lib/header";
 
 // コンポーネント
 export default function Index() {
-  const { myInfo, setMyInfo, placeCards, setPlaceCards } = useAuth();
+  const { myInfo, setMyInfo } = useAuth();
 
   const [colors, setColors] = useState([]);
   const [avatars, setAvatars] = useState([]);
@@ -30,11 +29,10 @@ export default function Index() {
           className={styles[colorSets[i]]}
           onClick={() => {
             setMyInfo({
-              id: myInfo.id,
-              name: myInfo.name,
-              email: myInfo.email,
-              icon: myInfo.icon,
-              color: colorSets[i],
+              ...myInfo,
+              ...{
+                color: colorSets[i],
+              },
             });
           }}
         ></button>
@@ -49,11 +47,10 @@ export default function Index() {
           className={styles.image}
           onClick={() => {
             setMyInfo({
-              id: myInfo.id,
-              name: myInfo.name,
-              email: myInfo.email,
-              icon: ("00" + i).slice(-2),
-              color: myInfo.color,
+              ...myInfo,
+              ...{
+                icon: ("00" + i).slice(-2),
+              },
             });
           }}
         >
@@ -94,7 +91,7 @@ export default function Index() {
             <input
               id="name"
               onChange={(event) => {
-                setMyInfo(Object.assign(myInfo, { name: event.target.value }));
+                setMyInfo({ ...myInfo, ...{ name: event.target.value } });
               }}
             />
           </div>

@@ -1,202 +1,107 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "../../styles/EditPlace.module.scss";
-import { useAuth } from "../../lib/auth";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
-import { useState, useEffect } from "react";
-import { MdKeyboardArrowRight, MdFileUpload } from "react-icons/md";
+import { useAuth } from "../../lib/auth";
+import Header from "../../lib/header";
 
-import {
-  HiOutlineUserCircle,
-  HiOutlineBell,
-  HiOutlineCog,
-} from "react-icons/hi";
-
+// コンポーネント
 export default function Index() {
-  // Auth
-  const { currentUser, userId, login, logout, getUserId } = useAuth();
   const router = useRouter();
-
-  const [placeData, setPlaceData] = useState(); // 行きたい場所
-  const [placeUls, setPlaceUls] = useState(<div></div>);
-  const [newPlace, setNewPlace] = useState("");
-  const [newMonth, setNewMonth] = useState("Apr");
-
-  const monthEmoji = {
-    Jan: "0x1F338",
-    Feb: "0x1F338",
-    Mar: "0x1F338",
-    Apr: "0x1F338",
-    May: "0x1F338",
-    Jun: "0x1F40C",
-    Jul: "0x1F338",
-    Aug: "0x1F338",
-    Sep: "0x1F338",
-    Oct: "0x1F338",
-    Nov: "0x1F338",
-    Dec: "0x1F338",
-  };
+  const { myInfo, setMyInfo, myPlaces, setMyPlaces } = useAuth();
+  const [avatars, setAvatars] = useState([]);
 
   useEffect(() => {
-    if (!currentUser) {
-      //router.push("/signup/welcome");
-    }
-  }, [currentUser, router]);
+    document.getElementById("name").value = myPlaces?.[router.query.id]?.name;
+  }, []);
 
-  const updateInfo = async () => {
-    if (userId) {
-      await db.collection("users").doc(userId).collection("place").add({
-        emoji: "0x1F37B",
-        month: newMonth,
-        name: newPlace,
-      });
-    }
-    alert("更新しました");
-  };
-
-  // Place
   useEffect(() => {
-    let placeObj = {};
-    if (userId) {
-      (async () => {
-        // DBから取得
-        const places = await db
-          .collection("users")
-          .doc(userId)
-          .collection("place")
-          .get();
-        // 予定がある月をキーとして予定を配列に入れる
-        places.forEach(async (p) => {
-          if (!placeObj[p.data().month]) {
-            placeObj[p.data().month] = [];
-          }
-          placeObj[p.data().month].push({
-            ...{ id: p.id },
-            ...p.data(),
-          });
-        });
-        setPlaceData(placeObj);
-        // 各月ごとにコンポーネントの配列にする
-        let ulComps = [];
-        for (let i = 0; i < Object.keys(placeObj).length; i++) {
-          let key = Object.keys(placeObj)[i];
-          let comp = placeObj[key].map((p, i) => {
-            return (
-              <li key={i} className={styles.placeListBox}>
-                <div className={styles.emoji}>
-                  {String.fromCodePoint(p?.emoji)}
-                </div>
-                <div className={styles.placeTextBox}>
-                  <input className={styles.name} value={p?.name} />
-                </div>
-                <div className={styles.placeBtnBox}>
-                  <button
-                    className={styles.placeGo}
-                    onClick={() => goPlace(p?.id)}
-                  >
-                    いきたい！
-                  </button>
-                </div>
-              </li>
-            );
-          });
-          ulComps.push(
-            <ul key={i} className={styles.placeUlBox + " " + styles[key]}>
-              <h3>{String.fromCodePoint(monthEmoji[key]) + " " + key}</h3>
-              {comp}
-            </ul>
-          );
-        }
-        ulComps.push(
-          <div className={styles.addPlaceBox}>
-            <select
-              name="monthes"
-              id="monthes"
-              onChange={(event) => {
-                setNewMonth(event.target.value);
-              }}
-            >
-              <option value="Apr">April</option>
-              <option value="May">May</option>
-              <option value="Jun">June</option>
-            </select>
-            <input
-              id="newPlace"
-              type="text"
-              value={newPlace}
-              onChange={(event) => {
-                setNewPlace(event.target.value);
-              }}
-            />
-            <button
-              onClick={() => {
-                updateInfo();
-              }}
-            >
-              追加
-            </button>
-          </div>
-        );
-        setPlaceUls(ulComps);
-      })();
+    // avatar
+    let _avatars = [];
+    for (let i = 1; i < 17; i++) {
+      _avatars.push(
+        <button
+          className={styles.image}
+          onClick={() => {
+            setMyPlaces({
+              ...myPlaces,
+              ...{
+                [router.query.id]: {
+                  name: myPlaces?.[router.query.id]?.name,
+                  icon: ("00" + i).slice(-2),
+                },
+              },
+            });
+          }}
+        >
+          <img src={`/images/avatars/${("00" + i).slice(-2)}.svg`} alt="" />
+        </button>
+      );
     }
-  }, [userId]);
+    setAvatars(_avatars);
+  }, [myInfo]);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>home</title>
-        <meta name="description" content="test" />
+        <title>アカウント編集</title>
+        <meta name="description" content="アカウント編集画面" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
         <meta name="og:title" content="test" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <header className={styles.header}>
-        <h1>FRIENDAY</h1>
-        <div className={styles.headerBtnBox}>
-          <Link href="/user/nortification">
-            <a>
-              <div className={styles.nortification}>
-                <HiOutlineBell />
-              </div>
-            </a>
-          </Link>
-          <Link href="/user/setting">
-            <a>
-              <div className={styles.user}>
-                <HiOutlineCog />
-              </div>
-            </a>
-          </Link>
-          <Link href={currentUser ? `/${userId}` : "/signup/welcome"}>
-            <a>
-              <div className={styles.user}>
-                <HiOutlineUserCircle />
-              </div>
-            </a>
-          </Link>
-        </div>
-      </header>
-      <main className={styles.main}>
-        <div className={styles.title}>
-          <h1>いきたい場所</h1>
-          <p></p>
-        </div>
-        <div className={styles.actionBox}>
-          <div className={styles.placeBox}>{placeUls}</div>
-        </div>
-        <div className={styles.btnBox}>
-          <div className={styles.nextText}>
-            <p>更新</p>
+      <Header />
+
+      <div className={styles.backBtnBox}>
+        <Link href={`/${myInfo?.id}`}>
+          <a>Back</a>
+        </Link>
+      </div>
+
+      <div className={styles.placeCardBox}>
+        <div className={styles.placeCard}>
+          <div className={styles.image}>
+            <Image
+              src={`/images/avatars/${myPlaces?.[router.query.id]?.icon}.svg`}
+              alt="場所カード"
+              width="160"
+              height="160"
+            />
           </div>
-          <button className={styles.nextArrow} onClick={() => {}}>
-            <MdKeyboardArrowRight />
-          </button>
+          <div className={styles.hashtag}>
+            <p>#{myPlaces?.[router.query.id]?.name}</p>
+          </div>
         </div>
-      </main>
+        <div className={styles.avatarBox}>{avatars}</div>
+        <div className={styles.name}>
+          <input
+            id="name"
+            onChange={(event) => {
+              setMyPlaces({
+                ...myPlaces,
+                ...{
+                  [router.query.id]: {
+                    name: event.target.value,
+                    icon: myPlaces?.[router.query.id]?.icon,
+                  },
+                },
+              });
+            }}
+          />
+        </div>
+
+        <div className={styles.btnBox}>
+          <button className={styles.delete}>このカードを削除</button>
+          <Link href={`/edit/newpost?id=${router.query.id}`}>
+            <a className={styles.ok + " " + styles[myInfo?.color]}>更新</a>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
