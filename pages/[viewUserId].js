@@ -48,18 +48,8 @@ export const getStaticProps = async ({ params }) => {
 
 // コンポーネント
 export default function Index({ viewUserInfo }) {
-  const {
-    myInfo,
-    setMyInfo,
-    profileImg,
-    setProfileImg,
-    placeCards,
-    setPlaceCards,
-    profileColor,
-    setProfileColor,
-    login,
-    logout,
-  } = useAuth();
+  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
+    useAuth();
   const [isMine, setIsMine] = useState(false);
   const [isFollowYou, setIsFollowYou] = useState(false);
   const [youGoods, setYouGoods] = useState(0);
@@ -223,7 +213,7 @@ export default function Index({ viewUserInfo }) {
             className={
               styles.image +
               " " +
-              styles[isMine ? profileColor : viewUserInfo?.color]
+              styles[isMine ? myInfo?.color : viewUserInfo?.color]
             }
           >
             <img src={`/images/avatars/${viewUserInfo?.icon}.svg`} alt="" />
@@ -259,7 +249,11 @@ export default function Index({ viewUserInfo }) {
               onClick={() => {
                 pushGood();
               }}
-              className={styles.goodBtn + " " + styles[profileColor]}
+              className={
+                styles.goodBtn +
+                " " +
+                styles[isMine ? myInfo?.color : viewUserInfo?.color]
+              }
             >
               Good
             </button>
@@ -276,7 +270,7 @@ export default function Index({ viewUserInfo }) {
         <div className={styles.addBtnBox}>
           <button
             onClick={() => {}}
-            className={styles.addBtn + " " + styles[profileColor]}
+            className={styles.addBtn + " " + styles[myInfo?.color]}
           >
             場所を追加
           </button>

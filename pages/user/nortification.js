@@ -10,18 +10,8 @@ import { useState, useEffect } from "react";
 
 export default function Index() {
   // Auth
-  const {
-    myInfo,
-    setMyInfo,
-    profileImg,
-    setProfileImg,
-    placeCards,
-    setPlaceCards,
-    profileColor,
-    setProfileColor,
-    login,
-    logout,
-  } = useAuth();
+  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
+    useAuth();
   const router = useRouter();
   const [nortifications, setNortifications] = useState(<div></div>);
 
@@ -97,8 +87,8 @@ export default function Index() {
       <Header />
 
       <div className={styles.top}>
-        <div className={styles.image + " " + styles[profileColor]}>
-          {profileImg}
+        <div className={styles.image + " " + styles[myInfo?.color]}>
+          <img src={`/images/avatars/${myInfo?.icon}}.svg`} alt="" />
         </div>
         <h2>通知一覧</h2>
       </div>

@@ -27,21 +27,6 @@ $bp : (mobile : 480px,
   padding: 0;
 }
 
-.header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 54px;
-  padding: 0 16px;
-  width: 100%;
-  border-bottom: 0.5px solid #E2E2E2;
-  z-index: 100;
-  h1 {
-    font-weight: 500;
-    font-size: 20px;
-    letter-spacing: 0.2em;
-  }
-}
 
 .backBtnBox {
   display: flex;
@@ -51,11 +36,10 @@ $bp : (mobile : 480px,
   width: 100%;
   padding: 0 36px;
   margin-top: 20px;
-
 }
 
 .profileBox {
-  margin-top: 36px;
+  margin-top: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,8 +85,9 @@ $bp : (mobile : 480px,
         display: flex;
         width: 40px;
         height: 40px;
-        margin: 5px;
-        border-radius: 10px;
+        margin: 2px;
+        border: 1px solid #000000;
+        border-radius: 50%;
       }
       .red {
         background-color: #FA6B6B;
@@ -118,11 +103,34 @@ $bp : (mobile : 480px,
       }
     }
 
+    .avatarBox {
+      margin-top: 10px;
+      width: 232px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      .image {
+        margin: 2px;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1.5px solid #000000;
+        img {
+          width: 54px;
+          object-fit: cover;
+          object-position: -1px 0px;
+        }
+      }
+    }
+
     .name {
       margin-top: 40px;
       input {
+        font-size: 24px;
         border-bottom: 0.5px solid rgba(0,0,0,0.2);
-        line-height: 36px;
+        line-height: 48px;
         text-align: center;
       }
     }

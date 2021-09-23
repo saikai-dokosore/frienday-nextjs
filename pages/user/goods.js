@@ -13,18 +13,8 @@ import {
 } from "react-icons/hi";
 
 export default function Index() {
-  const {
-    myInfo,
-    setMyInfo,
-    profileImg,
-    setProfileImg,
-    placeCards,
-    setPlaceCards,
-    profileColor,
-    setProfileColor,
-    login,
-    logout,
-  } = useAuth();
+  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
+    useAuth();
   return (
     <div className={styles.container}>
       <Head>
@@ -38,8 +28,8 @@ export default function Index() {
       <Header />
 
       <div className={styles.top}>
-        <div className={styles.image + " " + styles[profileColor]}>
-          {profileImg}
+        <div className={styles.image + " " + styles[myInfo?.color]}>
+          <img src={`/images/avatars/${myInfo?.icon}}.svg`} alt="" />
         </div>
         <h2>Good一覧</h2>
       </div>

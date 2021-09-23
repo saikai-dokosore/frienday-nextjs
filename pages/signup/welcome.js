@@ -10,18 +10,8 @@ import { useState, useEffect } from "react";
 export default function Index() {
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
-  const {
-    myInfo,
-    setMyInfo,
-    profileImg,
-    setProfileImg,
-    placeCards,
-    setPlaceCards,
-    profileColor,
-    setProfileColor,
-    login,
-    logout,
-  } = useAuth();
+  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
+    useAuth();
   const router = useRouter();
 
   const handleLoginButton = async () => {

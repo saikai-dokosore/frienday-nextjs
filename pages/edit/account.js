@@ -7,26 +7,62 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
 import { useAuth } from "../../lib/auth";
+import Header from "../../lib/header";
 
 // コンポーネント
 export default function Index() {
-  const router = useRouter();
-  const storageRef = storage.ref();
+  const { myInfo, setMyInfo, placeCards, setPlaceCards } = useAuth();
 
-  const {
-    myInfo,
-    setMyInfo,
-    profileImg,
-    setProfileImg,
-    placeCards,
-    setPlaceCards,
-    profileColor,
-    setProfileColor,
-  } = useAuth();
+  const [colors, setColors] = useState([]);
+  const [avatars, setAvatars] = useState([]);
 
   useEffect(() => {
     document.getElementById("name").value = myInfo?.name;
   }, []);
+
+  let colorSets = ["red", "blue", "green", "yellow"];
+  useEffect(() => {
+    // color
+    let _colors = [];
+    for (let i = 0; i < 4; i++) {
+      _colors.push(
+        <button
+          className={styles[colorSets[i]]}
+          onClick={() => {
+            setMyInfo({
+              id: myInfo.id,
+              name: myInfo.name,
+              email: myInfo.email,
+              icon: myInfo.icon,
+              color: colorSets[i],
+            });
+          }}
+        ></button>
+      );
+    }
+    setColors(_colors);
+    // avatar
+    let _avatars = [];
+    for (let i = 1; i < 17; i++) {
+      _avatars.push(
+        <button
+          className={styles.image}
+          onClick={() => {
+            setMyInfo({
+              id: myInfo.id,
+              name: myInfo.name,
+              email: myInfo.email,
+              icon: ("00" + i).slice(-2),
+              color: myInfo.color,
+            });
+          }}
+        >
+          <img src={`/images/avatars/${("00" + i).slice(-2)}.svg`} alt="" />
+        </button>
+      );
+    }
+    setAvatars(_avatars);
+  }, [myInfo]);
 
   return (
     <div className={styles.container}>
@@ -39,10 +75,7 @@ export default function Index() {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <header className={headerStyles.header}>
-        <h1>Instago</h1>
-        <div className={headerStyles.icon}>{profileImg}</div>
-      </header>
+      <Header />
 
       <div className={styles.backBtnBox}>
         <Link href={`/${myInfo?.id}`}>
@@ -52,35 +85,11 @@ export default function Index() {
 
       <div className={styles.profileBox}>
         <div className={styles.profile}>
-          <div className={styles.image + " " + styles[profileColor]}>
-            {profileImg}
+          <div className={styles.image + " " + styles[myInfo?.color]}>
+            <img src={`/images/avatars/${myInfo?.icon}.svg`} alt="" />
           </div>
-          <div className={styles.colorBox}>
-            <button
-              className={styles.red}
-              onClick={() => {
-                setProfileColor("red");
-              }}
-            ></button>
-            <button
-              className={styles.blue}
-              onClick={() => {
-                setProfileColor("blue");
-              }}
-            ></button>
-            <button
-              className={styles.yellow}
-              onClick={() => {
-                setProfileColor("yellow");
-              }}
-            ></button>
-            <button
-              className={styles.green}
-              onClick={() => {
-                setProfileColor("green");
-              }}
-            ></button>
-          </div>
+          <div className={styles.colorBox}>{colors}</div>
+          <div className={styles.avatarBox}>{avatars}</div>
           <div className={styles.name}>
             <input
               id="name"
