@@ -22,269 +22,86 @@ $bp : (mobile : 480px,
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  height: 100vh;
-  width: 100vw;
-  padding: 0 100px;
-    @include query (tablet) {
-      padding: 0;
-    }
-}
-
-// ヘッダー
-.header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  padding: 0 100px;
-    @include query (tablet) {
-      padding: 0 20px;
-    }
-  border-top: 1px solid #eaeaea;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  h1 {
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 0.3em;
-  }
-
-  .headerBtnBox {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100%;
-    font-size: 25px;
-    .nortification, .user {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 30px;
-      margin-left: 10px;
-      opacity: 0.8;
-    }
-  }
+  width: 100vw;
+  padding: 0;
 }
 
-// ボディ
-.main {
-  width: 100%;
-  height: 100%;
-  padding: 100px 50px 50px 50px;
+.top {
+  flex: 1;
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url(/images/signin.svg);
-  background-position: center;
-  background-size: cover;
-  @include query (tablet) {
-    flex-flow: column;
-    justify-content: center;
-    padding: 50px 30px 30px 30px;
+  .red {
+    background-color: #FA6B6B;
   }
-  .process {
-    flex: 1;
+  .blue{
+    background-color: #257BD4;
+  }
+  .yellow {
+    background-color: #EEC532;
+  }
+  .green {
+    background-color: #00A867;
+  }
+  .image {
+    margin: 0 36px;
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid #000000;
+    img {
+      width: 104px;
+      object-fit: cover;
+      object-position: -2px 0;
+    }
+  }
+  h2 {
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.2em;
+    margin-top: 8px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.contentBox {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  .text {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: white;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      font-size: 10px;
-    }
-    .yet {
-      opacity: 0.5;
-    }
-    .line {
-      height: 1px;
-      width: 80px;
-      margin: 0 10px;
-      background-color: rgba(0,0,0,0.1);
-    }
+    padding: 0 24px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: center;
+    letter-spacing: 0.26em;
   }
-  .title {
-    width: 100%;
-    flex: 1;
+  .btnBox {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    h1 {
-      font-size: 26px;
-      font-weight: 500;
-    }
-    p {
-      margin-top: 5px;
-      font-size: 12px;
-      font-weight: 300;
-      opacity: 0.6;
-    }
-  }
-  .actionBox {
-    width: 100%;
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    p {
-      font-weight: 400;
-      line-height: 2rem;
-      letter-spacing: 0.2rem;
-      opacity: 0.7;
-    }
-    .inputBox {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      height: 40px;
-      margin-top: 20px;
-      border-bottom: 1px solid var(--black100);
-      p {
-        font-weight: 500;
-        letter-spacing: 0.1rem;
-        opacity: 1;
-      }
-      input {
-        width: 100%;
-        height: 100%;
-        padding: 0 10px;
-      }
-    }
+    align-items: center;
     button {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px 20px;
-      background-color: var(--white100);
-      border-radius: 10px;
-      margin: 10px 0;
-    }
-    .name, .job, .bio {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      margin-top: 20px;
-      border-bottom: 1px solid var(--black100);
-      input {
-        width: 100%;
-        height: 40px;
-        padding: 0 10px;
-      }
-      textarea {
-        width: 100%;
-        height: 100px;
-        padding: 0 10px;
-      }
-    }
-    .imgBox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-        .green100 {
-          background-color: var(--green100);
-        }
-        .red100 {
-          background-color: var(--red100);
-        }
-        .blue100 {
-          background-color: var(--blue100);
-        }
-        .accountImgBox {
-          width: 120px;
-          height: 120px;
-          min-width: 120px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-          font-size: 20px;
-          overflow: hidden;
-          img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-          }
-        }
-        input[type="file"] {
-          display: none;
-        }
-        .select {
-          position: absolute;
-          color: var(--white100);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;
-          font-size: 25px;
-      }
-    }
-  }
-  .btnBox {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .nextText {
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      p {
-        font-size: 18px;
-        font-weight: 700;
-      }
-    }
-    .nextArrow {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      border: 4px solid var(--gray100);
-      background-color: white;
-      font-size: 30px;
-      a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-    .nextArrow:active { 
-      background-color: var(--black100);
-      color: var(--white100);
-    }
-  }
-  .other {
-    width: 100%;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    a {
+      width: 160px;
+      height: 42px;
+      border: 1px solid #000000;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-weight: 500;
       font-size: 12px;
-      font-weight: 300;
-      opacity: 0.5;
-      text-decoration: underline;
     }
   }
 }
-
-
-

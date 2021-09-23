@@ -48,8 +48,6 @@ export const getStaticProps = async ({ params }) => {
 
 // コンポーネント
 export default function Index({ viewUserInfo }) {
-  const [followNow, setFollowNow] = useState(true);
-  const [followersNum, setFollowersNum] = useState(0);
   const {
     myInfo,
     setMyInfo,
@@ -64,7 +62,6 @@ export default function Index({ viewUserInfo }) {
   } = useAuth();
   const [isMine, setIsMine] = useState(false);
   const [isFollowYou, setIsFollowYou] = useState(false);
-
   const [youGoods, setYouGoods] = useState(0);
   const [totalGoods, setTotalGoods] = useState(0);
 
@@ -100,12 +97,14 @@ export default function Index({ viewUserInfo }) {
           .collection("followers")
           .doc(myInfo?.id)
           .get();
-        setYouGoods(you?.data()?.num);
+        if (you?.data()?.num > 0) {
+          setYouGoods(you?.data()?.num);
+        }
       }
     })();
   }, [viewUserInfo?.id, myInfo?.id]);
 
-  // isFollowYouを取得
+  // あなたをGoodしています
   useEffect(() => {
     (async () => {
       if (myInfo) {
@@ -137,7 +136,7 @@ export default function Index({ viewUserInfo }) {
 
   // Youが変化したときにDBに反映する
   useEffect(() => {
-    if (myInfo) {
+    if (myInfo && youGoods > 0) {
       (async () => {
         await db
           .collection("users")
@@ -202,7 +201,7 @@ export default function Index({ viewUserInfo }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{viewUserInfo?.id}</title>
+        <title>{viewUserInfo?.id} : Instago</title>
         <meta
           name="description"
           content={viewUserInfo?.id + "を気軽に誘っちゃおう"}
@@ -252,16 +251,20 @@ export default function Index({ viewUserInfo }) {
           <div></div>
         )}
 
-        <div className={styles.goodBtnBox}>
-          <button
-            onClick={() => {
-              pushGood();
-            }}
-            className={styles.goodBtn + " " + styles[profileColor]}
-          >
-            Good
-          </button>
-        </div>
+        {isMine ? (
+          <div></div>
+        ) : (
+          <div className={styles.goodBtnBox}>
+            <button
+              onClick={() => {
+                pushGood();
+              }}
+              className={styles.goodBtn + " " + styles[profileColor]}
+            >
+              Good
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={styles.placeTitle}>
@@ -269,22 +272,18 @@ export default function Index({ viewUserInfo }) {
       </div>
       {placeCards}
 
-      <div className={styles.loginBox}>
-        <button
-          onClick={() => {
-            logout();
-          }}
-        >
-          ログアウトボタン
-        </button>
-        <button
-          onClick={() => {
-            login();
-          }}
-        >
-          ログインボタン
-        </button>
-      </div>
+      {isMine ? (
+        <div className={styles.addBtnBox}>
+          <button
+            onClick={() => {}}
+            className={styles.addBtn + " " + styles[profileColor]}
+          >
+            場所を追加
+          </button>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

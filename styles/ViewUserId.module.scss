@@ -27,8 +27,6 @@ $bp : (mobile : 480px,
   padding: 0;
 }
 
-
-
 .profileBox {
   margin-top: 12px;
   display: flex;
@@ -168,7 +166,6 @@ $bp : (mobile : 480px,
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
-  
 
   .placeCard {
     margin: 8px;
@@ -182,7 +179,6 @@ $bp : (mobile : 480px,
     border-radius: 10px;
     padding: 2px 10px 8px 10px;
     box-shadow: 0px 5px 10px rgba(112, 112, 112, 0.15);
-
     .image {
       width: 80px;
       height: 72px;
@@ -194,7 +190,6 @@ $bp : (mobile : 480px,
         object-position: 0 0;
       }
     }
-
     .hashtag {
       width: 100%;
       display: flex;
@@ -206,27 +201,31 @@ $bp : (mobile : 480px,
   }
 }
 
-
-.loginBox {
-  margin-top: 150px;
-  button {
+.addBtnBox {
+  .addBtn {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--insta-blue);
-    color: var(--white100);
-    width: 123px;
-    height: 41px;
-    margin-top: 15px; 
-    font-size: 12px;
-    font-weight: 500;
+    color: #FFFFFF;
+    width: 164px;
+    height: 44px;
+    margin-top: 16px; 
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    font-weight: 400;
     border-radius: 8px;
-    border-bottom: solid 3px #425FF6;
+    border: 1px solid #000000;
   }
-  button:active {
-    -webkit-transform: translateY(4px);
-    transform: translateY(4px);
-    border-bottom: none;
+  .red {
+    background-color: #FA6B6B;
   }
-
+  .blue{
+    background-color: #257BD4;
+  }
+  .yellow {
+    background-color: #EEC532;
+  }
+  .green {
+    background-color: #00A867;
+  }
 }
