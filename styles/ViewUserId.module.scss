@@ -188,8 +188,10 @@ $bp : (mobile : 480px,
       height: 72px;
       overflow: hidden;
       img {
+        width: 80px;
         object-fit: cover;
         object-position: top;
+        object-position: 0 0;
       }
     }
 

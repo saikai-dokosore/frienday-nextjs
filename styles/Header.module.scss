@@ -20,7 +20,7 @@ $bp : (mobile : 480px,
   justify-content: space-between;
   align-items: center;
   height: 54px;
-  padding: 0 16px;
+  padding: 0 24px 0 16px;
   width: 100%;
   z-index: 1;
   h1 {
@@ -40,6 +40,13 @@ $bp : (mobile : 480px,
       object-fit: cover;
       object-position: -1px 0;
     }
+    .chat {
+      position: absolute;
+      top: 8px;
+      right: 18px;
+      color: #E24343;
+      font-size: 16px;
+    }
   }
 
   .menu {
@@ -51,19 +58,18 @@ $bp : (mobile : 480px,
     width: 100vw;
     height: 100vh;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
     .menuContent {
       position: absolute;
       top: 0;
       right: 0;
-      width: 50%;
+      width: 160px;
       height: 100vh;
-      background-color: #FFFFFF;
+      background-color: rgba(0,0,0,0.8);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      padding: 54px 16px;
+      padding: 36px 8px;
       .items {
         display: flex;
         justify-content: flex-start;
@@ -72,7 +78,9 @@ $bp : (mobile : 480px,
         height: 50px;
         margin-top: 5px;
         padding: 0 8px;
-        background-color: #F5F5F5;
+        color: white;
+        font-weight: 400;
+        letter-spacing: 0.1em;
       }
     }
   }

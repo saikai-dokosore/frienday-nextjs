@@ -1,17 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "../styles/ViewUserId.module.scss";
-import headerStyles from "../styles/Header.module.scss";
+import styles from "../styles/viewUserId.module.scss";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { db, storage } from "../lib/firebaseInit";
+import { db } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
-import {
-  HiOutlineUserCircle,
-  HiOutlineBell,
-  HiOutlineCog,
-} from "react-icons/hi";
+import Header from "../lib/header";
 
 export const getStaticPaths = async () => {
   const users = await db.collection("users").get(); // 全ユーザー取得
@@ -41,25 +35,21 @@ export const getStaticProps = async ({ params }) => {
   }
   return {
     props: {
-      viewUserId: params.viewUserId,
+      viewUserInfo: {
+        id: params.viewUserId,
+        name: user.data().name,
+        icon: user.data().icon,
+        color: user.data().color,
+      },
     },
-    revalidate: 10, // 10秒間はキャッシュを更新しない
+    revalidate: 5, // 5秒間はキャッシュを更新しない
   };
 };
 
 // コンポーネント
-export default function Index({ viewUserId }) {
-  const [placeData, setPlaceData] = useState(); // 行きたい場所
-  const [pomu, setPomu] = useState([]);
-  const [placeUls, setPlaceUls] = useState(<div></div>);
+export default function Index({ viewUserInfo }) {
   const [followNow, setFollowNow] = useState(true);
-  const [message, setMessage] = useState("");
-  const [acctionBtnId, setAcctionBtnId] = useState("");
   const [followersNum, setFollowersNum] = useState(0);
-
-  const router = useRouter();
-  const storageRef = storage.ref();
-
   const {
     myInfo,
     setMyInfo,
@@ -76,107 +66,44 @@ export default function Index({ viewUserId }) {
   const [isFollowYou, setIsFollowYou] = useState(false);
 
   const [youGoods, setYouGoods] = useState(0);
-  const [totalGoods, setTotalGoods] = useState(120);
-
-  const colors = ["blue", "red", "yellow", "green"];
-
-  const monthEmoji = {
-    Jan: "0x1F338",
-    Feb: "0x1F338",
-    Mar: "0x1F338",
-    Apr: "0x1F338",
-    May: "0x1F338",
-    Jun: "0x1F40C",
-    Jul: "0x1F338",
-    Aug: "0x1F338",
-    Sep: "0x1F338",
-    Oct: "0x1F338",
-    Nov: "0x1F338",
-    Dec: "0x1F338",
-  };
+  const [totalGoods, setTotalGoods] = useState(0);
 
   // マイページ判定
   useEffect(() => {
-    // if (myInfo) {
-    //   setIsMine(myInfo.id === viewUserId ? true : false);
-    // }
-    setIsMine(true);
+    if (myInfo) {
+      setIsMine(myInfo.id === viewUserInfo?.id ? true : false);
+    }
   }, [myInfo]);
 
-  // // Place
-  // useEffect(() => {
-  //   let placeObj = {};
-  //   (async () => {
-  //     // DBから取得
-  //     const places = await db
-  //       .collection("users")
-  //       .doc(id)
-  //       .collection("place")
-  //       .get();
-  //     // 予定がある月をキーとして予定を配列に入れる
-  //     places.forEach(async (p) => {
-  //       if (!placeObj[p.data().month]) {
-  //         placeObj[p.data().month] = [];
-  //       }
-  //       placeObj[p.data().month].push({
-  //         ...{ id: p.id },
-  //         ...p.data(),
-  //       });
-  //     });
-  //     setPlaceData(placeObj);
-  //     // 各月ごとにコンポーネントの配列にする
-  //     let ulComps = [];
-  //     for (let i = 0; i < Object.keys(placeObj).length; i++) {
-  //       let key = Object.keys(placeObj)[i];
-  //       let comp = placeObj[key].map((p, i) => {
-  //         return (
-  //           <li key={i} className={styles.placeListBox}>
-  //             <div className={styles.emoji}>
-  //               {String.fromCodePoint(p?.emoji)}
-  //             </div>
-  //             <div className={styles.placeTextBox}>
-  //               <div className={styles.name}>{p?.name}</div>
-  //             </div>
-  //             <div className={styles.placeBtnBox}>
-  //               <button
-  //                 className={styles.placeGo}
-  //                 onClick={() => goPlace(p?.id)}
-  //               >
-  //                 いきたい！
-  //               </button>
-  //             </div>
-  //           </li>
-  //         );
-  //       });
-  //       ulComps.push(
-  //         <ul key={i} className={styles.placeUlBox + " " + styles[key]}>
-  //           <h3>{String.fromCodePoint(monthEmoji[key]) + " " + key}</h3>
-  //           {comp}
-  //         </ul>
-  //       );
-  //     }
-  //     setPlaceUls(ulComps);
-  //   })();
-  // }, [database]);
-
-  // FollowersNomを取得
+  // Total You を取得
   useEffect(() => {
     (async () => {
-      // DBから取得
-      const followers = await db
+      // Total
+      const total = await db
         .collection("users")
-        .doc(viewUserId)
+        .doc(viewUserInfo?.id)
         .collection("followers")
         .get();
       let num = 0;
-      followers.forEach(async (p) => {
-        if (p?.data()?.now) {
-          num = num + 1;
+      total.forEach(async (p) => {
+        if (p?.data()?.num) {
+          num = num + p?.data()?.num;
         }
       });
-      setFollowersNum(num);
+      setTotalGoods(num);
+
+      // You
+      if (myInfo?.id) {
+        const you = await db
+          .collection("users")
+          .doc(viewUserInfo?.id)
+          .collection("followers")
+          .doc(myInfo?.id)
+          .get();
+        setYouGoods(you?.data()?.num);
+      }
     })();
-  }, [viewUserId]);
+  }, [viewUserInfo?.id, myInfo?.id]);
 
   // isFollowYouを取得
   useEffect(() => {
@@ -185,11 +112,11 @@ export default function Index({ viewUserId }) {
         // DBから取得
         const followYou = await db
           .collection("users")
-          .doc(viewUserId)
+          .doc(viewUserInfo?.id)
           .collection("follows")
           .doc(myInfo.id)
           .get();
-        if (followYou?.data()?.now) {
+        if (followYou?.data()) {
           setIsFollowYou(true);
         } else {
           setIsFollowYou(false);
@@ -198,80 +125,71 @@ export default function Index({ viewUserId }) {
     })();
   }, [myInfo]);
 
-  // followNowを取得
-  useEffect(() => {
-    (async () => {
-      if (myInfo) {
-        // DBから取得
-        const follow = await db
-          .collection("users")
-          .doc(myInfo.id)
-          .collection("follows")
-          .doc(viewUserId)
-          .get();
-        if (follow?.data()?.now) {
-          setFollowNow(true);
-        } else {
-          setFollowNow(false);
-        }
-      }
-    })();
-  }, [myInfo]);
-
-  // ポムを押したときの挙動
-  const acctionfollowNow = async () => {
+  // Goodを押したときの挙動
+  const pushGood = async () => {
     if (myInfo) {
-      const now = !followNow;
-      setFollowersNum(now ? followersNum + 1 : followersNum - 1);
-      setFollowNow(now);
-      await db
-        .collection("users")
-        .doc(myInfo.id)
-        .collection("follows")
-        .doc(viewUserId)
-        .set({
-          now: now,
-        });
-      await db
-        .collection("users")
-        .doc(viewUserId)
-        .collection("followers")
-        .doc(myInfo.id)
-        .set({ now: now });
+      setYouGoods(youGoods + 1);
+      setTotalGoods(totalGoods + 1);
     } else {
-      alert("ログインできていません");
+      alert("ぜひアカウント作成してください！");
     }
   };
 
-  // いきたい場所リストの取得
+  // Youが変化したときにDBに反映する
   useEffect(() => {
-    let _placeCards = [];
-    for (let i = 0; i < 4; i++) {
-      const randomNum = Math.floor(Math.random() * 15) + 1;
-      const num = ("00" + randomNum).slice(-2);
-      _placeCards.push(
-        <Link href={`/admin/design/place?id=${randomNum}`}>
-          <a>
-            <div className={styles.placeCard}>
-              <div className={styles.image}>
-                <Image
-                  src={`/images/avatars/${num}.svg`}
-                  alt=""
-                  width={160}
-                  height={160}
-                />
-              </div>
-              <div className={styles.hashtag}>
-                <p>#東京クラフトビール</p>
-              </div>
-            </div>
-          </a>
-        </Link>
-      );
+    if (myInfo) {
+      (async () => {
+        await db
+          .collection("users")
+          .doc(myInfo.id)
+          .collection("follows")
+          .doc(viewUserInfo?.id)
+          .set({ num: youGoods });
+        await db
+          .collection("users")
+          .doc(viewUserInfo?.id)
+          .collection("followers")
+          .doc(myInfo.id)
+          .set({ num: youGoods });
+      })();
     }
-    setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
+  }, [youGoods]);
+
+  // 行きたい場所リストの取得
+  useEffect(() => {
+    (async () => {
+      let _placeCards = [];
+      const places = await db
+        .collection("users")
+        .doc(viewUserInfo?.id)
+        .collection("places")
+        .get();
+      places.forEach(async (p) => {
+        _placeCards.push(
+          <Link href={`/admin/design/place?id=${p.data().icon}`}>
+            <a>
+              <div className={styles.placeCard}>
+                <div className={styles.image}>
+                  <Image
+                    src={`/images/avatars/${p.data().icon}.svg`}
+                    alt="場所カード"
+                    width="160"
+                    height="160"
+                  />
+                </div>
+                <div className={styles.hashtag}>
+                  <p>#{p.data().name}</p>
+                </div>
+              </div>
+            </a>
+          </Link>
+        );
+      });
+      setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
+    })();
   }, []);
 
+  // メニューモーダル
   if (typeof window !== "undefined") {
     window.onclick = (event) => {
       const menu = document.getElementById("menu");
@@ -284,52 +202,17 @@ export default function Index({ viewUserId }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{viewUserId}</title>
+        <title>{viewUserInfo?.id}</title>
         <meta
           name="description"
-          content={viewUserId + "を気軽に誘っちゃおう"}
+          content={viewUserInfo?.id + "を気軽に誘っちゃおう"}
         />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
         <meta name="og:title" content="test" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-
-      <header className={headerStyles.header}>
-        <h1>Instago</h1>
-        <div
-          className={headerStyles.icon}
-          onClick={() => {
-            document.getElementById("menu").style.display = "block";
-          }}
-        >
-          {profileImg}
-        </div>
-        <div id="menu" className={headerStyles.menu}>
-          <div className={headerStyles.menuContent}>
-            <Link href={"/user/nortification"}>
-              <div className={headerStyles.items}>
-                <a>通知一覧</a>
-              </div>
-            </Link>
-            <Link href={"/user/goods"}>
-              <div className={headerStyles.items}>
-                <a>Good一覧</a>
-              </div>
-            </Link>
-            <Link href={`/${myInfo?.id}`}>
-              <div className={headerStyles.items}>
-                <a>マイページ編集</a>
-              </div>
-            </Link>
-            <Link href={"/user/setting"}>
-              <div className={headerStyles.items}>
-                <a>設定</a>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className={styles.profileBox}>
         <div className={styles.profileTop}>
@@ -337,15 +220,23 @@ export default function Index({ viewUserId }) {
             <p className={styles.num}>{totalGoods}</p>
             <p>Total</p>
           </div>
-          <div className={styles.image + " " + styles[profileColor]}>
-            {profileImg}
+          <div
+            className={
+              styles.image +
+              " " +
+              styles[isMine ? profileColor : viewUserInfo?.color]
+            }
+          >
+            <img src={`/images/avatars/${viewUserInfo?.icon}.svg`} alt="" />
           </div>
           <div className={styles.you}>
             <p className={styles.num}>{youGoods}</p>
             <p>You</p>
           </div>
         </div>
-        <p className={styles.name}>{myInfo?.name}</p>
+        <p className={styles.name}>
+          {isMine ? myInfo?.name : viewUserInfo?.name}
+        </p>
         {isFollowYou ? (
           <p className={styles.isGooded}>あなたをGoodしています</p>
         ) : (
@@ -364,8 +255,7 @@ export default function Index({ viewUserId }) {
         <div className={styles.goodBtnBox}>
           <button
             onClick={() => {
-              setYouGoods(youGoods + 1);
-              setTotalGoods(totalGoods + 1);
+              pushGood();
             }}
             className={styles.goodBtn + " " + styles[profileColor]}
           >

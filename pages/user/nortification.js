@@ -1,27 +1,29 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../../styles/Signup.module.scss";
+import styles from "../../styles/User.module.scss";
+import headerStyles from "../../styles/Header.module.scss";
 import { useAuth } from "../../lib/auth";
+import Header from "../../lib/header";
 import { useRouter } from "next/router";
 import { db, storage } from "../../lib/firebaseInit";
 import { useState, useEffect } from "react";
-import {
-  HiOutlineUserCircle,
-  HiOutlineBell,
-  HiOutlineCog,
-} from "react-icons/hi";
 
 export default function Index() {
   // Auth
-  const { currentUser, login, logout } = useAuth();
+  const {
+    myInfo,
+    setMyInfo,
+    profileImg,
+    setProfileImg,
+    placeCards,
+    setPlaceCards,
+    profileColor,
+    setProfileColor,
+    login,
+    logout,
+  } = useAuth();
   const router = useRouter();
   const [nortifications, setNortifications] = useState(<div></div>);
-
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/signup/welcome");
-    }
-  }, [currentUser, router]);
 
   useEffect(() => {
     const allMessages = {};
@@ -85,46 +87,27 @@ export default function Index() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>home</title>
-        <meta name="description" content="test" />
+        <title>設定</title>
+        <meta name="description" content="設定" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="test" />
         <meta name="og:title" content="test" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      <Header />
 
-      <header className={styles.header}>
-        <h1>FRIENDAY</h1>
-        <div className={styles.headerBtnBox}>
-          <Link href="/user/nortification">
-            <a>
-              <div className={styles.nortification}>
-                <HiOutlineBell />
-              </div>
-            </a>
-          </Link>
-          <Link href="/user/setting">
-            <a>
-              <div className={styles.user}>
-                <HiOutlineCog />
-              </div>
-            </a>
-          </Link>
-          <Link href={currentUser ? `/saikai_official` : "/signup/welcome"}>
-            <a>
-              <div className={styles.user}>
-                <HiOutlineUserCircle />
-              </div>
-            </a>
-          </Link>
+      <div className={styles.top}>
+        <div className={styles.image + " " + styles[profileColor]}>
+          {profileImg}
         </div>
-      </header>
-      <main className={styles.main}>
-        <div className={styles.title}>
-          <h1>通知一覧</h1>
-        </div>
-        <div className={styles.actionBox}>{nortifications}</div>
-      </main>
+        <h2>通知一覧</h2>
+      </div>
+      <div className={styles.contentBox}>
+        <div className={styles.itemBox}>使い方</div>
+        <div className={styles.itemBox}>ログアウト</div>
+        <div className={styles.itemBox}>アカウント削除</div>
+        <div className={styles.itemBox}>アプリダウンロード</div>
+      </div>
     </div>
   );
 }
