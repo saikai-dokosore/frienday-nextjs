@@ -159,44 +159,51 @@ $bp : (mobile : 480px,
   font-weight: 400;
   letter-spacing: 0.05em;
 }
-.placeCardBox {
-  padding: 0;
-  width: 100%;
+
+.placeBox {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-content: center;
 
-  .placeCard {
-    margin: 8px;
-    width: 152px;
-    height: 116px;
+  .placeCardBox {
+    width: 336px;
+    padding: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px solid #000000;
-    border-radius: 10px;
-    padding: 2px 10px 8px 10px;
-    box-shadow: 0px 5px 10px rgba(112, 112, 112, 0.15);
-    .image {
-      width: 80px;
-      height: 72px;
-      overflow: hidden;
-      img {
-        width: 80px;
-        object-fit: cover;
-        object-position: top;
-        object-position: 0 0;
-      }
-    }
-    .hashtag {
-      width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+
+    .placeCard {
+      margin: 8px;
+      width: 152px;
+      height: 116px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-around;
       align-items: center;
-      font-size: 10px;
-      font-weight: 500;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      padding: 2px 10px 8px 10px;
+      box-shadow: 0px 5px 10px rgba(112, 112, 112, 0.15);
+      .image {
+        width: 80px;
+        height: 72px;
+        overflow: hidden;
+        img {
+          width: 80px;
+          object-fit: cover;
+          object-position: top;
+          object-position: 0 0;
+        }
+      }
+      .hashtag {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        font-weight: 500;
+      }
     }
   }
 }
@@ -215,6 +222,9 @@ $bp : (mobile : 480px,
     font-weight: 400;
     border-radius: 8px;
     border: 1px solid #000000;
+  }
+  .addBtn:active {
+    opacity: 0.5;
   }
   .red {
     background-color: #FA6B6B;

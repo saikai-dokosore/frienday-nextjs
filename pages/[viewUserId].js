@@ -270,7 +270,7 @@ export default function Index({ viewUserInfo }) {
       <div className={styles.placeTitle}>
         <h3>今月気になっているところ</h3>
       </div>
-      {placeCards}
+      <div className={styles.placeBox}>{placeCards}</div>
 
       {isMine ? (
         <div className={styles.addBtnBox}>
