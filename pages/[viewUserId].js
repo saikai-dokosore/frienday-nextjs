@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "../styles/viewUserId.module.scss";
+import styles from "../styles/ViewUserId.module.scss";
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebaseInit";
 import { useAuth } from "../lib/auth";
