@@ -165,7 +165,7 @@ export default function Index({ viewUserInfo }) {
           .get();
         places.forEach(async (p) => {
           _placeCards.push(
-            <Link href={`/place/details?id=${p.id}`}>
+            <Link href={`/place/details?id=${viewUserInfo?.id}&key=${p.id}`}>
               <a>
                 <div className={styles.placeCard}>
                   <div className={styles.image}>
@@ -205,7 +205,9 @@ export default function Index({ viewUserInfo }) {
                   <MdEdit />
                 </a>
               </Link>
-              <Link href={`/place/details?id=${keys[i]}`}>
+              <Link
+                href={`/place/details?id=${viewUserInfo?.id}&key=${keys[i]}`}
+              >
                 <a>
                   <div className={styles.placeCard}>
                     <div className={styles.image}>

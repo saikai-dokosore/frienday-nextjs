@@ -63,9 +63,9 @@
           "name": "#表参道カフェ",
           "gowith": {
             "[randomID]": {
-              "name": "middle_shizu",
+              "userId": "middle_shizu",
               "message": "テニサーで行こう！",
-              "created_at": "2021-09-12",
+              "createdAt": "2021-09-12",
             }
           }
         }

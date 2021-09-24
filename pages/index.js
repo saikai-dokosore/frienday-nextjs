@@ -4,15 +4,6 @@ import styles from "../styles/Index.module.scss";
 import { useAuth } from "../lib/auth";
 
 export default function Index() {
-  const { currentUser, login, logout } = useAuth();
-
-  const handleLoginButton = () => {
-    login();
-  };
-
-  const handleLogoutButton = () => {
-    logout();
-  };
   return (
     <div className={styles.container}>
       <Head>
@@ -26,8 +17,8 @@ export default function Index() {
 
       <header className={styles.header}>
         <h1>FRIENDAY</h1>
-        <Link href="/saikai_official">
-          <a>saikai_official</a>
+        <Link href="/admin/designtest">
+          <a>designtest</a>
         </Link>
       </header>
       <main className={styles.main}>

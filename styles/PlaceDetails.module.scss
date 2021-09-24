@@ -45,7 +45,7 @@ $bp : (mobile : 480px,
   width: 100%;
 
   .placeCard {
-    margin: 8px;
+    margin: 4px;
     width: 152px;
     height: 116px;
     display: flex;
@@ -80,18 +80,15 @@ $bp : (mobile : 480px,
 
   .hashtags {
     width: 100%;
-    margin: 16px 0;
+    margin: 8px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    img {
-      
-    }
   }
 
   .isGood {
-    margin-top: 30px;
+    margin-top: 16px;
     font-size: 12px;
     background: -webkit-linear-gradient(15deg, #FAA500, #BB19BE);
     background-clip: text;
@@ -100,7 +97,7 @@ $bp : (mobile : 480px,
 
   .sendBox {
     width: 100%;
-    margin: 24px 0;
+    margin: 16px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -108,11 +105,12 @@ $bp : (mobile : 480px,
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 200px;
+      width: 240px;
       height: 40px;
       border: 1px solid #C7C7C7;
       border-radius: 8px;
-      padding: 4px 8px;
+      padding: 4px 12px;
+      font-size: 12px;
     }
     ::placeholder {
       color: #C7C7C7;
@@ -126,7 +124,7 @@ $bp : (mobile : 480px,
       align-items: center;
       background-color: var(--insta-blue);
       color: var(--white100);
-      width: 110px;
+      width: 80px;
       height: 40px;
       font-size: 10px;
       font-weight: 400;
