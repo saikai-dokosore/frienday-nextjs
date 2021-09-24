@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../../styles/User.module.scss";
-import headerStyles from "../../styles/Header.module.scss";
+import styles from "../../styles/UserNortification.module.scss";
 import { useAuth } from "../../lib/auth";
 import Header from "../../lib/header";
 import { useRouter } from "next/router";
@@ -9,70 +8,53 @@ import { db, storage } from "../../lib/firebaseInit";
 import { useState, useEffect } from "react";
 
 export default function Index() {
-  // Auth
-  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
-    useAuth();
-  const router = useRouter();
-  const [nortifications, setNortifications] = useState(<div></div>);
+  const { myInfo, setMyInfo, myPlaces, setMyPlaces } = useAuth();
+  const [nortificationCards, setNortificationCards] = useState(<div></div>);
 
   useEffect(() => {
-    const allMessages = {};
-    const getAllMessages = async () => {
-      const placeCollections = await db
-        .collection("users")
-        .doc("saikai_official")
-        .collection("place");
-      const places = await placeCollections.get();
-      places.forEach(async (p) => {
-        let name = p.data().name;
-        let emoji = p.data().emoji;
-        let month = p.data().month;
-        const messages = await placeCollections
-          .doc(p.id)
-          .collection("messages")
-          .get();
-        messages.forEach(async (m) => {
-          if (!allMessages[name]) {
-            allMessages[name] = [];
-          }
-          allMessages[name].push({
-            content: m.data().content,
-            read: m.data().read,
-            sentby: m.data().sentby,
-            senttime: m.data().senttime,
-          });
-        });
-      });
-    };
-    const setMessagesComps = async () => {
-      let ulComps = [];
-      for (let i = 0; i < Object.keys(allMessages).length; i++) {
-        let key = Object.keys(allMessages)[i];
-        let comp = allMessages[key].map((p, i) => {
-          return (
-            <li key={i}>
-              <p>{p?.content}</p>
-              <p>{p?.sentby}</p>
-            </li>
-          );
-        });
-        ulComps.push(
-          <ul key={i}>
-            <p>{key}</p>
-            {comp}
-          </ul>
-        );
-      }
-      setNortifications(<div>{ulComps}</div>);
-    };
-
-    // なぜか2回実行しないと反映されない
     (async () => {
-      await getAllMessages();
-      await getAllMessages();
-      await setMessagesComps();
+      let _nortificationCards = [];
+      const nortifications = await db
+        .collection("users")
+        .doc(myInfo?.id)
+        .collection("nortifications")
+        .get();
+
+      nortifications.forEach(async (n) => {
+        const user = await db.collection("users").doc(n.data().userId).get();
+        const date = n.data().createdAt.toDate();
+        const displayDate = `${("00" + (date.getMonth() + 1)).slice(-2)}/${(
+          "00" + date.getDate()
+        ).slice(-2)}/${("00" + date.getHours()).slice(-2)}:${(
+          "00" + date.getMinutes()
+        ).slice(-2)}`;
+
+        _nortificationCards.push(
+          <button className={styles.nortificationCard}>
+            <div className={styles.topBox}>
+              <div className={styles.hashtag}>#{n.data().hashtag}</div>
+              <div className={styles.date}>{displayDate}</div>
+            </div>
+            <div className={styles.mainBox}>
+              <div className={styles.image + " " + styles[user.data().color]}>
+                <img src={`/images/avatars/${user.data().icon}.svg`} alt="" />
+              </div>
+              <div className={styles.profileBox}>
+                <div className={styles.profile}>
+                  <p className={styles.name}>{user.data().name}</p>
+                  <p className={styles.id}>{n.data().userId}</p>
+                </div>
+                <div className={styles.message}>{n.data().message}</div>
+              </div>
+            </div>
+          </button>
+        );
+      });
+      setNortificationCards(
+        <div className={styles.nortificationCardBox}>{_nortificationCards}</div>
+      );
     })();
-  }, []);
+  }, [myInfo]);
 
   return (
     <div className={styles.container}>
@@ -88,16 +70,11 @@ export default function Index() {
 
       <div className={styles.top}>
         <div className={styles.image + " " + styles[myInfo?.color]}>
-          <img src={`/images/avatars/${myInfo?.icon}}.svg`} alt="" />
+          <img src={`/images/avatars/${myInfo?.icon}.svg`} alt="" />
         </div>
         <h2>通知一覧</h2>
       </div>
-      <div className={styles.contentBox}>
-        <div className={styles.itemBox}>使い方</div>
-        <div className={styles.itemBox}>ログアウト</div>
-        <div className={styles.itemBox}>アカウント削除</div>
-        <div className={styles.itemBox}>アプリダウンロード</div>
-      </div>
+      <div className={styles.contentBox}>{nortificationCards}</div>
     </div>
   );
 }

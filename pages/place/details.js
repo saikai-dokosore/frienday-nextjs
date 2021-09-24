@@ -34,16 +34,16 @@ export default function Index() {
       await db
         .collection("users")
         .doc(router.query.id)
-        .collection("places")
-        .doc(router.query.key)
-        .collection("gowith")
+        .collection("nortifications")
         .add({
+          key: router.query.key,
+          hashtag: place.name,
           userId: myInfo?.id,
           message: message,
           createdAt: new Date(),
         });
     }
-    router.push(`/place/send?id=${router.query.id}`);
+    router.push(`/place/sent?id=${router.query.id}`);
   };
 
   return (
