@@ -18,6 +18,20 @@ export default function Index() {
     document.getElementById("name").value = myPlaces?.[router.query.id]?.name;
   }, []);
 
+  const placeUpdate = async (key, name, icon) => {
+    if (myInfo) {
+      await db
+        .collection("users")
+        .doc(myInfo?.id)
+        .collection("places")
+        .doc(key)
+        .set({
+          name: name,
+          icon: icon,
+        });
+    }
+  };
+
   useEffect(() => {
     // avatar
     let _avatars = [];
@@ -35,6 +49,11 @@ export default function Index() {
                 },
               },
             });
+            placeUpdate(
+              router.query.id,
+              myPlaces?.[router.query.id]?.name,
+              ("00" + i).slice(-2)
+            );
           }}
         >
           <img src={`/images/avatars/${("00" + i).slice(-2)}.svg`} alt="" />
@@ -91,6 +110,11 @@ export default function Index() {
                   },
                 },
               });
+              placeUpdate(
+                router.query.id,
+                event.target.value,
+                myPlaces?.[router.query.id]?.icon
+              );
             }}
           />
         </div>
