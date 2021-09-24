@@ -37,14 +37,14 @@ export default function Index() {
         <div className={styles.placeCard}>
           <div className={styles.image}>
             <Image
-              src={`/images/avatars/${myPlaces?.[router.query.id]?.icon}.svg`}
+              src={`/images/avatars/${router.query.icon}.svg`}
               alt="場所カード"
               width="160"
               height="160"
             />
           </div>
           <div className={styles.hashtag}>
-            <p>#{myPlaces?.[router.query.id]?.name}</p>
+            <p>#{router.query.name}</p>
           </div>
         </div>
       </div>

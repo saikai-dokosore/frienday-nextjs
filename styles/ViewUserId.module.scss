@@ -165,6 +165,7 @@ $bp : (mobile : 480px,
   justify-content: center;
   align-content: center;
 
+  
   .placeCardBox {
     width: 336px;
     padding: 0;
@@ -173,19 +174,19 @@ $bp : (mobile : 480px,
     justify-content: flex-start;
     align-content: center;
     
+    .editCardBox {
+      display: flex;
+    }
     a {
-      width: 166px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-end;
     }
-    
     .edit {
-      position: relative;
+      position: absolute;
+      transform: translateX(145px);
       z-index: 2;
-      margin-bottom: -28px;
-      margin-right: -4px;
       display: flex;
       justify-content: center;
       align-items: center;

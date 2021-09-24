@@ -123,6 +123,9 @@ $bp : (mobile : 480px,
           object-position: -1px 0px;
         }
       }
+      .image:active {
+        background-color: #000000
+      }
     }
 
     .name {

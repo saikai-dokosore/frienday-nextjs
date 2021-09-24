@@ -198,28 +198,30 @@ export default function Index({ viewUserInfo }) {
         const keys = Object.keys(myPlaces);
         for (let i = 0; i < keys.length; i++) {
           _placeCards.push(
-            <Link href={`/admin/design/place?id=${myPlaces[keys[i]].icon}`}>
-              <a>
-                <Link href={`/edit/place?id=${keys[i]}`}>
-                  <a className={styles.edit}>
-                    <MdEdit />
-                  </a>
-                </Link>
-                <div className={styles.placeCard}>
-                  <div className={styles.image}>
-                    <Image
-                      src={`/images/avatars/${myPlaces[keys[i]].icon}.svg`}
-                      alt="場所カード"
-                      width="160"
-                      height="160"
-                    />
+            <div className={styles.editCardBox}>
+              <Link href={`/edit/place?id=${keys[i]}`}>
+                <a className={styles.edit}>
+                  <MdEdit />
+                </a>
+              </Link>
+              <Link href={`/admin/design/place?id=${myPlaces[keys[i]].icon}`}>
+                <a>
+                  <div className={styles.placeCard}>
+                    <div className={styles.image}>
+                      <Image
+                        src={`/images/avatars/${myPlaces[keys[i]].icon}.svg`}
+                        alt="場所カード"
+                        width="160"
+                        height="160"
+                      />
+                    </div>
+                    <div className={styles.hashtag}>
+                      <p>#{myPlaces[keys[i]].name}</p>
+                    </div>
                   </div>
-                  <div className={styles.hashtag}>
-                    <p>#{myPlaces[keys[i]].name}</p>
-                  </div>
-                </div>
-              </a>
-            </Link>
+                </a>
+              </Link>
+            </div>
           );
         }
         setPlaceCards(<div className={styles.placeCardBox}>{_placeCards}</div>);
@@ -240,7 +242,7 @@ export default function Index({ viewUserInfo }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{viewUserInfo?.id} : Instago</title>
+        <title>{viewUserInfo?.id}</title>
         <meta
           name="description"
           content={viewUserInfo?.id + "を気軽に誘っちゃおう"}
