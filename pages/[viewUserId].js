@@ -165,15 +165,16 @@ export default function Index({ viewUserInfo }) {
           .get();
         places.forEach(async (p) => {
           _placeCards.push(
-            <Link href={`/admin/design/place?id=${p.data().icon}`}>
+            <Link href={`/place/details?id=${p.id}`}>
               <a>
                 <div className={styles.placeCard}>
                   <div className={styles.image}>
                     <Image
                       src={`/images/avatars/${p.data().icon}.svg`}
                       alt="場所カード"
-                      width="160"
-                      height="160"
+                      width={200}
+                      height={200}
+                      quality={100}
                     />
                   </div>
                   <div className={styles.hashtag}>
@@ -204,15 +205,16 @@ export default function Index({ viewUserInfo }) {
                   <MdEdit />
                 </a>
               </Link>
-              <Link href={`/admin/design/place?id=${myPlaces[keys[i]].icon}`}>
+              <Link href={`/place/details?id=${keys[i]}`}>
                 <a>
                   <div className={styles.placeCard}>
                     <div className={styles.image}>
                       <Image
                         src={`/images/avatars/${myPlaces[keys[i]].icon}.svg`}
                         alt="場所カード"
-                        width="160"
-                        height="160"
+                        width={200}
+                        height={200}
+                        quality={100}
                       />
                     </div>
                     <div className={styles.hashtag}>
