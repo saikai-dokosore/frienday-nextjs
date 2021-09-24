@@ -254,7 +254,7 @@ export default function Index({ viewUserInfo }) {
         <meta name="og:title" content="test" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Header />
+      <Header back={false} />
 
       <div className={styles.profileBox}>
         <div className={styles.profileTop}>

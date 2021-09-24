@@ -84,7 +84,7 @@ export default function Index() {
         <meta name="og:title" content="test" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Header />
+      <Header back={true} />
 
       <div className={styles.top}>
         <div className={styles.image + " " + styles[myInfo?.color]}>

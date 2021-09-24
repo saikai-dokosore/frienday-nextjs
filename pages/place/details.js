@@ -5,6 +5,7 @@ import styles from "../../styles/PlaceDetails.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../lib/auth";
+import Header from "../../lib/header";
 
 export default function Index() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function Index() {
         <meta name="og:title" content="test" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      <Header back={true} />
 
       <div className={styles.placePage}>
         <div className={styles.placeCard}>

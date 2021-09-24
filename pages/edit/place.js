@@ -148,13 +148,7 @@ export default function Index() {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <Header />
-
-      <div className={styles.backBtnBox}>
-        <Link href={`/${myInfo?.id}`}>
-          <a>Back</a>
-        </Link>
-      </div>
+      <Header back={true} />
 
       <div className={styles.placeCardBox}>
         <div className={styles.placeCard}>

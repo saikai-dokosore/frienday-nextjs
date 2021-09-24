@@ -24,13 +24,7 @@ export default function Index() {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <Header />
-
-      <div className={styles.backBtnBox}>
-        <Link href={`/${myInfo?.id}`}>
-          <a>Back</a>
-        </Link>
-      </div>
+      <Header back={true} />
 
       <div className={styles.newPostBox}>
         <p className={styles.newpost}>\ NEW POST /</p>
