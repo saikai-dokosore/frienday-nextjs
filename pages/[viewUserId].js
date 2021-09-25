@@ -69,6 +69,7 @@ export default function Index({ viewUserInfo }) {
     if (myInfo) {
       setIsMine(myInfo.id === viewUserInfo?.id ? true : false);
     }
+    console.log("myInfo", myInfo);
   }, [myInfo]);
 
   // Total You を取得

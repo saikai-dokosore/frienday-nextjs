@@ -1,89 +1,159 @@
 import Head from "next/head";
-import styles from "../../styles/Signup.module.scss";
+import Link from "next/link";
+import styles from "../../styles/SignupSetname.module.scss";
 import { useAuth } from "../../lib/auth";
+import SignupHeader from "../../lib/signupHeader";
 import { useRouter } from "next/router";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { useState, useEffect } from "react";
 import { db, storage } from "../../lib/firebaseInit";
 
-export default function Welcome() {
-  const { currentUser, userId, login, logout, getUserId } = useAuth();
+export default function Index() {
+  const {
+    myInfo,
+    setMyInfo,
+    login,
+    logout,
+    newAccount,
+    setNewAccount,
+    isLoggedIn,
+    loginChecked,
+  } = useAuth();
   const router = useRouter();
-  const usersCollection = db.collection("users");
 
-  const createAccount = async (name, id, email) => {
-    const newUser = {
-      name: name,
-      email: email,
-      bio: "",
-      job: "",
-    };
-    if (name === "") {
-      alert("ニックネームが空です");
-    } else if (!id) {
-      alert("Instagram連携ができていません");
-    } else if (email === undefined) {
-      alert("Googleログインができていません");
-    } else {
-      const user = await usersCollection.doc(id).get();
-      if (!user.data()) {
-        await usersCollection.doc(id).set(newUser);
-        router.push("/" + id);
-      } else {
-        alert("ユーザー作成済みです");
-        router.push("/" + id);
+  const [colors, setColors] = useState([]);
+  const [avatars, setAvatars] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      if (loginChecked) {
+        if (!isLoggedIn) {
+          await login();
+        } else {
+          const user = await db.collection("users").doc(router.query.id).get();
+          await db
+            .collection("users")
+            .doc(router.query.id)
+            .set({ ...newAccount });
+          setMyInfo({
+            ...newAccount,
+            ...{ id: router.query.id },
+          });
+          console.log(user.data());
+          if (!user.data()) {
+            const placeDb = await db
+              .collection("users")
+              .doc(router.query.id)
+              .collection("places");
+            placeDb.add({ name: "ディズニーランド", icon: "01" });
+            placeDb.add({ name: "表参道カフェ", icon: "02" });
+            placeDb.add({ name: "劇場版鬼滅の刃", icon: "03" });
+          }
+        }
       }
+    })();
+  }, [newAccount]);
+
+  useEffect(() => {
+    if (document.getElementById("name")) {
+      document.getElementById("name").value = newAccount?.name;
     }
-  };
+  }, []);
+
+  let colorSets = ["red", "blue", "green", "yellow"];
+  useEffect(() => {
+    // color
+    let _colors = [];
+    for (let i = 0; i < 4; i++) {
+      _colors.push(
+        <button
+          className={styles[colorSets[i]]}
+          onClick={() => {
+            setNewAccount({
+              ...newAccount,
+              ...{
+                color: colorSets[i],
+              },
+            });
+          }}
+        ></button>
+      );
+    }
+    setColors(_colors);
+    // avatar
+    let _avatars = [];
+    for (let i = 1; i < 17; i++) {
+      _avatars.push(
+        <button
+          className={styles.image}
+          onClick={() => {
+            setNewAccount({
+              ...newAccount,
+              ...{
+                icon: ("00" + i).slice(-2),
+              },
+            });
+          }}
+        >
+          <img src={`/images/avatars/${("00" + i).slice(-2)}.svg`} alt="" />
+        </button>
+      );
+    }
+    setAvatars(_avatars);
+  }, [newAccount]);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>アカウント作成</title>
-        <meta name="description" content="超気軽に誘っちゃおう" />
+        <title>ニックネーム</title>
+        <meta name="description" content="設定" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:image" content="test" />
+        <meta name="og:title" content="test" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      {!isLoggedIn ? (
+        <SignupHeader title={"Googleログイン"} enable={2} />
+      ) : (
+        <SignupHeader title={"アイコン作成"} enable={3} />
+      )}
 
-      <header className={styles.header}>
-        <h1>FRIENDAY</h1>
-      </header>
-
-      <main className={styles.main}>
-        <ul className={styles.process}>
-          <li>1</li>
-          <div className={styles.line}></div>
-          <li>2</li>
-          <div className={styles.line}></div>
-          <li>3</li>
-        </ul>
-        <div className={styles.title}>
-          <h1>Friendayへようこそ</h1>
-          <p>Welcome to Frienday</p>
+      <div className={styles.top}>
+        <div className={styles.image + " " + styles[newAccount.color]}>
+          <img src={`/images/avatars/${newAccount.icon}.svg`} alt="" />
         </div>
-        <div className={styles.actionBox}>
-          <p>最後にとっておきのニックネームをつけましょう</p>
+        {!isLoggedIn ? (
+          <p className={styles.text}>ログイン中です...</p>
+        ) : (
+          <div></div>
+        )}
+      </div>
+
+      {!isLoggedIn ? (
+        <div></div>
+      ) : (
+        <div className={styles.contentBox}>
+          <div className={styles.colorBox}>{colors}</div>
+          <div className={styles.avatarBox}>{avatars}</div>
           <div className={styles.inputBox}>
-            <p>Name</p>
-            <input id="nickname" type="text" />
+            <input
+              type="text"
+              id="name"
+              placeholder={"ニックネーム"}
+              onChange={(event) => {
+                setNewAccount({
+                  ...newAccount,
+                  ...{ name: event.target.value },
+                });
+              }}
+            />
+          </div>
+          <div className={styles.btnBox}>
+            <Link href={`/signup/newaccount?id=${router.query.id}`}>
+              <a className={styles[newAccount.color]}>アカウント作成</a>
+            </Link>
           </div>
         </div>
-        <div className={styles.btnBox}>
-          <div className={styles.nextText}>
-            <p>ページを発行</p>
-          </div>
-          <button
-            className={styles.nextArrow}
-            onClick={() =>
-              createAccount(
-                document.getElementById("nickname").value,
-                userId,
-                currentUser?.email
-              )
-            }
-          >
-            <MdKeyboardArrowRight />
-          </button>
-        </div>
-      </main>
+      )}
     </div>
   );
 }

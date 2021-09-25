@@ -106,26 +106,28 @@ export default function Index() {
       <div className={styles.contentBox}>{nortificationCards}</div>
 
       <div id="modal" className={styles.modal}>
-        <Link href={`instagram://user?username=${user.id}`}>
-          <a className={styles.modalContent}>
-            <div
-              className={styles.cancel}
-              onClick={() => {
-                document.getElementById("modal").style.display = "none";
-              }}
-            >
-              <IoCloseSharp />
-            </div>
-            <p className={styles.top}>InstagramでDMを送る</p>
-            <div className={styles.image + " " + styles[user.color]}>
-              <img src={`/images/avatars/${user.icon}.svg`} alt="" />
-            </div>
-            <div className={styles.profile}>
-              <p className={styles.name}>{user.name}</p>
-              <p className={styles.id}>{user.id}</p>
-            </div>
-          </a>
-        </Link>
+        <div className={styles.modalContent}>
+          <div
+            className={styles.cancel}
+            onClick={() => {
+              document.getElementById("modal").style.display = "none";
+            }}
+          >
+            <IoCloseSharp />
+          </div>
+          <Link href={`instagram://user?username=${user.id}`}>
+            <a>
+              <p className={styles.top}>InstagramでDMを送る</p>
+              <div className={styles.image + " " + styles[user.color]}>
+                <img src={`/images/avatars/${user.icon}.svg`} alt="" />
+              </div>
+              <div className={styles.profile}>
+                <p className={styles.name}>{user.name}</p>
+                <p className={styles.id}>{user.id}</p>
+              </div>
+            </a>
+          </Link>
+        </div>
       </div>
     </div>
   );

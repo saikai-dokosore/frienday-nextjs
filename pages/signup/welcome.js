@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../../styles/Signup.module.scss";
+import styles from "../../styles/SignupWelcome.module.scss";
 import headerStyles from "../../styles/Header.module.scss";
 import { useAuth } from "../../lib/auth";
 import Header from "../../lib/header";
@@ -10,16 +10,13 @@ import { useState, useEffect } from "react";
 export default function Index() {
   const getCodeUrl = `https://api.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_INSTA_CLIENT_ID}&redirect_uri=https%3A%2F%2Ffrienday.vercel.app%2Fsignup%2Fgetinsta&scope=user_profile,user_media&response_type=code`;
 
-  const { myInfo, setMyInfo, placeCards, setPlaceCards, login, logout } =
-    useAuth();
+  const { myInfo, setMyInfo, login, logout } = useAuth();
   const router = useRouter();
 
   const handleLoginButton = async () => {
     await login();
   };
-  const handleLogoutButton = () => {
-    logout();
-  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -48,7 +45,9 @@ export default function Index() {
           そんなサービスです。
         </div>
         <div className={styles.btnBox}>
-          <button>アカウント作成</button>
+          <Link href={"/signup/setinsta"}>
+            <a className={styles.enable}>アカウント作成</a>
+          </Link>
           <button
             onClick={() => {
               handleLoginButton();

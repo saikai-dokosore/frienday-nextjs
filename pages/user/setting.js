@@ -40,10 +40,39 @@ export default function Index() {
       </div>
 
       <div className={styles.contentBox}>
-        <div className={styles.itemBox}>使い方</div>
-        <div className={styles.itemBox}>ログアウト</div>
-        <div className={styles.itemBox}>アカウント削除</div>
-        <div className={styles.itemBox}>アプリダウンロード</div>
+        <div
+          className={styles.itemBox}
+          onClick={() => {
+            alert("まだこの機能はありません");
+          }}
+        >
+          使い方
+        </div>
+        <div
+          className={styles.itemBox}
+          onClick={() => {
+            handleLogoutButton();
+            router.push("/signup/welcome");
+          }}
+        >
+          ログアウト
+        </div>
+        <div
+          className={styles.itemBox}
+          onClick={() => {
+            alert("まだこの機能はありません");
+          }}
+        >
+          アカウント削除
+        </div>
+        <div
+          className={styles.itemBox}
+          onClick={() => {
+            alert("まだこの機能はありません");
+          }}
+        >
+          アプリダウンロード
+        </div>
       </div>
     </div>
   );

@@ -62,8 +62,9 @@ $bp : (mobile : 480px,
     font-family: 'Jost', sans-serif;
     letter-spacing: 0.2em;
     margin-top: 8px;
+    margin-left: 4px;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 300;
   }
 }
 
@@ -91,17 +92,23 @@ $bp : (mobile : 480px,
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    button {
+    button, a {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 160px;
-      height: 42px;
+      width: 176px;
+      height: 46px;
       border: 1px solid #000000;
       border-radius: 8px;
       margin-bottom: 16px;
-      font-weight: 500;
+      font-weight: 400;
+      letter-spacing: 0.1em;
       font-size: 12px;
+      box-shadow: 0px 5px 10px rgba(112, 112, 112, 0.3);
+    }
+    .enable {
+      background-color: #257BD4;
+      color: #FFFFFF;
     }
   }
 }

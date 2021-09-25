@@ -1,0 +1,119 @@
+// レスポンシブ設定
+$bp : (mobile : 480px,
+    tablet : 768px,
+    desktop : 1440px,
+);
+@mixin query($display) {
+
+    @each $key,
+    $value in $bp {
+        @if ($display==$key) {
+            @media (max-width: $value) {
+                @content;
+            }
+        }
+    }
+}
+
+// 全体
+.container {
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  padding: 0;
+}
+
+
+.backBtnBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 54px;
+  width: 100%;
+  padding: 0 36px;
+  margin-top: 8px;
+}
+
+.newAccountBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  margin-bottom: 80px;
+
+  .text {
+    font-size: 12px;
+    color: #585858;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 28px;
+  }
+
+  .newAccount {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+  .image {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #000000;
+    img {
+      width: 144px;
+      object-fit: cover;
+      object-position: -2px 0;
+    }
+  }
+  .red {
+      background-color: #FA6B6B;
+    }
+    .blue{
+      background-color: #257BD4;
+    }
+    .yellow {
+      background-color: #EEC532;
+    }
+    .green {
+      background-color: #00A867;
+    }
+    .name {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-top: 16px;
+    }
+  
+}
+.btnBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 176px;
+    height: 46px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    box-shadow: 0px 5px 10px rgba(112, 112, 112, 0.3);
+  }
+  .enable {
+    background-color: #257BD4;
+    color: #FFFFFF;
+  }
+}
