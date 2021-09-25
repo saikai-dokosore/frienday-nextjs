@@ -34,7 +34,7 @@ export default function Index() {
 
       <div className={styles.top}>
         <div className={styles.image + " " + styles[myInfo?.color]}>
-          <img src={`/images/avatars/${myInfo?.icon}}.svg`} alt="" />
+          <img src={`/images/avatars/${myInfo?.icon}.svg`} alt="" />
         </div>
         <h2>設定</h2>
       </div>

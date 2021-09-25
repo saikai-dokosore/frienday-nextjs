@@ -233,16 +233,6 @@ export default function Index({ viewUserInfo }) {
     })();
   }, [myPlaces, isMine]);
 
-  // メニューモーダル
-  if (typeof window !== "undefined") {
-    window.onclick = (event) => {
-      const menu = document.getElementById("menu");
-      if (event.target == menu) {
-        menu.style.display = "none";
-      }
-    };
-  }
-
   return (
     <div className={styles.container}>
       <Head>
