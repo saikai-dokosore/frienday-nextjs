@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../../styles/Signup.module.scss";
+import styles from "../../styles/SignupGetinsta.module.scss";
 import { useAuth } from "../../lib/auth";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
