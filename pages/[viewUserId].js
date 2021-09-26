@@ -262,7 +262,11 @@ export default function Index({ viewUserInfo }) {
               styles[isMine ? myInfo?.color : viewUserInfo?.color]
             }
           >
-            <img src={`/images/avatars/${viewUserInfo?.icon}.svg`} alt="" />
+            <img
+              src={`/images/avatars/${viewUserInfo?.icon}.svg`}
+              width={1000}
+              alt=""
+            />
           </div>
           <div className={styles.you}>
             <p className={styles.num}>{youGoods}</p>
